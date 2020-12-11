@@ -1,51 +1,152 @@
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-// const camera = new THREE.OrthographicCamera(window.innerWidth / - 2, window.innerWidth / 2, window.innerHeightght / 2, window.innerHeight / - 2, 1, 1000);
+// global variables
+let renderer;
+let scene;
+let camera;
 
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+let control;
 
-const controls = new THREE.OrbitControls(camera, renderer.domElement);
+function init() {
 
-// Add cube
-const geometry = new THREE.BoxGeometry();
-const material = new THREE.MeshBasicMaterial({color: 0x00ff00});
-const cube = new THREE.Mesh(geometry, material);
-// scene.add(cube);
+    scene = new THREE.Scene();
+    camera = new THREE.OrthographicCamera();
 
-// Add plane
-const geometry1 = new THREE.PlaneGeometry(5, 5);
-const material1 = new THREE.MeshBasicMaterial({color: 0xffff00, side: THREE.DoubleSide});
-const plane = new THREE.Mesh(geometry1, material1);
-scene.add(plane);
+    camera.left = window.innerWidth / -2;
+    camera.right = window.innerWidth / 2;
+    camera.top = window.innerHeight / 2;
+    camera.bottom = window.innerHeight / -2;
+    camera.near = 0.1;
+    camera.far = 1500;
 
-camera.position.z = 1;
-camera.rotateZ(0.785398);
+    camera.updateProjectionMatrix();
 
-plane.rotateZ(0.785398);
+    // create a render, sets the background color and the size
+    renderer = new THREE.WebGLRenderer();
+    renderer.setClearColor(0x000000, 1.0);
+    renderer.setSize(window.innerWidth, window.innerHeight);
 
-let angle = 0;
-let radius = 500;
+    // position and point the camera to the center of the scene
+    camera.position.x = -500;
+    camera.position.y = 200;
+    camera.position.z = 300;
+    camera.lookAt(scene.position);
 
-let cameraRotation = THREE.Vector3(0,0,0);
+    let dirLight = new THREE.DirectionalLight();
+    scene.add(dirLight);
+    dirLight.position.set(-500, 200, 300);
 
-const animate = function () {
-    requestAnimationFrame(animate);
+    // add the output of the renderer to the html element
+    document.body.appendChild(renderer.domElement);
 
-    // cube.rotation.x += 0.01;
-    // cube.rotation.y += 0.01;
+    control = new function () {
+        this.left = camera.left;
+        this.right = camera.right;
+        this.top = camera.top;
+        this.bottom = camera.bottom;
+        this.far = camera.far;
+        this.near = camera.near;
 
-    // camera.getWorldDirection(cameraRotation);
-    // console.log(cameraRotation);
+        this.updateCamera = function () {
+            camera.left = control.left;
+            camera.right = control.right;
+            camera.top = control.top;
+            camera.bottom = control.bottom;
+            camera.far = control.far;
+            camera.near = control.near;
 
-    console.log("pos: ")
-    console.log(camera.position);
-    console.log("rot:")
-    console.log(camera.rotation);
+            camera.updateProjectionMatrix();
+        };
+    };
 
+    addControls(control);
 
-    renderer.render(scene, camera);
-};
+    // add ground
+    for (let x = 0; x < 15; x++) {
+        for (let z = 0; z < 15; z++) {
+            let floorBlock = new FloorBlock(x, z);
+            scene.add(floorBlock);
+        }
+    }
 
-animate();
+    // add player
+    let player = new Player(7,7);
+    scene.add(player);
+
+    // main animation loop
+    let frame = 0;
+    const animate = () => {
+        renderer.render(scene, camera);
+
+        if(frame < 155) {
+            player.rotation.z += 0.01;
+            player.position.x -= 0.4;
+        }
+
+        frame += 1;
+        requestAnimationFrame(animate);
+    }
+
+    // call the animate function
+    animate();
+}
+
+// function roll(object, speed, dir, startingFrame, currentFrame) {
+//     if(dir == 'back' || dir == 'right')
+//         speed *= -1;
+    
+//     if(dir == 'back' || dir == 'forward') {
+
+//     }
+// }
+
+function addControls(controlObject) {
+    let gui = new dat.GUI();
+    gui.add(controlObject, 'left', -1000, 0).onChange(controlObject.updateCamera);
+    gui.add(controlObject, 'right', 0, 1000).onChange(controlObject.updateCamera);
+    gui.add(controlObject, 'top', 0, 1000).onChange(controlObject.updateCamera);
+    gui.add(controlObject, 'bottom', -1000, 0).onChange(controlObject.updateCamera);
+    gui.add(controlObject, 'far', 100, 2000).onChange(controlObject.updateCamera);
+    gui.add(controlObject, 'near', 0, 200).onChange(controlObject.updateCamera);
+}
+
+class FloorBlock extends THREE.Mesh {
+    constructor(x, z) {
+        let cubeGeometry = new THREE.BoxGeometry(50, 50, 50);
+        let cubeMaterial = new THREE.MeshLambertMaterial();
+        cubeMaterial.color = new THREE.Color(0xffffff * Math.random())
+        cubeMaterial.transparent = true;
+        super(cubeGeometry, cubeMaterial);
+        this.name = 'floor';
+        this.position.x = 60 * x - 450;
+        this.position.y = 0;
+        this.position.z = 60 * z - 450;
+    }
+}
+
+class Player extends FloorBlock {
+    constructor(x, z) {
+        super(x, z);
+        this.name = 'player';
+        this.position.y += 60;
+        this.speed = 1;
+        
+        document.addEventListener('keydown', this.move, false);
+    }
+
+    move(event) {
+        console.log('hello');
+        var keyCode = event.which;
+        console.log(keyCode);
+        console.log(this.speed);
+        if (keyCode == 87) {
+            this.position.z += this.speed;
+        } else if (keyCode == 83) {
+            this.position.z -= this.speed;
+        } else if (keyCode == 65) {
+            this.position.x -= this.speed;
+        } else if (keyCode == 68) {
+            this.position.x += this.speed;
+        }
+    };
+}
+
+window.onload = init;
