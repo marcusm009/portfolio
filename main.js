@@ -76,10 +76,7 @@ function init() {
     const animate = () => {
         renderer.render(scene, camera);
 
-        if(frame < 155) {
-            player.rotation.z += 0.01;
-            player.position.x -= 0.4;
-        }
+        player.animate();
 
         frame += 1;
         requestAnimationFrame(animate);
@@ -88,15 +85,6 @@ function init() {
     // call the animate function
     animate();
 }
-
-// function roll(object, speed, dir, startingFrame, currentFrame) {
-//     if(dir == 'back' || dir == 'right')
-//         speed *= -1;
-    
-//     if(dir == 'back' || dir == 'forward') {
-
-//     }
-// }
 
 function addControls(controlObject) {
     let gui = new dat.GUI();
@@ -128,34 +116,77 @@ class Player extends FloorBlock {
         this.name = 'player';
         this.position.y += 60;
         this.speed = 60;
-        this.isMoving = false;
+        
+        this.keyHeldDown = false;
+        this.isReadyToMove = true;
+        
+        this.animationFn = null;
+        this.framesLeftOfAnimation = 0;
         
         document.addEventListener('keydown', this.move.bind(this), false);
-        document.addEventListener('keyup', this.readyToMove.bind(this), false);
+        document.addEventListener('keyup', this.keyUp.bind(this), false);
     }
 
     move(event) {
-        console.log('hello');
-        var keyCode = event.which;
-        console.log(keyCode);
-        console.log(this.isMoving);
-        if (this.isMoving == false) {
+        let keyCode = event.which;
+        // let rotVel = 50;
+        let rotVel = 0.1 * (Math.PI/2);
+        let totAnimationFrames = (Math.PI/2) / rotVel;
+        
+        if (this.isReadyToMove == true) {
+            // up
             if (keyCode == 87 || keyCode == 38) {
                 this.position.x += this.speed;
+                this.setAnimation(() => {
+                        this.rotation.z -= rotVel;
+                    }, totAnimationFrames);
+            // down
             } else if (keyCode == 83 || keyCode == 40) {
                 this.position.x -= this.speed;
+                this.setAnimation(() => {
+                    this.rotation.z += rotVel;
+                }, totAnimationFrames);
+            // left
             } else if (keyCode == 65 || keyCode == 37) {
                 this.position.z -= this.speed;
+                this.setAnimation(() => {
+                    this.rotation.x -= rotVel;
+                }, totAnimationFrames);
+            // right
             } else if (keyCode == 68 || keyCode == 39) {
                 this.position.z += this.speed;
+                this.setAnimation(() => {
+                    this.rotation.x += rotVel;
+                }, totAnimationFrames);
             }
         }
-        this.isMoving = true;
-        
+        this.keyHeldDown = true;
+        this.isReadyToMove = false;
     };
 
-    readyToMove(event) {
-        this.isMoving = false;
+    keyUp() {
+        this.keyHeldDown = false;
+    };
+
+    checkReadyToMove() {
+        if (this.keyHeldDown == false && this.framesLeftOfAnimation == 0) {
+            this.rotation.x = 0;
+            this.rotation.z = 0;
+            this.isReadyToMove = true;
+        }
+    };
+
+    setAnimation(animationFn, totalAnimationFrames) {
+        this.animationFn = animationFn;
+        this.framesLeftOfAnimation = totalAnimationFrames;
+    };
+
+    animate() {
+        if (this.framesLeftOfAnimation != 0) {
+            this.animationFn.bind(this)();
+            this.framesLeftOfAnimation -= 1;
+        }
+        this.checkReadyToMove();
     };
 }
 
