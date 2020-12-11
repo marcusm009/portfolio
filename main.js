@@ -127,25 +127,35 @@ class Player extends FloorBlock {
         super(x, z);
         this.name = 'player';
         this.position.y += 60;
-        this.speed = 1;
+        this.speed = 60;
+        this.isMoving = false;
         
-        document.addEventListener('keydown', this.move, false);
+        document.addEventListener('keydown', this.move.bind(this), false);
+        document.addEventListener('keyup', this.readyToMove.bind(this), false);
     }
 
     move(event) {
         console.log('hello');
         var keyCode = event.which;
         console.log(keyCode);
-        console.log(this.speed);
-        if (keyCode == 87) {
-            this.position.z += this.speed;
-        } else if (keyCode == 83) {
-            this.position.z -= this.speed;
-        } else if (keyCode == 65) {
-            this.position.x -= this.speed;
-        } else if (keyCode == 68) {
-            this.position.x += this.speed;
+        console.log(this.isMoving);
+        if (this.isMoving == false) {
+            if (keyCode == 87 || keyCode == 38) {
+                this.position.x += this.speed;
+            } else if (keyCode == 83 || keyCode == 40) {
+                this.position.x -= this.speed;
+            } else if (keyCode == 65 || keyCode == 37) {
+                this.position.z -= this.speed;
+            } else if (keyCode == 68 || keyCode == 39) {
+                this.position.z += this.speed;
+            }
         }
+        this.isMoving = true;
+        
+    };
+
+    readyToMove(event) {
+        this.isMoving = false;
     };
 }
 
