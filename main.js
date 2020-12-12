@@ -8,13 +8,14 @@ let control;
 function init() {
 
     scene = new THREE.Scene();
+    console.log(scene.position);
     camera = new THREE.OrthographicCamera();
 
     camera.left = window.innerWidth / -2;
     camera.right = window.innerWidth / 2;
-    camera.top = window.innerHeight / 2;
-    camera.bottom = window.innerHeight / -2;
-    camera.near = 0.1;
+    camera.top = window.innerHeight / 2 + 200;
+    camera.bottom = window.innerHeight / -2 + 200;
+    camera.near = -300;
     camera.far = 1500;
 
     camera.updateProjectionMatrix();
@@ -25,10 +26,13 @@ function init() {
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     // position and point the camera to the center of the scene
-    camera.position.x = -500;
-    camera.position.y = 200;
-    camera.position.z = 300;
-    camera.lookAt(scene.position);
+    camera.position.x = -300;
+    camera.position.y = 150;
+    camera.position.z = 200;
+    let focalPoint = scene.position;
+    console.log(focalPoint);
+    focalPoint.y += 75;
+    camera.lookAt(focalPoint);
 
     let dirLight = new THREE.DirectionalLight();
     scene.add(dirLight);
@@ -120,7 +124,7 @@ class Player extends FloorBlock {
         this.keyHeldDown = false;
         this.isReadyToMove = true;
         
-        this.animationFn = null;
+        this.animations = [];
         this.framesLeftOfAnimation = 0;
         
         document.addEventListener('keydown', this.move.bind(this), false);
@@ -136,28 +140,28 @@ class Player extends FloorBlock {
         if (this.isReadyToMove == true) {
             // up
             if (keyCode == 87 || keyCode == 38) {
-                this.position.x += this.speed;
-                this.setAnimation(() => {
-                        this.rotation.z -= rotVel;
-                    }, totAnimationFrames);
+                this.animations.push([() => {
+                    this.position.x += this.speed/totAnimationFrames;
+                    this.rotation.z -= rotVel;
+                }, totAnimationFrames]);
             // down
             } else if (keyCode == 83 || keyCode == 40) {
-                this.position.x -= this.speed;
-                this.setAnimation(() => {
+                this.animations.push([() => {
+                    this.position.x -= this.speed/totAnimationFrames;
                     this.rotation.z += rotVel;
-                }, totAnimationFrames);
+                }, totAnimationFrames]);
             // left
             } else if (keyCode == 65 || keyCode == 37) {
-                this.position.z -= this.speed;
-                this.setAnimation(() => {
-                    this.rotation.x -= rotVel;
-                }, totAnimationFrames);
+                this.animations.push([() => {
+                    this.position.z -= this.speed/totAnimationFrames;
+                    this.rotation.x -= rotVel
+                }, totAnimationFrames]);
             // right
             } else if (keyCode == 68 || keyCode == 39) {
-                this.position.z += this.speed;
-                this.setAnimation(() => {
+                this.animations.push([() => {
+                    this.position.z += this.speed/totAnimationFrames;
                     this.rotation.x += rotVel;
-                }, totAnimationFrames);
+                }, totAnimationFrames]);
             }
         }
         this.keyHeldDown = true;
@@ -169,24 +173,35 @@ class Player extends FloorBlock {
     };
 
     checkReadyToMove() {
-        if (this.keyHeldDown == false && this.framesLeftOfAnimation == 0) {
+        if (this.keyHeldDown == false && this.animations.length == 0) {
             this.rotation.x = 0;
             this.rotation.z = 0;
             this.isReadyToMove = true;
         }
     };
 
-    setAnimation(animationFn, totalAnimationFrames) {
-        this.animationFn = animationFn;
-        this.framesLeftOfAnimation = totalAnimationFrames;
+    animate() {
+        if (this.animations.length > 0) {
+            console.log(this.animations);
+        }
+        for (let i = 0; i < this.animations.length; i++) {
+            if (this.animations[i][1] > 0) {
+                console.log(this.animations[i][1]);
+                this.animations[i][0].bind(this)();
+                this.animations[i][1]--;
+            }
+        }
+        this.removeCompletedAnimations();
+        this.checkReadyToMove();
     };
 
-    animate() {
-        if (this.framesLeftOfAnimation != 0) {
-            this.animationFn.bind(this)();
-            this.framesLeftOfAnimation -= 1;
+    removeCompletedAnimations() {
+        let newAnimations = [];
+        for (let i = 0; i < this.animations.length; i++) {
+            if (this.animations[i][1] > 0)
+                newAnimations.push(this.animations[i]);
         }
-        this.checkReadyToMove();
+        this.animations = newAnimations;
     };
 }
 
