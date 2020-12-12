@@ -2,7 +2,6 @@
 let renderer;
 let scene;
 let camera;
-
 let control;
 
 function init() {
@@ -66,7 +65,7 @@ function init() {
     // add ground
     for (let x = 0; x < 15; x++) {
         for (let z = 0; z < 15; z++) {
-            let floorBlock = new FloorBlock(x, z);
+            let floorBlock = new FloorBlock(x, z, 0xffffff);
             scene.add(floorBlock);
         }
     }
@@ -101,11 +100,11 @@ function addControls(controlObject) {
 }
 
 class FloorBlock extends THREE.Mesh {
-    constructor(x, z) {
+    constructor(x, z, color) {
         let cubeGeometry = new THREE.BoxGeometry(50, 50, 50);
-        let cubeMaterial = new THREE.MeshLambertMaterial();
-        cubeMaterial.color = new THREE.Color(0xffffff * Math.random())
-        cubeMaterial.transparent = true;
+        let cubeMaterial = new THREE.MeshPhongMaterial();
+        cubeMaterial.color = new THREE.Color(color);
+        // cubeMaterial.wireframe = true;
         super(cubeGeometry, cubeMaterial);
         this.name = 'floor';
         this.position.x = 60 * x - 450;
@@ -116,7 +115,7 @@ class FloorBlock extends THREE.Mesh {
 
 class Player extends FloorBlock {
     constructor(x, z) {
-        super(x, z);
+        super(x, z, 0xff0000);
         this.name = 'player';
         this.position.y += 60;
         this.speed = 60;
@@ -133,7 +132,6 @@ class Player extends FloorBlock {
 
     move(event) {
         let keyCode = event.which;
-        // let rotVel = 50;
         let rotVel = 0.1 * (Math.PI/2);
         let totAnimationFrames = (Math.PI/2) / rotVel;
         
