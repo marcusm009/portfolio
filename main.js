@@ -7,7 +7,6 @@ let control;
 function init() {
 
     scene = new THREE.Scene();
-    console.log(scene.position);
     camera = new THREE.OrthographicCamera();
 
     camera.left = window.innerWidth / -2;
@@ -24,6 +23,12 @@ function init() {
     renderer.setClearColor(0x000000, 1.0);
     renderer.setSize(window.innerWidth, window.innerHeight);
 
+    // create CSS renderer
+    let cssRenderer = new THREE.CSS3DRenderer();
+    cssRenderer.setSize(window.innerWidth, window.innerHeight);
+    cssRenderer.domElement.style.position = 'absolute';
+    cssRenderer.domElement.style.top = 0;
+
     // position and point the camera to the center of the scene
     camera.position.x = -300;
     camera.position.y = 150;
@@ -38,6 +43,7 @@ function init() {
     dirLight.position.set(-500, 200, 300);
 
     // add the output of the renderer to the html element
+    document.body.appendChild(cssRenderer.domElement);
     document.body.appendChild(renderer.domElement);
 
     control = new function () {
@@ -74,12 +80,18 @@ function init() {
     let player = new Player(7,7);
     scene.add(player);
 
+    // add screen
+    let screen = new Screen();
+    screen.addToScene(scene);
+
     // main animation loop
     let frame = 0;
     const animate = () => {
+        cssRenderer.render(scene, camera);
         renderer.render(scene, camera);
 
         player.animate();
+        // console.log(player.position);
 
         frame += 1;
         requestAnimationFrame(animate);
@@ -99,11 +111,43 @@ function addControls(controlObject) {
     gui.add(controlObject, 'near', 0, 200).onChange(controlObject.updateCamera);
 }
 
+class Screen extends THREE.Mesh {
+    constructor() {
+        let material = new THREE.MeshBasicMaterial({wireframe: true});
+        let geometry = new THREE.PlaneGeometry(900, 450, 32, 32);
+        super(geometry, material);
+        this.position.x = 450;
+        this.position.y = 250;
+        this.position.z = -50;
+        this.rotation.y = Math.PI/2;
+
+        this.powerOn();
+    }
+
+    powerOn() {
+        let element = document.createElement('img');
+        element.src = 'textures/ml-example-screen.png';
+        // let element = document.createElement('div');
+        // element.style.background = 'white';
+
+        this.image = new THREE.CSS3DObject(element);
+        this.image.position.copy(this.position);
+        this.image.rotation.copy(this.rotation);
+    };
+
+    addToScene(scene) {
+        scene.add(this.image);
+        scene.add(this);
+    };
+
+}
+
 class FloorBlock extends THREE.Mesh {
     constructor(x, z, color) {
         let cubeGeometry = new THREE.BoxGeometry(50, 50, 50);
         let cubeMaterial = new THREE.MeshPhongMaterial();
         cubeMaterial.color = new THREE.Color(color);
+        cubeMaterial.blending = THREE.NoBlending;
         // cubeMaterial.wireframe = true;
         super(cubeGeometry, cubeMaterial);
         this.name = 'floor';
@@ -179,12 +223,8 @@ class Player extends FloorBlock {
     };
 
     animate() {
-        if (this.animations.length > 0) {
-            console.log(this.animations);
-        }
         for (let i = 0; i < this.animations.length; i++) {
             if (this.animations[i][1] > 0) {
-                console.log(this.animations[i][1]);
                 this.animations[i][0].bind(this)();
                 this.animations[i][1]--;
             }
