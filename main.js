@@ -19,9 +19,12 @@ function init() {
     camera.updateProjectionMatrix();
 
     // create a render, sets the background color and the size
-    renderer = new THREE.WebGLRenderer();
+    renderer = new THREE.WebGLRenderer({alpha: true});
     renderer.setClearColor(0x000000, 1.0);
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.domElement.style.position = 'absolute';
+    renderer.domElement.style.top = 0;    
+    renderer.domElement.style.zIndex = '1';
 
     // create CSS renderer
     let cssRenderer = new THREE.CSS3DRenderer();
@@ -31,11 +34,10 @@ function init() {
 
     // position and point the camera to the center of the scene
     camera.position.x = -300;
-    camera.position.y = 150;
+    camera.position.y = 250;
     camera.position.z = 200;
     let focalPoint = scene.position;
-    console.log(focalPoint);
-    focalPoint.y += 75;
+    focalPoint.y += 150;
     camera.lookAt(focalPoint);
 
     let dirLight = new THREE.DirectionalLight();
@@ -81,8 +83,8 @@ function init() {
     scene.add(player);
 
     // add screen
-    let screen = new Screen();
-    screen.addToScene(scene);
+    let screen = new Screen(scene);
+    // screen.addToScene(scene);
 
     // main animation loop
     let frame = 0;
@@ -99,6 +101,7 @@ function init() {
 
     // call the animate function
     animate();
+
 }
 
 function addControls(controlObject) {
@@ -112,32 +115,65 @@ function addControls(controlObject) {
 }
 
 class Screen extends THREE.Mesh {
-    constructor() {
-        let material = new THREE.MeshBasicMaterial({wireframe: true});
-        let geometry = new THREE.PlaneGeometry(900, 450, 32, 32);
+    constructor(scene) {
+        let material = new THREE.MeshBasicMaterial({wireframe: false});
+        material.color.set('black')
+        material.opacity   = 0;
+        material.blending  = THREE.NoBlending;
+        let geometry = new THREE.PlaneGeometry(900, 500, 32, 32);
         super(geometry, material);
+        // this.position.x = 450;
+        // this.position.y = 250;
+        // this.position.z = -50;
         this.position.x = 450;
-        this.position.y = 250;
+        this.position.y = 225;
         this.position.z = -50;
-        this.rotation.y = Math.PI/2;
+        this.rotation.y = -Math.PI/2;
+
+        this.scene = scene;
+        this.scene.add(this);
 
         this.powerOn();
+        // this.goToUrl('https://google.com');
     }
 
     powerOn() {
-        let element = document.createElement('img');
-        element.src = 'textures/ml-example-screen.png';
-        // let element = document.createElement('div');
-        // element.style.background = 'white';
+        // let element = document.createElement('img');
+        // element.src = 'textures/ml-example-screen.png';
+
+        let element = document.createElement('iframe');
+        element.src = [ 'https://www.youtube.com/embed/jO2viLEW-1A', '?rel=0' ].join( '' );
+        element.style.width = '200px';
+        element.style.height = '150px';
 
         this.image = new THREE.CSS3DObject(element);
+        console.log(typeof(element));
+        console.log(element);
         this.image.position.copy(this.position);
         this.image.rotation.copy(this.rotation);
+
     };
 
-    addToScene(scene) {
-        scene.add(this.image);
-        scene.add(this);
+    // addToScene(scene) {
+    //     scene.add(this.image);
+    //     scene.add(this);
+    // };
+
+    goToUrl(url) {
+        httpGetAsync('https://cors-anywhere.herokuapp.com/' + url, (data) => {
+            let doc = new DOMParser().parseFromString(data, "text/html");    
+            console.log(typeof(doc));
+            console.log(doc);
+            console.log(doc.childNodes);
+            console.log('hello2!');
+            this.image = new THREE.CSS3DObject(doc);
+            console.log('hello!');
+            console.log(this.image);
+            this.image.position.copy(this.position);
+            this.image.rotation.copy(this.rotation);
+            this.scene.add(this.image);
+        });
+
     };
 
 }
@@ -152,7 +188,7 @@ class FloorBlock extends THREE.Mesh {
         super(cubeGeometry, cubeMaterial);
         this.name = 'floor';
         this.position.x = 60 * x - 450;
-        this.position.y = 0;
+        this.position.y = -50;
         this.position.z = 60 * z - 450;
     }
 }
@@ -241,6 +277,17 @@ class Player extends FloorBlock {
         }
         this.animations = newAnimations;
     };
+}
+
+function httpGetAsync(theUrl, callback)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() { 
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(xmlHttp.responseText);
+    }
+    xmlHttp.open("GET", theUrl, true);
+    xmlHttp.send(null);
 }
 
 window.onload = init;
