@@ -20,22 +20,24 @@ function init() {
 
     // create a render, sets the background color and the size
     renderer = new THREE.WebGLRenderer({alpha: true});
-    renderer.setClearColor(0x000000, 1.0);
+    renderer.setClearColor(0x000000, 1);
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.domElement.style.position = 'absolute';
     renderer.domElement.style.top = 0;    
-    renderer.domElement.style.zIndex = '1';
+    renderer.domElement.style.zIndex = 0;
 
     // create CSS renderer
     let cssRenderer = new THREE.CSS3DRenderer();
     cssRenderer.setSize(window.innerWidth, window.innerHeight);
     cssRenderer.domElement.style.position = 'absolute';
     cssRenderer.domElement.style.top = 0;
+    cssRenderer.domElement.style.zIndex = 1;
 
     // position and point the camera to the center of the scene
     camera.position.x = -300;
     camera.position.y = 250;
     camera.position.z = 200;
+    // camera.position.set(0, 0, 0);
     let focalPoint = scene.position;
     focalPoint.y += 150;
     camera.lookAt(focalPoint);
@@ -84,7 +86,7 @@ function init() {
 
     // add screen
     let screen = new Screen(scene);
-    // screen.addToScene(scene);
+    screen.addToScene(scene);
 
     // main animation loop
     let frame = 0;
@@ -122,58 +124,32 @@ class Screen extends THREE.Mesh {
         material.blending  = THREE.NoBlending;
         let geometry = new THREE.PlaneGeometry(900, 500, 32, 32);
         super(geometry, material);
-        // this.position.x = 450;
-        // this.position.y = 250;
-        // this.position.z = -50;
         this.position.x = 450;
         this.position.y = 225;
         this.position.z = -50;
         this.rotation.y = -Math.PI/2;
 
         this.scene = scene;
-        this.scene.add(this);
 
         this.powerOn();
-        // this.goToUrl('https://google.com');
     }
 
     powerOn() {
-        // let element = document.createElement('img');
-        // element.src = 'textures/ml-example-screen.png';
-
         let element = document.createElement('iframe');
-        element.src = [ 'https://www.youtube.com/embed/jO2viLEW-1A', '?rel=0' ].join( '' );
-        element.style.width = '200px';
-        element.style.height = '150px';
+        // element.src = [ 'https://www.youtube.com/embed/xBOqwRRj82A', '?rel=0' ].join( '' );
+        element.src = 'screen/main.html';
+        element.style.width = '900px';
+        element.style.height = '500px';
 
         this.image = new THREE.CSS3DObject(element);
-        console.log(typeof(element));
-        console.log(element);
         this.image.position.copy(this.position);
         this.image.rotation.copy(this.rotation);
 
     };
 
-    // addToScene(scene) {
-    //     scene.add(this.image);
-    //     scene.add(this);
-    // };
-
-    goToUrl(url) {
-        httpGetAsync('https://cors-anywhere.herokuapp.com/' + url, (data) => {
-            let doc = new DOMParser().parseFromString(data, "text/html");    
-            console.log(typeof(doc));
-            console.log(doc);
-            console.log(doc.childNodes);
-            console.log('hello2!');
-            this.image = new THREE.CSS3DObject(doc);
-            console.log('hello!');
-            console.log(this.image);
-            this.image.position.copy(this.position);
-            this.image.rotation.copy(this.rotation);
-            this.scene.add(this.image);
-        });
-
+    addToScene(scene) {
+        scene.add(this.image);
+        scene.add(this);
     };
 
 }
