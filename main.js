@@ -72,11 +72,22 @@ function init() {
 
     addControls(control);
 
+    let holes = [[5,5]];
+
     // add ground
     for (let x = 0; x < 15; x++) {
         for (let z = 0; z < 15; z++) {
-            let floorBlock = new FloorBlock(x, z, 0xffffff);
-            scene.add(floorBlock);
+            let isHole = false;
+            for (let hole of holes) {
+                if (x == hole[0] && z == hole[1]) {
+                    isHole = true;
+                    break;
+                }
+            }
+            if (!isHole) {
+                let floorBlock = new FloorBlock(x, z, 0xffffff);
+                scene.add(floorBlock);
+            }
         }
     }
 
@@ -253,17 +264,6 @@ class Player extends FloorBlock {
         }
         this.animations = newAnimations;
     };
-}
-
-function httpGetAsync(theUrl, callback)
-{
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() { 
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            callback(xmlHttp.responseText);
-    }
-    xmlHttp.open("GET", theUrl, true);
-    xmlHttp.send(null);
 }
 
 window.onload = init;
