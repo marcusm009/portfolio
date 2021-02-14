@@ -72,24 +72,8 @@ function init() {
 
     // addControls(control);
 
-    let holes = [[5,5]];
-
-    // add ground
-    for (let x = 0; x < 15; x++) {
-        for (let z = 0; z < 15; z++) {
-            let isHole = false;
-            for (let hole of holes) {
-                if (x == hole[0] && z == hole[1]) {
-                    isHole = true;
-                    break;
-                }
-            }
-            if (!isHole) {
-                let floorBlock = new FloorBlock(x, z, 0xffffff);
-                scene.add(floorBlock);
-            }
-        }
-    }
+    let floor = new Floor(15, 15, color=0xffffff, holes=[[5,5]]);
+    floor.addToScene(scene);
 
     // add player
     let player = new Player(7,7);
@@ -105,7 +89,7 @@ function init() {
         cssRenderer.render(scene, camera);
         renderer.render(scene, camera);
 
-        player.animate();
+        player.animate(floor);
         // console.log(player.position);
 
         frame += 1;
