@@ -1,12 +1,12 @@
 class Player extends FloorBlock {
-    constructor(x, z, multiplier=60) {
-        super(x, z, 0xff0000);
+    constructor(x, z, multiplier=1) {
+        super(x, z, 0.9, 0xff0000);
         this.name = 'player';
         this.multiplier = multiplier;
         this.position.y += multiplier;
         this.speed = multiplier;
 
-        this.gravity = 1;
+        this.gravity = 0.05;
         this.fallVelocity = 0;
         
         this.keyHeldDown = false;
@@ -83,8 +83,8 @@ class Player extends FloorBlock {
 
     checkReadyToMove() {
         if (this.keyHeldDown == false && this.animations.length == 0 && this.isFalling == false) {
-            this.rotation.x = 0;
-            this.rotation.z = 0;
+            this.rotation.set(0,0,0);
+            this.position.round();
             this.isReadyToMove = true;
         }
     };

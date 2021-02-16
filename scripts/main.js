@@ -9,10 +9,14 @@ function init() {
     scene = new THREE.Scene();
     camera = new THREE.OrthographicCamera();
 
-    camera.left = window.innerWidth / -2;
-    camera.right = window.innerWidth / 2;
-    camera.top = window.innerHeight / 2 + 200;
-    camera.bottom = window.innerHeight / -2 + 200;
+    let zoom = 192;
+    let defaultCameraPos = THREE.Vector3(-1, 0.5, 0.75);
+
+    camera.left = window.innerWidth / -zoom;
+    camera.right = window.innerWidth / zoom;
+    camera.top = window.innerHeight / zoom;
+    camera.bottom = window.innerHeight / -zoom;
+
     camera.near = -300;
     camera.far = 1500;
 
@@ -34,12 +38,12 @@ function init() {
     cssRenderer.domElement.style.zIndex = 1;
 
     // position and point the camera to the center of the scene
-    camera.position.x = -300;
-    camera.position.y = 250;
-    camera.position.z = 200;
-    // camera.position.set(0, 0, 0);
-    let focalPoint = scene.position;
-    focalPoint.y += 150;
+    camera.position.set(-1, 4, 1);
+    
+    let focalPoint = scene.position.clone();
+    
+    focalPoint.y += 3;
+
     camera.lookAt(focalPoint);
 
     let dirLight = new THREE.DirectionalLight();
@@ -50,33 +54,33 @@ function init() {
     document.body.appendChild(cssRenderer.domElement);
     document.body.appendChild(renderer.domElement);
 
-    control = new function () {
-        this.left = camera.left;
-        this.right = camera.right;
-        this.top = camera.top;
-        this.bottom = camera.bottom;
-        this.far = camera.far;
-        this.near = camera.near;
+    // control = new function () {
+    //     this.left = camera.left;
+    //     this.right = camera.right;
+    //     this.top = camera.top;
+    //     this.bottom = camera.bottom;
+    //     this.far = camera.far;
+    //     this.near = camera.near;
 
-        this.updateCamera = function () {
-            camera.left = control.left;
-            camera.right = control.right;
-            camera.top = control.top;
-            camera.bottom = control.bottom;
-            camera.far = control.far;
-            camera.near = control.near;
+    //     this.updateCamera = function () {
+    //         camera.left = control.left;
+    //         camera.right = control.right;
+    //         camera.top = control.top;
+    //         camera.bottom = control.bottom;
+    //         camera.far = control.far;
+    //         camera.near = control.near;
 
-            camera.updateProjectionMatrix();
-        };
-    };
+    //         camera.updateProjectionMatrix();
+    //     };
+    // };
 
     // addControls(control);
 
-    let floor = new Floor(15, 15, color=0xffffff, holes=[[5,5]]);
+    let floor = new Floor(new THREE.Vector3(), new THREE.Vector2(9,9), new THREE.Vector3(), 0.9, 0, color=0xffffff, holes=[[1,1]]);
     floor.addToScene(scene);
 
     // add player
-    let player = new Player(7,7);
+    let player = new Player(0,0);
     scene.add(player);
 
     // add screen
@@ -86,7 +90,9 @@ function init() {
     // main animation loop
     let frame = 0;
     const animate = () => {
+        // camera.position.set(-1,.5,.75);
         cssRenderer.render(scene, camera);
+        // camera.position.multiplyScalar(1000);
         renderer.render(scene, camera);
 
         player.animate(floor);
@@ -94,6 +100,11 @@ function init() {
 
         frame += 1;
         requestAnimationFrame(animate);
+        
+        if(frame % 200 == 0) {
+            console.log(floor.getPositions());
+            console.log(player.position);
+        }
     }
 
     // call the animate function

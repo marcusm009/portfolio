@@ -1,8 +1,14 @@
 class Floor {
-    constructor(m, n, color=0xffffff, holes = []) {
+    constructor(position, dimensions, rotationAxis, scale, rotation, color=0xffffff, holes = []) {
         this.blocks = [];
-        this.m = m;
-        this.n = n;
+
+        this.position = position;
+        this.dimensions = dimensions;
+        this.rotationAxis = rotationAxis;
+        
+        this.scale = scale;
+        this.rotation = rotation;
+
         this.color = color;
         this.holes = holes;
 
@@ -10,17 +16,20 @@ class Floor {
     }
 
     addFloor() {
-        for (let x = 0; x < this.m; x++) {
-            for (let z = 0; z < this.n; z++) {
+        this.start = this.dimensions.clone().addScalar(-1).divideScalar(-2);
+        this.end = this.start.clone().multiplyScalar(-1);
+
+        for (let x = this.start.x; x <= this.end.x; x++) {
+            for (let y = this.start.y; y <= this.end.y; y++) {
                 let isHole = false;
                 for (let hole of this.holes) {
-                    if (x == hole[0] && z == hole[1]) {
+                    if (x == hole[0] && y == hole[1]) {
                         isHole = true;
                         break;
                     }
                 }
                 if (!isHole) {
-                    this.blocks.push(new FloorBlock(x, z, this.color));
+                    this.blocks.push(new FloorBlock(x, y, this.scale, this.color));
                 }
             }
         }
@@ -33,7 +42,7 @@ class Floor {
     }
 
     hasBlockInLocation(x, z) {
-        if (x < 0 || x >= this.m || z < 0 || z >= this.n) {
+        if (x < this.start.x - .1 || x > this.end.x + .1 || z < this.start.y - .1  || z > this.end.y + .1) {
             return false;
         }
         let holeFound = false;
@@ -44,5 +53,13 @@ class Floor {
             }
         }
         return !holeFound;
+    }
+
+    getPositions() {
+        let positions = [];
+        for (let block of this.blocks) {
+            positions.push(block.position);
+        }
+        return positions;
     }
 }
