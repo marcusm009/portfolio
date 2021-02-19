@@ -14,6 +14,8 @@ class Screen extends THREE.Mesh {
         this.applyQuaternion(quaternion);
         this.quaternion.normalize();
 
+        this.dimensions = dimensions;
+
         this.powerOn();
     }
 
@@ -21,8 +23,8 @@ class Screen extends THREE.Mesh {
         let element = document.createElement('iframe');
         // element.src = [ 'https://www.youtube.com/embed/xBOqwRRj82A', '?rel=0' ].join( '' );
         element.src = 'screen/main.html';
-        element.style.width = '900px';
-        element.style.height = '450px';
+        element.style.width = this.dimensions.x * 100 + 'px';
+        element.style.height = this.dimensions.y * 100 + 'px';
 
         this.image = new THREE.CSS3DObject(element);
         this.image.position.copy(this.position);

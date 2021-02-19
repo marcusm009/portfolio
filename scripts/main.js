@@ -43,7 +43,6 @@ function init() {
     let focalPoint = scene.position.clone();
     
     focalPoint.y += 3;
-
     camera.lookAt(focalPoint);
 
     let dirLight = new THREE.DirectionalLight();
@@ -80,14 +79,15 @@ function init() {
     // floor.addToScene(scene);
 
     let planet = [];
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 9; i++) {
         let ground = new Floor(
             new THREE.Vector3(0,-i,0),
             new THREE.Vector2(9,9),
             new THREE.Vector3(),
             0.9,
             0,
-            color=0xffffff,
+            colors=[0xacff78,'blue'], // light green, blue
+            colorProb=[.75,.25],
             holes=[[1,1]]
         );
         planet.push(ground);
@@ -98,10 +98,9 @@ function init() {
     let player = new Player(0,0);
     scene.add(player);
 
-    const quaternion = new THREE.Quaternion();
+    // add screen 0
+    let quaternion = new THREE.Quaternion();
     quaternion.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), -Math.PI/2);
-
-    // add screen
     let screen = new Screen(
         new THREE.Vector3(4.5,3.8,0),
         new THREE.Vector2(9,4.5),
@@ -109,14 +108,20 @@ function init() {
     );
     screen.addToScene(scene);
 
-    // let screen2 = new Screen(
-    //     new THREE.Vector3(4.5,3.8,0),
-    //     new THREE.Vector2(9,4.5)
-    // );
-    // screen2.addToScene(scene);
+    // add screen 1
+    quaternion.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), -Math.PI/4);
+    let screen1 = new Screen(
+        new THREE.Vector3(0,-22,0),
+        new THREE.Vector2(24,12),
+        quaternion
+    );
+    screen1.addToScene(scene);
 
     // main animation loop
     let frame = 0;
+    let playerAnimations = [];
+    let playerIsFalling = false;
+
     const animate = () => {
         // camera.position.set(-1,.5,.75);
         cssRenderer.render(scene, camera);
@@ -124,11 +129,18 @@ function init() {
         renderer.render(scene, camera);
 
         player.animate(planet[0]);
-        // console.log(player.position);
 
         frame += 1;
         requestAnimationFrame(animate);
         
+        // TODO: Consider applying quaternion to camera instead
+        if (player.isFalling && camera.position.y > -20) {
+            let vel = .4;
+            focalPoint.y -= vel;
+            camera.lookAt(focalPoint);
+            camera.position.setY(camera.position.y - vel);
+        }
+
         if(frame % 200 == 0) {
             console.log(planet[0].getPositions());
             console.log(player.position);

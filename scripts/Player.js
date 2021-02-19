@@ -6,7 +6,7 @@ class Player extends FloorBlock {
         this.position.y += multiplier;
         this.speed = multiplier;
 
-        this.gravity = 0.05;
+        this.gravity = 0.025;
         this.fallVelocity = 0;
         
         this.keyHeldDown = false;

@@ -1,5 +1,5 @@
 class Floor {
-    constructor(position, dimensions, rotationAxis, scale, rotation, color=0xffffff, holes = []) {
+    constructor(position, dimensions, rotationAxis, scale, rotation, colors=[0xffffff], colorProb=[1], holes = []) {
         this.blocks = [];
 
         this.position = position;
@@ -9,7 +9,9 @@ class Floor {
         this.scale = scale;
         this.rotation = rotation;
 
-        this.color = color;
+        this.colors = colors;
+        this.colorProb = colorProb;
+        
         this.holes = holes;
 
         document.addEventListener('keydown', this.move.bind(this), false);
@@ -39,7 +41,19 @@ class Floor {
                     }
                 }
                 if (!isHole) {
-                    this.blocks.push(new FloorBlock(x + this.position.x, this.position.y, z + this.position.z, this.scale, this.color));
+                    let cumulativeProb = 0;
+                    let color = 0xffffff;
+                    
+                    for (let i = 0; i < this.colorProb.length; i++) {
+                        cumulativeProb += this.colorProb[i];
+                        console.log(cumulativeProb);
+                        if (Math.random() < cumulativeProb) {
+                            color = this.colors[i];
+                            break;
+                        }
+
+                    }
+                    this.blocks.push(new FloorBlock(x + this.position.x, this.position.y, z + this.position.z, this.scale, color));
                 }
             }
         }
