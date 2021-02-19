@@ -76,16 +76,44 @@ function init() {
 
     // addControls(control);
 
-    let floor = new Floor(new THREE.Vector3(), new THREE.Vector2(9,9), new THREE.Vector3(), 0.9, 0, color=0xffffff, holes=[[1,1]]);
-    floor.addToScene(scene);
+    // let floor = new Floor(new THREE.Vector3(), new THREE.Vector2(9,9), new THREE.Vector3(), 0.9, 0, color=0xffffff, holes=[[1,1]]);
+    // floor.addToScene(scene);
+
+    let planet = [];
+    for (let i = 0; i < 6; i++) {
+        let ground = new Floor(
+            new THREE.Vector3(0,-i,0),
+            new THREE.Vector2(9,9),
+            new THREE.Vector3(),
+            0.9,
+            0,
+            color=0xffffff,
+            holes=[[1,1]]
+        );
+        planet.push(ground);
+        ground.addToScene(scene);
+    }
 
     // add player
     let player = new Player(0,0);
     scene.add(player);
 
+    const quaternion = new THREE.Quaternion();
+    quaternion.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), -Math.PI/2);
+
     // add screen
-    let screen = new Screen(scene);
+    let screen = new Screen(
+        new THREE.Vector3(4.5,3.8,0),
+        new THREE.Vector2(9,4.5),
+        quaternion
+    );
     screen.addToScene(scene);
+
+    // let screen2 = new Screen(
+    //     new THREE.Vector3(4.5,3.8,0),
+    //     new THREE.Vector2(9,4.5)
+    // );
+    // screen2.addToScene(scene);
 
     // main animation loop
     let frame = 0;
@@ -95,14 +123,14 @@ function init() {
         // camera.position.multiplyScalar(1000);
         renderer.render(scene, camera);
 
-        player.animate(floor);
+        player.animate(planet[0]);
         // console.log(player.position);
 
         frame += 1;
         requestAnimationFrame(animate);
         
         if(frame % 200 == 0) {
-            console.log(floor.getPositions());
+            console.log(planet[0].getPositions());
             console.log(player.position);
         }
     }

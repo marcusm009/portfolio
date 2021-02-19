@@ -1,6 +1,6 @@
 class Player extends FloorBlock {
     constructor(x, z, multiplier=1) {
-        super(x, z, 0.9, 0xff0000);
+        super(x, 0, z, 0.9, 0xff0000);
         this.name = 'player';
         this.multiplier = multiplier;
         this.position.y += multiplier;
@@ -50,6 +50,9 @@ class Player extends FloorBlock {
                     this.position.z += this.speed/totAnimationFrames;
                     this.rotation.x += rotVel;
                 }, totAnimationFrames]);
+            } else {
+                console.log('Key pressed: ' + keyCode);
+                return;
             }
         }
         this.keyHeldDown = true;

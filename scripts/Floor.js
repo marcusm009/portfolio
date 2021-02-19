@@ -12,24 +12,34 @@ class Floor {
         this.color = color;
         this.holes = holes;
 
+        document.addEventListener('keydown', this.move.bind(this), false);
+
         this.addFloor();
     }
 
+    move(event) {
+        let keyCode = event.which;
+        if (keyCode == 81) {
+            this.rotation.x += 5;
+        }
+    };
+
     addFloor() {
+        console.log(this.dimensions);
         this.start = this.dimensions.clone().addScalar(-1).divideScalar(-2);
         this.end = this.start.clone().multiplyScalar(-1);
 
         for (let x = this.start.x; x <= this.end.x; x++) {
-            for (let y = this.start.y; y <= this.end.y; y++) {
+            for (let z = this.start.y; z <= this.end.y; z++) {
                 let isHole = false;
                 for (let hole of this.holes) {
-                    if (x == hole[0] && y == hole[1]) {
+                    if (x == hole[0] && z == hole[1]) {
                         isHole = true;
                         break;
                     }
                 }
                 if (!isHole) {
-                    this.blocks.push(new FloorBlock(x, y, this.scale, this.color));
+                    this.blocks.push(new FloorBlock(x + this.position.x, this.position.y, z + this.position.z, this.scale, this.color));
                 }
             }
         }

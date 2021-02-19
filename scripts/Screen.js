@@ -1,17 +1,18 @@
 class Screen extends THREE.Mesh {
-    constructor(scene) {
+    constructor(position, dimensions, quaternion=new THREE.Quaternion(0,0,0,1), color='white') {
         let material = new THREE.MeshBasicMaterial({wireframe: false});
-        material.color.set('black')
+        material.color.set(color)
         material.opacity   = 0;
         material.blending  = THREE.NoBlending;
-        let geometry = new THREE.PlaneGeometry(9, 4.5, 10, 10);
+        
+        let geometry = new THREE.PlaneGeometry(dimensions.x, dimensions.y, 1, 1);
         super(geometry, material);
-        this.position.x = 4.5;
-        this.position.y = 3.8;
-        this.position.z = 0;
-        this.rotation.y = -Math.PI/2;
+        
+        this.position.copy(position);
+        this.image = null;
 
-        this.scene = scene;
+        this.applyQuaternion(quaternion);
+        this.quaternion.normalize();
 
         this.powerOn();
     }
@@ -29,10 +30,14 @@ class Screen extends THREE.Mesh {
 
         this.image.scale.set(.01,.01,.01);
 
+        // this.image.scale.copy(this.scale.multiplyScalar(.01));
+
     };
 
     addToScene(scene) {
-        scene.add(this.image);
+        if(this.image != null) {
+            scene.add(this.image);
+        }
         scene.add(this);
     };
 }
