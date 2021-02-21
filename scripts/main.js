@@ -34,7 +34,7 @@ function init() {
 
     // create a render, sets the background color and the size
     renderer = new THREE.WebGLRenderer({alpha: true});
-    renderer.setClearColor(0x000000, 1);
+    // renderer.setClearColor(0x000000, 1);
     
     // get container to contain three.js canvas.
     let container = document.getElementById('canvas-container');
@@ -43,11 +43,8 @@ function init() {
     renderer.setSize(w, h);
     container.appendChild(renderer.domElement);
     
-    // console.log(container.innerWidth);
-
-    // renderer.setSize(container.innerWidth, container.innerHeight);
-    renderer.domElement.style.position = 'absolute';
-    renderer.domElement.style.top = 0;    
+    // renderer.domElement.style.position = 'absolute';
+    // renderer.domElement.style.top = 0;    
     renderer.domElement.style.zIndex = 0;
 
     // create CSS renderer
@@ -82,8 +79,8 @@ function init() {
             0.9,
             0,
             colors=[0xacff78,'blue'], // light green, blue
-            colorProb=[.25,.75],
-            holes=[[1,1]]
+            colorProb=[1,0],
+            holes=[[-3,-3],[3,-3],[3,3]]
         );
         planet.push(ground);
         ground.addToScene(scene);
@@ -102,19 +99,6 @@ function init() {
     //     quaternion
     // );
     // screen.addToScene(scene);
-
-    // add screen
-    // quaternion.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), -Math.PI/4);
-    // screen = new Screen(
-    //     new THREE.Vector3(0,-22,0),
-    //     new THREE.Vector2(window.innerWidth/zoom*2,window.innerHeight/zoom*2),
-    //     quaternion
-    // );
-    // screen.addToScene(scene);
-
-    console.log(window.innerHeight);
-    console.log(window.innerWidth);
-
 
     // main animation loop
     let frame = 0;
