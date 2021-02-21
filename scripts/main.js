@@ -123,19 +123,38 @@ function init() {
             camera.lookAt(focalPoint);
             camera.position.setY(camera.position.y - vel);
         } else if (player.isFalling) {
-            $('body').css('overflow', 'auto');
+            scrollTransition();
             player.isFalling = false;
+            player.isDead = true;
+        }
+
+        if(frame == 2) {
+            window.scrollTo(0,0);
         }
 
         if(frame % 200 == 0) {
-            console.log(planet[0].getPositions());
-            console.log(player.position);
-            // window.scrollTo(0,document.body.scrollHeight);
+            // console.log(planet[0].getPositions());
+            // console.log(player.position);
+            // console.log(player.isFalling);
         }
     }
 
-    // call the animate function
     animate();
+
+    $(window).scroll(() => {
+        let scroll = $(window).scrollTop();
+        let transparency = Math.max(scroll/window.innerHeight, 0.5);
+        let redness = Math.min(Math.max(scroll/window.innerHeight*255,64),215);
+        // console.log(scroll);
+        console.log(transparency);
+        console.log(redness);
+        $('#nav-bar').css('background-color', `rgba(${redness}, 64, 64, ${transparency})`);    
+
+    });
+
+    $('#title').click(() => {
+        location.reload();
+    });
 }
 
 window.onload = init;
@@ -155,6 +174,14 @@ function onWindowResize(){
     screen.scale.setY(window.innerHeight/initialScreenHeight);
 
     screen.reflow();
+}
 
+function scrollTransition() {
+    $('body').css('overflow', 'auto');
 
+    window.scrollBy({
+        top: window.innerHeight,
+        left: 0,
+        behavior: 'smooth'
+    });
 }

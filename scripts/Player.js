@@ -12,6 +12,7 @@ class Player extends FloorBlock {
         this.keyHeldDown = false;
         this.isReadyToMove = true;
         this.isFalling = false;
+        this.isDead = false;
         
         this.animations = [];
         this.framesLeftOfAnimation = 0;
@@ -64,15 +65,17 @@ class Player extends FloorBlock {
     };
 
     animate(floor) {
-        for (let i = 0; i < this.animations.length; i++) {
-            if (this.animations[i][1] > 0) {
-                this.animations[i][0].bind(this)();
-                this.animations[i][1]--;
+        if (!this.isDead) {
+            for (let i = 0; i < this.animations.length; i++) {
+                if (this.animations[i][1] > 0) {
+                    this.animations[i][0].bind(this)();
+                    this.animations[i][1]--;
+                }
             }
+            this.removeCompletedAnimations();        
+            this.checkReadyToFall(floor);
+            this.checkReadyToMove();
         }
-        this.removeCompletedAnimations();        
-        this.checkReadyToFall(floor);
-        this.checkReadyToMove();
     };
 
     removeCompletedAnimations() {
