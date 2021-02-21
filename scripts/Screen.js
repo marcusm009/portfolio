@@ -20,13 +20,14 @@ class Screen extends THREE.Mesh {
     }
 
     powerOn() {
-        let element = document.createElement('iframe');
+        this.element = document.createElement('iframe');
         // element.src = [ 'https://www.youtube.com/embed/xBOqwRRj82A', '?rel=0' ].join( '' );
-        element.src = 'screen/main.html';
-        element.style.width = this.dimensions.x * 100 + 'px';
-        element.style.height = this.dimensions.y * 100 + 'px';
+        this.element.src = 'screen/main.html';
+        this.element.id = 'screen';
+        this.element.style.width = this.scale.x * this.dimensions.x * 100 + 'px';
+        this.element.style.height = this.scale.y * this.dimensions.y * 100 + 'px';
 
-        this.image = new THREE.CSS3DObject(element);
+        this.image = new THREE.CSS3DObject(this.element);
         this.image.position.copy(this.position);
         this.image.rotation.copy(this.rotation);
 
@@ -41,5 +42,10 @@ class Screen extends THREE.Mesh {
             scene.add(this.image);
         }
         scene.add(this);
+    };
+
+    reflow() {
+        console.log(this.element);
+        this.element.style.width = this.scale.x * this.dimensions.x * 100 + 'px';
     };
 }

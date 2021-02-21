@@ -11,7 +11,7 @@ class FloorBlock extends THREE.Mesh {
         this.position.x = x;
         this.position.y = y;
         this.position.z = z;
-
+        this.color = color;
     }
 
     getPosition() {

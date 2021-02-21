@@ -27,7 +27,6 @@ class Floor {
     };
 
     addFloor() {
-        console.log(this.dimensions);
         this.start = this.dimensions.clone().addScalar(-1).divideScalar(-2);
         this.end = this.start.clone().multiplyScalar(-1);
 
@@ -46,7 +45,6 @@ class Floor {
                     
                     for (let i = 0; i < this.colorProb.length; i++) {
                         cumulativeProb += this.colorProb[i];
-                        console.log(cumulativeProb);
                         if (Math.random() < cumulativeProb) {
                             color = this.colors[i];
                             break;
