@@ -143,12 +143,12 @@ function init() {
 
     $(window).scroll(() => {
         let scroll = $(window).scrollTop();
-        let transparency = Math.max(scroll/window.innerHeight, 0.5);
-        let redness = Math.min(Math.max(scroll/window.innerHeight*255,64),215);
+        let transparency = Math.min(Math.max(scroll/window.innerHeight, 0.5), 1);
+        let redness = Math.min(Math.max(scroll/window.innerHeight*255, 64), 215);
         // console.log(scroll);
         console.log(transparency);
         console.log(redness);
-        $('#nav-bar').css('background-color', `rgba(${redness}, 64, 64, ${transparency})`);    
+        $('#nav-bar').css('background-color', `rgba(64, 64, ${redness}, ${transparency})`);    
 
     });
 
