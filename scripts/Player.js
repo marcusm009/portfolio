@@ -1,6 +1,8 @@
 class Player extends FloorBlock {
     constructor(x, z, multiplier=1) {
         super(x, 0, z, 0.9, 0xff0000);
+        // super(x, 0, z, 0.9, 'purple');
+
         this.name = 'player';
         this.multiplier = multiplier;
         this.position.y += multiplier;

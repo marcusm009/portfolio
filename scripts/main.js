@@ -64,7 +64,8 @@ function init() {
 
     let dirLight = new THREE.DirectionalLight();
     scene.add(dirLight);
-    dirLight.position.set(-500, 200, 300);
+    // dirLight.position.set(-500, 200, 300);
+    dirLight.position.set(-20,100,50);
 
     // add the output of the renderer to the html element
     // document.body.appendChild(cssRenderer.domElement);
@@ -78,8 +79,8 @@ function init() {
             new THREE.Vector3(),
             0.9,
             0,
-            colors=[0xacff78,'blue'], // light green, blue
-            colorProb=[1,0],
+            colors=[0xacff78,0x292929], // light green, blue
+            colorProb=[0,1],
             holes=[[-3,-3],[3,-3],[3,3]]
         );
         planet.push(ground);
@@ -148,7 +149,8 @@ function init() {
         // console.log(scroll);
         console.log(transparency);
         console.log(redness);
-        $('#nav-bar').css('background-color', `rgba(64, 64, ${redness}, ${transparency})`);    
+        // $('#nav-bar').css('background-color', `rgba(${redness}, 64, 64, ${transparency})`);
+        $('#nav-bar').css('background-color', `rgba(64, 64, 64, ${transparency})`);    
 
     });
 
