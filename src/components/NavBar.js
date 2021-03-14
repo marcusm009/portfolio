@@ -1,6 +1,6 @@
 import NavButton from './NavButton'
 
-const NavBar = ({ buttons, onClick }) => {
+const NavBar = ({ buttons }) => {
   return (
     <div
       id='nav-bar'
@@ -9,7 +9,6 @@ const NavBar = ({ buttons, onClick }) => {
             <NavButton
               key={idx}
               button={button}
-              onClick={onClick}
             />
           ))}
     </div>

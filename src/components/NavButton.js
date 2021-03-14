@@ -7,7 +7,7 @@ const NavButton = ({ button }) => {
   return (
     <Link
       to={button.route}
-      className={location === button.route && 'selected'}
+      className={(location === button.route) ? 'selected' : ''}
     >
       {button.text}
     </Link>
