@@ -1,35 +1,18 @@
-import { useRef, useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import { Canvas, useFrame } from 'react-three-fiber'
+import { Canvas, useResource } from 'react-three-fiber'
+import { OrthographicCamera } from '@react-three/drei'
+import { Controls, useControl } from 'react-three-gui';
+
 import * as THREE from 'three'
 
 import NavBar from './components/NavBar'
-
-const Box = (props) => {
-  // This reference will give us direct access to the mesh
-  const mesh = useRef();
-
-  // Set up state for the hovered and active state 
-  const [active, setActive] = useState(false);
-
-  // Rotate mesh every frame, this is outside of React without overhead
-  useFrame(() => {
-    mesh.current.rotation.x = mesh.current.rotation.y += 0.01;
-  });
-  
-  return (
-    <mesh
-    {...props}
-    ref={mesh}
-    scale={active ? [2, 2, 2] : [1.5, 1.5, 1.5]}
-    onClick={(e) => setActive(!active)}
-      >
-      <boxBufferGeometry args={[1, 1, 1]} />
-    </mesh>
-  );
-}
+import Player from './components/Player'
+import Tile from './components/Tile'
+import Level from './components/Level'
 
 const App = () => {
+  
+  const myCamera = useResource()
   
   const navButtons = [
     {
@@ -44,20 +27,34 @@ const App = () => {
       text: 'Contact',
       route: '/contact'
     }
-  ];
+  ]
+
+  const template = [
+    ['x', 'x'],
+    ['' , 'x']
+  ]
   
   return (
     <Router>
       <NavBar buttons={navButtons}/>
-      <Canvas>
-        <ambientLight intensity={0.5} />
-        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-        <pointLight position={[-10, -10, -10]} />
-        <Box position={[-1.2, 0, 0]} />
-        <Box position={[2.5, 0, 0]} />
-      </Canvas>
+      <div id='canvas-container'>
+        <Canvas>
+          <OrthographicCamera
+            ref={myCamera}
+            postion={[-1,-1,1]}
+            near={-300}
+            far={1500}
+            zoom={100}
+            rotation={[Math.PI/4,-(1.25)*Math.PI/8,-(1.25)*Math.PI/8]}
+            makeDefault>
+            <mesh />
+          </OrthographicCamera>
+          <directionalLight position={[-.5,-3,5]}/>
+          <Level template={template}/>
+        </Canvas>
+      </div>
     </Router>
-  );
+  )
 }
 
 export default App;
