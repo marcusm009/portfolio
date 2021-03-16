@@ -1,22 +1,19 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { useFrame, useThree } from 'react-three-fiber'
 
 const Camera = (props) => {
-  const mesh = useRef();
-  const [active, setActive] = useState(false);
+  const ref = useRef()
+  const [active, setActive] = useState(false)
+  const { setDefaultCamera } = useThree()
+
+  useEffect(() => void setDefaultCamera(ref.current, []))
 
   useFrame(() => {
-    mesh.current.rotation.x = mesh.current.rotation.y += 0.01;
+    ref.current.updateMatrixWorld()
   });
   
   return (
-    <mesh
-    {...props}
-    ref={mesh}
-    scale={active ? [2, 2, 2] : [1.5, 1.5, 1.5]}
-    onClick={(e) => setActive(!active)}>
-      <boxBufferGeometry args={[1, 1, 1]} />
-    </mesh>
+    <orthographicCamera ref={ref} {...props} />
   );
 }
 
