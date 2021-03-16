@@ -36,7 +36,7 @@ const App = () => {
   ]
 
   const playerGoTo = {
-    position: [1,0,.75],
+    position: [-1,0,.75],
     rotation: [0,Math.PI/2,0]
   }
   
