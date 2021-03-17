@@ -2,35 +2,70 @@ import { useRef, useState } from 'react'
 import { useFrame, useResource } from 'react-three-fiber'
 
 const Player = (props) => {
-  const [position, setPosition] = useState(props.position)
-  const [rotation, setRotation] = useState(props.rotation)
-  const [isFalling, setFall] = useState(false)
+  const [initialState, setInitialState] = useState({
+    position: props.spawnPos,
+    rotation: props.spawnRot,
+    velocity: [0,0,0],
+    rotVelocity: [0,0,0],
+    isFalling: false,
+    isDead: false
+  })
+  const [state, setState] = useState(initialState)
+  const mesh = useRef(null)
 
-  useFrame((state, delta) => {
-    if(onGrid(position)) {
-      if(!overTile(position, props.template))
-        setFall(true)
-    }
+  useFrame((st, del) => {
+    let curState = {}
+    curState = Object.assign(curState, state)
 
-    if(isFalling) {
-      const fallPosition = [position[0], position[1], -10000]
-      setPosition(calcNewVectorBasedOnLimit(position, fallPosition, props.maxVel))
+    if(!curState.isDead) {
+      // Update position and rotation
+      curState.position = addVectors(curState.position, curState.velocity)
+      curState.rotation = addVectors(curState.rotation, curState.rotVelocity)
+      
+      // Needs to update state when on grid
+      if(onGrid(curState.position)) {
+        // Must set falling state to add gravity and stop lateral movements
+        if(!overTile(curState.position, props.template)) {
+          curState.isFalling = true
+        }
+        curState.rotation = [0,0,0] // Note: rotation is reset to make movement more predictable;
+                                    //       need to come up with better method for non-cubes
+      }
+
+      // If currently falling, only update velocity from gravity
+      if(curState.isFalling) {
+        curState.velocity = addVectors([0, 0, curState.velocity[2]], [0, 0, -props.gravity])
+      } else {
+        curState.velocity = calcMagnitudeLimitedDiff(curState.position, props.goto.position, props.maxVel)
+        curState.rotVelocity = calcMagnitudeLimitedDiff(curState.rotation, props.goto.rotation, props.maxRotVel) 
+      }
+
+      // Set dead state
+      if(curState.position[2] < -10)
+        curState.isDead = true;
     } else {
-      setPosition(calcNewVectorBasedOnLimit(position, props.goto.position, props.maxVel))
-      setRotation(calcNewVectorBasedOnLimit(rotation, props.goto.rotation, props.maxRotVel));
+      // Respawn
+      curState = Object.assign(curState, initialState)
     }
+
+    setState(curState)
   });
 
   return (
     <mesh
     {...props}
-    position={position}
-    rotation={rotation}
+    ref={mesh}
+    position={state.position}
+    rotation={state.rotation}
     scale={[.9, .9, .9]}>
       <boxBufferGeometry args={[1, 1, 1]} />
       <meshStandardMaterial color={props.color} />
     </mesh>
   );
+}
+
+const vectorEquals = (vectA, vectB) => {
+  return vectA.every((comp, idx) => comp === vectB[idx])
 }
 
 const addVectors = (vectA, vectB) => {
@@ -41,10 +76,10 @@ const multVectorByScalar = (vect, scal) => {
   return vect.map(comp => comp * scal)
 }
 
-const calcNewVectorBasedOnLimit = (prevVect, newVect, limit) => {
+const calcMagnitudeLimitedDiff = (prevVect, newVect, limit) => {
   const diff = addVectors(newVect, multVectorByScalar(prevVect, -1))
-  const limitedDiff = diff.map(comp => (comp > 0) ? Math.min(comp, limit) : Math.max(comp, -limit))
-  return addVectors(prevVect, limitedDiff)
+  return diff.map(comp => (comp > 0) ? Math.min(comp, limit) : Math.max(comp, -limit))
+  // return addVectors(prevVect, limitedDiff)
 }
 
 const onGrid = (pos) => {
@@ -54,7 +89,7 @@ const onGrid = (pos) => {
 const overTile = (pos, template) => {
   if (pos[0] < 0 || pos[1] < 0 || pos[0] > template.length || pos[1] > template[0].length)
     return false
-  return template[pos[0]][pos[1]] == 'x'
+  return template[pos[1]][pos[0]] == 'x'
 }
 
 export default Player

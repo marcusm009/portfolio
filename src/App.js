@@ -57,13 +57,14 @@ const App = () => {
           <directionalLight position={[-.5,-3,5]}/>
           <Level template={template}/>
           <Player
-            position={[0,0,.75]}
+            spawnPos={[0,0,.75]}
+            spawnRot={[0,0,0]}
             color={'red'}
-            rotation={[0,0,0]}
             template={template}
             goto={playerGoTo}
-            maxVel={.05}
-            maxRotVel={.1}/>
+            maxVel={.05}           // 1/20th of a unit (1)
+            maxRotVel={Math.PI/40} // 1/20th of a 90deg rotation (Math.PI/2)
+            gravity={.025}/>
         </Canvas>
       </div>
     </Router>
