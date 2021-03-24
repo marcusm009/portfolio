@@ -7,6 +7,8 @@ const Player = (props) => {
     rotation: props.spawnRot,
     velocity: [0,0,0],
     rotVelocity: [0,0,0],
+    // nextMove: props.nextMove,
+    isMoving: false,
     isFalling: false,
     isDead: false
   })
@@ -18,27 +20,35 @@ const Player = (props) => {
     curState = Object.assign(curState, state)
 
     if(!curState.isDead) {
-      // Update position and rotation
-      curState.position = addVectors(curState.position, curState.velocity)
-      curState.rotation = addVectors(curState.rotation, curState.rotVelocity)
-      
       // Needs to update state when on grid
       if(onGrid(curState.position)) {
         // Must set falling state to add gravity and stop lateral movements
-        if(!overTile(curState.position, props.template)) {
+        if(!overTile(curState.position, props.template))
           curState.isFalling = true
-        }
+        
         curState.rotation = [0,0,0] // Note: rotation is reset to make movement more predictable;
                                     //       need to come up with better method for non-cubes
+        // curState.velocity = [0,0,0]
+        // curState.rotVelocity = [0,0,0]
       }
 
       // If currently falling, only update velocity from gravity
       if(curState.isFalling) {
         curState.velocity = addVectors([0, 0, curState.velocity[2]], [0, 0, -props.gravity])
-      } else {
-        curState.velocity = calcMagnitudeLimitedDiff(curState.position, props.goto.position, props.maxVel)
-        curState.rotVelocity = calcMagnitudeLimitedDiff(curState.rotation, props.goto.rotation, props.maxRotVel) 
       }
+      if(curState.canMove) {
+          const movement = move(props.nextMove, curState.position, curState.rotation, props.maxVel, props.maxRotVel)
+          console.log(props.nextMove)
+          curState.velocity = movement.vel
+          curState.rotVelocity = movement.rotVel
+      }
+      // else {
+      //   console.log(curState.canMove)
+      // }
+
+      // Update position and rotation
+      curState.position = addVectors(curState.position, curState.velocity)
+      curState.rotation = addVectors(curState.rotation, curState.rotVelocity)
 
       // Set dead state
       if(curState.position[2] < -10)
@@ -90,6 +100,34 @@ const overTile = (pos, template) => {
   if (pos[0] < 0 || pos[1] < 0 || pos[0] > template.length || pos[1] > template[0].length)
     return false
   return template[pos[1]][pos[0]] == 'x'
+}
+
+const move = (dir, pos, rot, maxVel, maxRotVel) => {
+  let goToPos = pos;
+  let goToRot = rot;
+  
+  switch(dir) {
+    case 'up':
+      goToPos = addVectors(pos, [0,1,0])
+      goToRot = addVectors(rot, [-Math.PI/2,0,0])
+      break
+    case 'down':
+      goToPos = addVectors(pos, [0,-1,0])
+      goToRot = addVectors(rot, [Math.PI/2,0,0])
+      break
+    case 'right':
+      goToPos = addVectors(pos, [1,0,0])
+      goToRot = addVectors(rot, [0,Math.PI/2,0])
+      break
+    case 'left':
+      goToPos = addVectors(pos, [-1,0,0])
+      goToRot = addVectors(rot, [0,-Math.PI/2,0])
+  }
+
+  return {
+    'vel': calcMagnitudeLimitedDiff(pos, goToPos, maxVel),
+    'rotVel': calcMagnitudeLimitedDiff(rot, goToRot, maxRotVel)
+  }
 }
 
 export default Player

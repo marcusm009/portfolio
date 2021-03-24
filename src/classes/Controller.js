@@ -5,6 +5,7 @@ class Controller {
         
         // keyboard event listeners
         document.addEventListener('keydown', this.handleKeyDown.bind(this), false);
+        document.addEventListener('keyup', this.handleKeyUp.bind(this), false);
 
         // touch event listeners
         document.addEventListener('touchstart', this.handleTouchStart.bind(this), false);        
@@ -29,6 +30,10 @@ class Controller {
             console.log('Key pressed: ' + keyCode);
         }
     }
+
+    handleKeyUp() {
+      this.moveCallback('still');
+  }
 
     getTouches(event) {
         return event.touches || event.originalEvent.touches;

@@ -46,21 +46,11 @@ const App = () => {
   // }
 
   const moveCallback = (dir) => {
-    if (dir == 'up') {
-      setState({
-        playerGoTo: {
-          position: [-1,0,.75],
-          rotation: [0,-Math.PI/2,0]
-        }
-      })
-    }
+    setState({nextMove: dir})
   }
 
   const [initialState, setInitialState] = useState({
-    playerGoTo: {
-      position: [0,0,.75],
-      rotation: [0,0,0]
-    }
+    nextMove: 'still'
   })
   const [state, setState] = useState(initialState)
 
@@ -84,17 +74,17 @@ const App = () => {
             near={-300}
             far={1500}
             zoom={100}
-            rotation={[Math.PI/4,-(1.25)*Math.PI/8,-(1.25)*Math.PI/8]}
+            rotation={[Math.PI/4,-(1)*Math.PI/8,-(1)*Math.PI/8]}
             makeDefault>
           </Camera>
           <directionalLight position={[-.5,-3,5]}/>
           <Level template={template}/>
           <Player
-            spawnPos={initialState.playerGoTo.position}
-            spawnRot={initialState.playerGoTo.rotation}
+            spawnPos={[0,0,.75]}
+            spawnRot={[0,0,0]}
             color={'red'}
             template={template}
-            goto={state.playerGoTo}
+            nextMove={state.nextMove}
             maxVel={.05}           // 1/20th of a unit (1)
             maxRotVel={Math.PI/40} // 1/20th of a 90deg rotation (Math.PI/2)
             gravity={.025}/>
