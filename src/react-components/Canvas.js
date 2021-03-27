@@ -10,30 +10,42 @@ import AudioManager from '../classes/AudioManager'
 import CubePlayer from '../classes/CubePlayer'
 import RectangularPrismPlayer from '../classes/RectangularPrismPlayer'
 import Floor from '../classes/Floor'
+import { render } from 'react-three-fiber'
 
-let renderer;
-let scene;
-let camera;
+// let renderer;
+// let scene;
+// let camera;
+// let audioManager;
 
-let initialScreenWidth;
-let initialScreenHeight;
+// let initialScreenWidth;
+// let initialScreenHeight;
+
+let curState
 
 const Canvas = ({ level }) => {
   const location = useLocation()
   const mount = useRef(null)
 
-  const [state, setState] = useState({
+  const [lastState, setNextState] = useState({
     'isInitialized': false,
     'renderer': null,
     'scene': null,
     'camera': null,
-    'audioManager': null
+    'audioManager': null,
+    'floor': null,
+    'controller': null,
+    'player': null,
+    'initialScreenWidth': null,
+    'initialScreenHeight': null
   })
 
   useEffect(async () => {
-    if(!state.isInitialized)
-      await initThreeCanvas(level, location, mount, state)
-    resumeThreeCanvas(level, location, mount, state)
+    curState = lastState
+    if(!lastState.isInitialized)
+      curState = await initThreeCanvas(level, location, mount, curState)
+    curState = await resumeThreeCanvas(level, location, mount, curState)
+    console.log('hello')
+    setNextState(curState)
     // return () => destroyScene(document, level)
   }, [location])
   
@@ -49,56 +61,75 @@ const Canvas = ({ level }) => {
 
 async function initThreeCanvas(level, location, mount, state) {
   console.log('VER: 0.1.6');
+  console.log('initializing...')
+  console.log('state:', curState)
 
   if(level == location.pathname.split('/').pop()) {
-    setupScene(window, document, level, mount);
+    state = setupScene(window, document, mount, state);
   }
 
-  let audioManager = new AudioManager(window);
+  state.audioManager = new AudioManager(window);
 
-  camera.add(audioManager.listener);
-  audioManager.loadSound('wooden-percussion-shot');
+  state.camera.add(state.audioManager.listener);
+  state.audioManager.loadSound('wooden-percussion-shot');
 
   // add floor
-  let floor = new Floor(
+  state.floor = new Floor(
       0.9,
       [0xacff78,0x292929],
       [0,1]
   )
-  await floor.loadTemplate(`levels/${level}.tsv`);
-  floor.addToScene(scene);
+  await state.floor.loadTemplate(`levels/${level}.tsv`);
+  state.floor.addToScene(state.scene);
 
   // add player
-  let controller = new Controller(document);
-  let player;
+  state.controller = new Controller(document);
   if(level == 'projects')
-      player = new RectangularPrismPlayer(floor.spawnTile.position.x, floor.spawnTile.position.z);
+      state.player = new RectangularPrismPlayer(state.floor.spawnTile.position.x, state.floor.spawnTile.position.z);
   else
-      player = new CubePlayer(floor.spawnTile.position.x, floor.spawnTile.position.z);
-  player.setController(controller);
-  scene.add(player);
-  camera.follow(player);
+      state.player = new CubePlayer(state.floor.spawnTile.position.x, state.floor.spawnTile.position.z);
+  state.player.setController(state.controller);
+  state.scene.add(state.player);
+  state.camera.follow(state.player);
+  
+  console.log('done initializing')
+  console.log('new state: ', state)
+  return state
+  // return {
+  //   'isInitialized': true,
+  //   'renderer': null,
+  //   'scene': null,
+  //   'camera': null,
+  //   'audioManager': null,
+  //   'floor': null,
+  //   'controller': null,
+  //   'player': null
+  // }
+}
 
+async function resumeThreeCanvas(level, location, mount, state) {
+  // let { audioManager, floor, controller, player, renderer, scene, camera, initialScreenHeight, initialScreenWidth } = curState
+  
   // main animation loop
   let frame = 0;
 
   const animate = () => {
-      renderer.render(scene, camera);
+      state.renderer.render(state.scene, state.camera);
 
-      if(player.playSound) {
-          audioManager.playSound('wooden-percussion-shot');
+      if(state.player.playSound) {
+          state.audioManager.playSound('wooden-percussion-shot');
       }
 
-      player.animate(floor);
-      camera.follow(player, .1);
+      state.player.animate(state.floor);
+      state.camera.follow(state.player, .1);
 
-      if (player.completionPending) {
-          player.completionPending = false;
-          player.completedLevel = true;
+      if (state.player.completionPending) {
+          state.player.completionPending = false;
+          state.player.completedLevel = true;
       }
 
       if(frame % 200 == 0) {
-          console.log(player.position);
+          console.log(state.player.position);
       }
 
       frame += 1;
@@ -107,48 +138,54 @@ async function initThreeCanvas(level, location, mount, state) {
 
   animate();
 
+  return state
+
 }
 
-async function resumeThreeCanvas(level, location, mount, state) {
-  console.log('done loading!')
-}
+function setupScene(window, document, mount, state) {
+  // let { audioManager, floor, controller, player, renderer, scene, camera, initialScreenHeight, initialScreenWidth } = curState
+  
+  state.initialScreenWidth = window.innerWidth;
+  state.initialScreenHeight = window.innerHeight;
 
-function setupScene(window, document, containerId, mount) {
-  initialScreenWidth = window.innerWidth;
-  initialScreenHeight = window.innerHeight;
-
-  scene = new THREE.Scene();
-  camera = new Camera(window, scene);
-  renderer = new THREE.WebGLRenderer({alpha: true})
+  state.scene = new THREE.Scene();
+  state.camera = new Camera(window, state.scene);
+  state.renderer = new THREE.WebGLRenderer({alpha: true})
   
   let container = mount.current
-  console.log(mount.current)
   // let container = document.getElementById(containerId)
   let w = container ? container.offsetWidth : 0
   let h = container ? container.offsetHeight : 0
-  renderer.setSize(w, h)
+  state.renderer.setSize(w, h)
   if(container) {
     console.log(container)
-    container.appendChild(renderer.domElement)
-    console.log(renderer.domElement)
+    container.appendChild(state.renderer.domElement)
+    console.log(state.renderer.domElement)
   }
     
-  renderer.domElement.style.zIndex = 0
+  state.renderer.domElement.style.zIndex = 0
 
   let dirLight = new THREE.DirectionalLight();
-  scene.add(dirLight);
+  state.scene.add(dirLight);
   dirLight.position.set(-20,100,50);
+
+  return state
+  // curState.scene = scene
+  // curState.camera = camera
+  // curState.renderer = renderer
+  // curState.initialScreenHeight = initialScreenHeight
+  // curState.initialScreenWidth = initialScreenWidth
 }
 
 function destroyScene(document, containerId) {
   document.getElementById(containerId).innerHTML = '';
 }
 
-function onWindowResize() {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-}
+// function onWindowResize() {
+//   camera.aspect = window.innerWidth / window.innerHeight;
+//   camera.updateProjectionMatrix();
+//   renderer.setSize(window.innerWidth, window.innerHeight);
+// }
 
 function scrollTransition() {
   window.scrollBy({
