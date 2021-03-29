@@ -1,13 +1,21 @@
 import { useLocation } from 'react-router'
 import Canvas from './Canvas'
 
-const CanvasSwitcher = ({ buttons }) => {
+const CanvasSwitcher = ({ pages, completeStageCallback }) => {
   const location = useLocation().pathname
-  
+
   return (
     <>
-    {buttons.map((button, idx) => (
-        <Canvas key={idx} level={button.route.replace('/','')} isActive={location === button.route}/>
+    {pages.map((page, idx) => (
+        <>
+          <Canvas
+            key={idx}
+            level={page.route.replace('/','')}
+            isActive={location === page.route}
+            completeStageCallback={() => completeStageCallback(page.route)}
+            />
+          {(page.completed) && (<page.component />)}
+        </>
     ))}
     </>
   )
