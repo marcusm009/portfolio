@@ -1,6 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
-import { useLocation } from 'react-router-dom'
-
+import { Component } from 'react'
 
 import * as THREE from 'three'
 
@@ -10,175 +8,119 @@ import AudioManager from '../classes/AudioManager'
 import CubePlayer from '../classes/CubePlayer'
 import RectangularPrismPlayer from '../classes/RectangularPrismPlayer'
 import Floor from '../classes/Floor'
-import { render } from 'react-three-fiber'
 
-// let renderer;
-// let scene;
-// let camera;
-// let audioManager;
-
-// let initialScreenWidth;
-// let initialScreenHeight;
-
-let curState
-
-const Canvas = ({ level }) => {
-  const location = useLocation()
-  const mount = useRef(null)
-
-  const [lastState, setNextState] = useState({
-    'isInitialized': false,
-    'renderer': null,
-    'scene': null,
-    'camera': null,
-    'audioManager': null,
-    'floor': null,
-    'controller': null,
-    'player': null,
-    'initialScreenWidth': null,
-    'initialScreenHeight': null
-  })
-
-  useEffect(async () => {
-    curState = lastState
-    if(!lastState.isInitialized)
-      curState = await initThreeCanvas(level, location, mount, curState)
-    curState = await resumeThreeCanvas(level, location, mount, curState)
-    console.log('hello')
-    setNextState(curState)
-    // return () => destroyScene(document, level)
-  }, [location])
-  
-  return (
-    <div
-      ref={mount}
-      id={level}
-      className='canvas-container'
-    >
-    </div>
-  )
-}
-
-async function initThreeCanvas(level, location, mount, state) {
-  console.log('VER: 0.1.6');
-  console.log('initializing...')
-  console.log('state:', curState)
-
-  if(level == location.pathname.split('/').pop()) {
-    state = setupScene(window, document, mount, state);
+class Canvas extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      'renderer': null,
+      'scene': null,
+      'camera': null,
+      'audioManager': null,
+      'floor': null,
+      'controller': null,
+      'player': null,
+      'initialScreenWidth': null,
+      'initialScreenHeight': null
+    }
   }
 
-  state.audioManager = new AudioManager(window);
-
-  state.camera.add(state.audioManager.listener);
-  state.audioManager.loadSound('wooden-percussion-shot');
-
-  // add floor
-  state.floor = new Floor(
-      0.9,
-      [0xacff78,0x292929],
-      [0,1]
-  )
-  await state.floor.loadTemplate(`levels/${level}.tsv`);
-  state.floor.addToScene(state.scene);
-
-  // add player
-  state.controller = new Controller(document);
-  if(level == 'projects')
-      state.player = new RectangularPrismPlayer(state.floor.spawnTile.position.x, state.floor.spawnTile.position.z);
-  else
-      state.player = new CubePlayer(state.floor.spawnTile.position.x, state.floor.spawnTile.position.z);
-  state.player.setController(state.controller);
-  state.scene.add(state.player);
-  state.camera.follow(state.player);
-  
-  console.log('done initializing')
-  console.log('new state: ', state)
-  return state
-  // return {
-  //   'isInitialized': true,
-  //   'renderer': null,
-  //   'scene': null,
-  //   'camera': null,
-  //   'audioManager': null,
-  //   'floor': null,
-  //   'controller': null,
-  //   'player': null
-  // }
-}
-
-async function resumeThreeCanvas(level, location, mount, state) {
-  // let { audioManager, floor, controller, player, renderer, scene, camera, initialScreenHeight, initialScreenWidth } = curState
-  
-  // main animation loop
-  let frame = 0;
-
-  const animate = () => {
-      state.renderer.render(state.scene, state.camera);
-
-      if(state.player.playSound) {
-          state.audioManager.playSound('wooden-percussion-shot');
-      }
-
-      state.player.animate(state.floor);
-      state.camera.follow(state.player, .1);
-
-      if (state.player.completionPending) {
-          state.player.completionPending = false;
-          state.player.completedLevel = true;
-      }
-
-      if(frame % 200 == 0) {
-          console.log(state.player.position);
-      }
-
-      frame += 1;
-      requestAnimationFrame(animate);
+  async componentDidMount() {
+    await this.initThreeCanvas()
+    await this.resumeThreeCanvas()
   }
 
-  animate();
-
-  return state
-
-}
-
-function setupScene(window, document, mount, state) {
-  // let { audioManager, floor, controller, player, renderer, scene, camera, initialScreenHeight, initialScreenWidth } = curState
-  
-  state.initialScreenWidth = window.innerWidth;
-  state.initialScreenHeight = window.innerHeight;
-
-  state.scene = new THREE.Scene();
-  state.camera = new Camera(window, state.scene);
-  state.renderer = new THREE.WebGLRenderer({alpha: true})
-  
-  let container = mount.current
-  // let container = document.getElementById(containerId)
-  let w = container ? container.offsetWidth : 0
-  let h = container ? container.offsetHeight : 0
-  state.renderer.setSize(w, h)
-  if(container) {
-    console.log(container)
-    container.appendChild(state.renderer.domElement)
-    console.log(state.renderer.domElement)
+  async componentDidUpdate() {
+    this.state.controller.isEnabled = this.props.isActive
+    if(this.state.player.completedLevel) {
+      console.log('completed - ', this.props.level)
+    }
   }
+
+  async initThreeCanvas() {    
+    this.state.initialScreenWidth = window.innerWidth;
+    this.state.initialScreenHeight = window.innerHeight;
+  
+    this.state.scene = new THREE.Scene();
+    this.state.camera = new Camera(window, this.state.scene);
+    this.state.renderer = new THREE.WebGLRenderer({alpha: true})
     
-  state.renderer.domElement.style.zIndex = 0
+    let container = this.mount
+    this.state.renderer.setSize(this.state.initialScreenWidth, this.state.initialScreenHeight)
+    container.appendChild(this.state.renderer.domElement)
+      
+    this.state.renderer.domElement.style.zIndex = 0
+  
+    let dirLight = new THREE.DirectionalLight();
+    this.state.scene.add(dirLight);
+    dirLight.position.set(-20,100,50);
 
-  let dirLight = new THREE.DirectionalLight();
-  state.scene.add(dirLight);
-  dirLight.position.set(-20,100,50);
+    this.state.audioManager = new AudioManager(window);
+  
+    this.state.camera.add(this.state.audioManager.listener);
+    this.state.audioManager.loadSound('wooden-percussion-shot');
+  
+    // add floor
+    this.state.floor = new Floor(
+        0.9,
+        [0xacff78,0x292929],
+        [0,1]
+    )
+    await this.state.floor.loadTemplate(`levels/${this.props.level}.tsv`);
+    this.state.floor.addToScene(this.state.scene);
+  
+    // add player
+    this.state.controller = new Controller(document, this.props.isActive);
+    if(this.props.level == 'projects')
+        this.state.player = new RectangularPrismPlayer(this.state.floor.spawnTile.position.x, this.state.floor.spawnTile.position.z);
+    else
+        this.state.player = new CubePlayer(this.state.floor.spawnTile.position.x, this.state.floor.spawnTile.position.z);
+    this.state.player.setController(this.state.controller);
+    this.state.scene.add(this.state.player);
+    this.state.camera.follow(this.state.player);
+  }
 
-  return state
-  // curState.scene = scene
-  // curState.camera = camera
-  // curState.renderer = renderer
-  // curState.initialScreenHeight = initialScreenHeight
-  // curState.initialScreenWidth = initialScreenWidth
-}
-
-function destroyScene(document, containerId) {
-  document.getElementById(containerId).innerHTML = '';
+  // main animation loop
+  async resumeThreeCanvas() {
+    let frame = 0;
+  
+    const animate = () => {
+        this.state.renderer.render(this.state.scene, this.state.camera);
+  
+        if(this.state.player.playSound) {
+            this.state.audioManager.playSound('wooden-percussion-shot');
+        }
+  
+        this.state.player.animate(this.state.floor);
+        this.state.camera.follow(this.state.player, .1);
+  
+        if (this.state.player.completionPending) {
+            this.state.player.completionPending = false;
+            this.state.player.completedLevel = true;
+            this.setState(this.state);
+        }
+  
+        if(frame % 200 == 0) {
+            console.log(this.state.player.position);
+        }
+  
+        frame += 1;
+        requestAnimationFrame(animate);
+    }
+    animate();
+  }
+  
+  render() {
+    return (
+      <div
+        ref={ref => (this.mount = ref)}
+        id={this.props.level}
+        className='canvas-container'
+        style={{display: this.props.isActive ? 'block' : 'none'}}
+      >
+      </div>
+    )
+  }
 }
 
 // function onWindowResize() {

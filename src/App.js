@@ -1,39 +1,33 @@
-import { useEffect, useState } from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 import NavBar from './react-components/NavBar'
-import Canvas from './react-components/Canvas'
+import CanvasSwitcher from './react-components/CanvasSwitcher'
 
 const App = () => {  
   const navButtons = [
     {
       text: 'About',
-      route: '/about'
+      route: '/about',
+      completed: 'false'
     },
     {
       text: 'Projects',
-      route: '/projects'
+      route: '/projects',
+      completed: 'false'
     },
     {
       text: 'Contact',
-      route: '/contact'
+      route: '/contact',
+      completed: 'false'
     }
   ]
+
+  console.log('VER: 0.1.6');
 
   return (
     <Router>
       <NavBar buttons={navButtons}/>
-      <Switch>
-        <Route path='/about'>
-          <Canvas level='about' />
-        </Route>
-        <Route path='/projects'>
-          <Canvas level='projects' />
-        </Route>
-        <Route path='/contact'>
-          <Canvas level='contact' />
-        </Route>
-      </Switch>
+      <CanvasSwitcher buttons={navButtons}/>
     </Router>
   )
 }
