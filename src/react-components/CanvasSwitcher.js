@@ -13,8 +13,9 @@ const CanvasSwitcher = ({ pages, completeStageCallback }) => {
             level={page.route.replace('/','')}
             isActive={location === page.route}
             completeStageCallback={() => completeStageCallback(page.route)}
+            isComplete={page.completed}
             />
-          {(page.completed) && (<page.component />)}
+          {(location === page.route) && (page.completed) && (<page.component />)}
         </>
     ))}
     </>

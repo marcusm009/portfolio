@@ -5,6 +5,9 @@ import NavBar from './react-components/NavBar'
 import CanvasSwitcher from './react-components/CanvasSwitcher'
 
 import About from './react-components/pages/About'
+import Projects from './react-components/pages/Projects'
+import Contact from './react-components/pages/Contact'
+
 
 console.log('VER: 0.1.6');
 
@@ -21,13 +24,13 @@ const App = () => {
         text: 'Projects',
         route: '/projects',
         completed: false,
-        component: About
+        component: Projects
       },
       {
         text: 'Contact',
         route: '/contact',
         completed: false,
-        component: About
+        component: Contact
       }
     ]
   })

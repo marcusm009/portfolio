@@ -93,12 +93,9 @@ class Canvas extends Component {
   
         this.state.player.animate(this.state.floor);
         this.state.camera.follow(this.state.player, .1);
-  
-        if (this.state.player.completionPending) {
-            this.state.player.completionPending = false;
-            this.state.player.completedLevel = true;
+
+        if (this.state.player.completedLevel && !this.props.isComplete) {
             this.props.completeStageCallback()
-            // this.setState(this.state);
         }
   
         if(frame % 200 == 0) {

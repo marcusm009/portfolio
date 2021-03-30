@@ -76,9 +76,13 @@ class CubePlayer extends THREE.Mesh {
         }
         this.removeCompletedAnimations();        
         
-        if (this.animations.length == 0 && !this.completedLevel) {
-            this.getNextAction();
-            this.checkFloor(floor);
+        if (this.animations.length == 0) {
+            if (this.completionPending) {
+                this.complete()
+            } else {
+                this.getNextAction();
+                this.checkFloor(floor);
+            }
         }
         this.playSound = false;
     };
@@ -114,7 +118,7 @@ class CubePlayer extends THREE.Mesh {
 
             // complete level
             if (floor.hasGoalInLocation(this.position.x, this.position.z)) {
-                this.completionPending = true;
+                this.beginCompletion()
                 floor.completeLevel();
             // respawn once animation is finished
             } else {
@@ -127,6 +131,29 @@ class CubePlayer extends THREE.Mesh {
         this.fallVelocity = 0;
         this.position.copy(this.spawnPos);
     };
+
+    beginCompletion() {
+        this.completionPending = true
+
+        // Add completion animations
+        // let totalFrames = 10;
+        // let rotVel = (Math.PI/4) / totalFrames;
+        // this.animations.push([() => {
+        //     this.rotation.y -= rotVel;
+        // }, totalFrames]);
+        // this.animations.push([() => {
+        //   this.scale.x *= 1.1
+        //   this.scale.y *= 1.1
+        //   this.scale.z *= 1.1
+        // }, 5*totalFrames]);
+    }
+
+    complete() {
+        this.position.x = 9999999
+        this.position.y = 9999999
+        this.position.z = 9999999
+        this.completedLevel = true
+    }
 }
 
 export default CubePlayer
