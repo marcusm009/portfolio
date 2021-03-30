@@ -2,6 +2,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { useState } from 'react'
 
 import NavBar from './react-components/NavBar'
+import TitleBar from './react-components/TitleBar'
 import CanvasSwitcher from './react-components/CanvasSwitcher'
 
 import About from './react-components/pages/About'
@@ -53,6 +54,7 @@ const App = () => {
 
   return (
     <Router>
+      <TitleBar/>
       <NavBar buttons={state.pages}/>
       <CanvasSwitcher pages={state.pages} completeStageCallback={completeStage}/>
     </Router>

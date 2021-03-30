@@ -8,6 +8,7 @@ const CanvasSwitcher = ({ pages, completeStageCallback }) => {
     <>
     {pages.map((page, idx) => (
         <>
+          {(page.completed) && (<page.component />)}
           <Canvas
             key={idx}
             level={page.route.replace('/','')}
@@ -15,7 +16,6 @@ const CanvasSwitcher = ({ pages, completeStageCallback }) => {
             completeStageCallback={() => completeStageCallback(page.route)}
             isComplete={page.completed}
             />
-          {(location === page.route) && (page.completed) && (<page.component />)}
         </>
     ))}
     </>
