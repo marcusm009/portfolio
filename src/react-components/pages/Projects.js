@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useLocation } from 'react-router'
 
-const Projects = () => {
+const Projects = ({ baseRoute }) => {
   const active = useLocation().pathname == '/projects'
   const [isFadingIn, setFadingIn] = useState(true)
 
@@ -17,7 +17,7 @@ const Projects = () => {
   return (
     <div className={`site-body ${isFadingIn ? 'fade': ''} ${!isFadingIn && active ? 'active': ''}`}>
     <h1>Projects</h1>
-        <img src="https://media.githubusercontent.com/media/marcusm009/marcusm009.github.io/main/images/headshot.jpg"
+        <img src={baseRoute + '/images/headshot.jpg'}
           style={{
             width: '500px',
             maxWidth: '100%',

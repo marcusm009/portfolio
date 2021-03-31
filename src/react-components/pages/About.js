@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useLocation } from 'react-router'
 
-const About = () => {
+const About = ({ baseRoute }) => {
   const active = useLocation().pathname == '/about'
   const [isFadingIn, setFadingIn] = useState(true)
 
@@ -17,7 +17,7 @@ const About = () => {
   return (
       <div className={`site-body ${isFadingIn ? 'fade': ''} ${!isFadingIn && active ? 'active': ''}`}>
         <h1>About Me</h1>
-        <img src="https://media.githubusercontent.com/media/marcusm009/marcusm009.github.io/main/images/headshot.jpg"
+        <img src={baseRoute + '/images/headshot.jpg'}
           style={{
             width: '500px',
             maxWidth: '100%',

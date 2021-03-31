@@ -9,6 +9,7 @@ import About from './react-components/pages/About'
 import Projects from './react-components/pages/Projects'
 import Contact from './react-components/pages/Contact'
 
+const BASE_ROUTE = '/portfolio'
 
 console.log('VER: 0.1.6');
 
@@ -18,27 +19,27 @@ const App = () => {
       {
         text: 'About',
         route: '/about',
-        template: [
-          ['x','x','x','x','x','x','x','x'],
-          ['x','x','','s','x','x','x','x'],
-          ['x','','x','x','x','x','g','x'],
-          ],
+        // template: [
+        //   ['x','x','x','x','x','x','x','x'],
+        //   ['x','x','','s','x','x','x','x'],
+        //   ['x','','x','x','x','x','g','x'],
+        //   ],
         completed: false,
         component: About
       }
-      // ,
-      // {
-      //   text: 'Projects',
-      //   route: '/projects',
-      //   completed: false,
-      //   component: Projects
-      // },
-      // {
-      //   text: 'Contact',
-      //   route: '/contact',
-      //   completed: false,
-      //   component: Contact
-      // }
+      ,
+      {
+        text: 'Projects',
+        route: '/projects',
+        completed: false,
+        component: Projects
+      },
+      {
+        text: 'Contact',
+        route: '/contact',
+        completed: false,
+        component: Contact
+      }
     ]
   })
 
@@ -59,11 +60,20 @@ const App = () => {
   }
 
   return (
-    <BrowserRouter basename='/portfolio'>
-      <Redirect exact from='/' to='about'/>
+    <BrowserRouter basename={BASE_ROUTE}>
+      <Redirect
+        exact
+        from='/'
+        to='about'/>
       <TitleBar/>
-      <NavBar buttons={state.pages}/>
-      <CanvasSwitcher pages={state.pages} completeStageCallback={completeStage}/>
+      <NavBar
+        buttons={state.pages}
+        baseRoute={BASE_ROUTE}/>
+      <CanvasSwitcher
+        pages={state.pages}
+        completeStageCallback={completeStage}
+        baseRoute={BASE_ROUTE}
+      />
     </BrowserRouter>
   )
 }

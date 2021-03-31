@@ -1,11 +1,10 @@
 import * as THREE from 'three'
 
-const CONTENT_SERVER_URL = "https://media.githubusercontent.com/media/marcusm009/marcusm009.github.io/main";
-
 class AudioManager {
-    constructor(window, context=null) {
+    constructor(window, baseRoute, context=null) {
         this.window = window;
         this.loadedSound = null;
+        this.baseRoute = baseRoute
 
         this.context = context;
         this.listener = new THREE.AudioListener();
@@ -41,7 +40,7 @@ class AudioManager {
     }
 
     loadSound(sound, volume=1) {
-        this.loader.load(`${CONTENT_SERVER_URL}/sounds/${sound}.ogg`, (buffer) => {
+        this.loader.load(`${this.baseRoute}/sounds/${sound}.ogg`, (buffer) => {
             this.sound.setBuffer(buffer);
             this.sound.setLoop(false);
             this.sound.setVolume(volume);
