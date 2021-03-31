@@ -1,4 +1,4 @@
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter, Redirect } from 'react-router-dom'
 import { useState } from 'react'
 
 import NavBar from './react-components/NavBar'
@@ -18,21 +18,27 @@ const App = () => {
       {
         text: 'About',
         route: '/about',
+        template: [
+          ['x','x','x','x','x','x','x','x'],
+          ['x','x','','s','x','x','x','x'],
+          ['x','','x','x','x','x','g','x'],
+          ],
         completed: false,
         component: About
-      },
-      {
-        text: 'Projects',
-        route: '/projects',
-        completed: false,
-        component: Projects
-      },
-      {
-        text: 'Contact',
-        route: '/contact',
-        completed: false,
-        component: Contact
       }
+      // ,
+      // {
+      //   text: 'Projects',
+      //   route: '/projects',
+      //   completed: false,
+      //   component: Projects
+      // },
+      // {
+      //   text: 'Contact',
+      //   route: '/contact',
+      //   completed: false,
+      //   component: Contact
+      // }
     ]
   })
 
@@ -53,11 +59,12 @@ const App = () => {
   }
 
   return (
-    <Router>
+    <BrowserRouter>
+      <Redirect exact from='/' to='about'/>
       <TitleBar/>
       <NavBar buttons={state.pages}/>
       <CanvasSwitcher pages={state.pages} completeStageCallback={completeStage}/>
-    </Router>
+    </BrowserRouter>
   )
 }
 

@@ -26,6 +26,7 @@ class Canvas extends Component {
   }
 
   async componentDidMount() {
+    console.log(this.props)
     await this.initThreeCanvas()
     await this.resumeThreeCanvas()
   }
@@ -58,7 +59,7 @@ class Canvas extends Component {
     this.state.audioManager = new AudioManager(window);
   
     this.state.camera.add(this.state.audioManager.listener);
-    this.state.audioManager.loadSound('wooden-percussion-shot');
+    // this.state.audioManager.loadSound('wooden-percussion-shot');
   
     // add floor
     this.state.floor = new Floor(
@@ -66,8 +67,11 @@ class Canvas extends Component {
         [0xacff78,0x292929],
         [0,1]
     )
-    await this.state.floor.loadTemplate(`levels/${this.props.level}.tsv`);
-    this.state.floor.addToScene(this.state.scene);
+    this.state.floor.setTemplate(this.props.template)
+    // await this.state.floor.loadTemplate(`levels/${this.props.level}.tsv`);
+    this.state.floor.addToScene(this.state.scene)
+
+    console.log(this.state.floor)
   
     // add player
     this.state.controller = new Controller(document, this.props.isActive);
@@ -87,9 +91,9 @@ class Canvas extends Component {
     const animate = () => {
         this.state.renderer.render(this.state.scene, this.state.camera);
   
-        if(this.state.player.playSound) {
-            this.state.audioManager.playSound('wooden-percussion-shot');
-        }
+        // if(this.state.player.playSound) {
+        //     this.state.audioManager.playSound('wooden-percussion-shot');
+        // }
   
         this.state.player.animate(this.state.floor);
         this.state.camera.follow(this.state.player, .1);

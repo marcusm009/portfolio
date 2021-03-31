@@ -15,6 +15,7 @@ const CanvasSwitcher = ({ pages, completeStageCallback }) => {
             isActive={location === page.route}
             completeStageCallback={() => completeStageCallback(page.route)}
             isComplete={page.completed}
+            template={page.template}
             />
         </>
     ))}

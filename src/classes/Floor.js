@@ -23,6 +23,11 @@ class Floor {
         });
     };
 
+    setTemplate(template) {
+      this.template = template
+      this.addTiles()
+    }
+
     addTiles() {
         for (let z = 0; z < this.template.length; z++) {
             for (let x = 0; x < this.template[z].length; x++) {
