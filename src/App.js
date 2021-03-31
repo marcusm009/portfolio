@@ -1,95 +1,62 @@
-import { useEffect, useState } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
-import { Canvas, useResource, useFrame } from 'react-three-fiber'
-// import { OrthographicCamera } from '@react-three/drei'
-import { Controls, useControl } from 'react-three-gui';
+import { BrowserRouter as Router } from 'react-router-dom'
+import { useState } from 'react'
 
-import * as THREE from 'three'
+import NavBar from './react-components/NavBar'
+import TitleBar from './react-components/TitleBar'
+import CanvasSwitcher from './react-components/CanvasSwitcher'
 
-import NavBar from './components/NavBar'
-import Player from './components/Player'
-import Tile from './components/Tile'
-import Level from './components/Level'
-import Camera from './components/Camera'
+import About from './react-components/pages/About'
+import Projects from './react-components/pages/Projects'
+import Contact from './react-components/pages/Contact'
 
-import Controller from './classes/Controller'
 
-let controller;
+console.log('VER: 0.1.6');
 
-const App = () => {
-  
-  const myCamera = useResource()
-  
-  const navButtons = [
-    {
-      text: 'About',
-      route: '/about'
-    },
-    {
-      text: 'Projects',
-      route: '/projects'
-    },
-    {
-      text: 'Contact',
-      route: '/contact'
-    }
-  ]
+const App = () => {  
+  const [state, setState] = useState({
+    pages: [
+      {
+        text: 'About',
+        route: '/about',
+        completed: false,
+        component: About
+      },
+      {
+        text: 'Projects',
+        route: '/projects',
+        completed: false,
+        component: Projects
+      },
+      {
+        text: 'Contact',
+        route: '/contact',
+        completed: false,
+        component: Contact
+      }
+    ]
+  })
 
-  const template = [
-    ['x', 'x'],
-    ['' , 'x']
-  ]
+  // let pages = [
+    
+  // ]
 
-  // const playerGoTo = {
-  //   position: [-1,0,.75],
-  //   rotation: [0,-Math.PI/2,0]
-  // }
-
-  const moveCallback = (dir) => {
-    setState({nextMove: dir})
+  const completeStage = route => {
+    console.log(route, ' completed!')
+    state.pages.forEach((page, idx) => {
+      if (page.route === route){
+        let newState = {}
+        Object.assign(newState, state)
+        newState.pages[idx].completed = true
+        setState(newState)
+      }
+    });
   }
 
-  const [initialState, setInitialState] = useState({
-    nextMove: 'still'
-  })
-  const [state, setState] = useState(initialState)
-
-  useEffect(() => {
-    controller = new Controller(document);
-    controller.moveCallback = moveCallback;
-
-    return () => {
-      controller.unregister();
-    };
-  }, []);
-  
   return (
     <Router>
-      <NavBar buttons={navButtons}/>
-      <div id='canvas-container'>
-        <Canvas>
-          <Camera
-            ref={myCamera}
-            position={[-1,-1,1]}
-            near={-300}
-            far={1500}
-            zoom={100}
-            rotation={[Math.PI/4,-(1)*Math.PI/8,-(1)*Math.PI/8]}
-            makeDefault>
-          </Camera>
-          <directionalLight position={[-.5,-3,5]}/>
-          <Level template={template}/>
-          <Player
-            spawnPos={[0,0,.75]}
-            spawnRot={[0,0,0]}
-            color={'red'}
-            template={template}
-            nextMove={state.nextMove}
-            maxVel={.05}           // 1/20th of a unit (1)
-            maxRotVel={Math.PI/40} // 1/20th of a 90deg rotation (Math.PI/2)
-            gravity={.025}/>
-        </Canvas>
-      </div>
+      <TitleBar/>
+      <NavBar buttons={state.pages}/>
+      <CanvasSwitcher pages={state.pages} completeStageCallback={completeStage}/>
     </Router>
   )
 }

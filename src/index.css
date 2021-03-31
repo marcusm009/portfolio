@@ -39,15 +39,15 @@ p {
   font-family: fantasy;
 }
 
-.title-bar > a {
-  position: relative;
+#title-bar > a {
+  position: absolute;
   top: 1.25rem;
   left: 2rem;
   z-index: 3;
   font-style: italic;
 }
 
-.title-bar > a:hover {
+#title-bar > a:hover {
   background-color: initial;
   /* text-shadow: 1px 1px 3px white; */
 }
@@ -94,37 +94,37 @@ p {
   background-color: rgba(64, 64, 64, 0.75);
 }
 
-@media screen and (max-aspect-ratio: 5/4) {
+@media screen and (max-aspect-ratio: 3/4) {
   #nav-bar {
-      top: 3rem;
+      padding-top: 3rem;
   }
-  
-  .title-bar > a {
-      top: 0;
-      left: 0;
-      background-color: rgba(64, 64, 64, 0.5);
-  }
+
+  #nav-bar > a {
+    margin-top: 1rem;
+  }  
 }
 
-#canvas-container {
+.canvas-container {
   position: absolute;
   top: 0;
   width: 100%;
   height: 100%;
 }
 
-#site-body {
+.site-body {
   position: absolute;
   display: none;
-  top: 7.5rem;
-  width: 100%;
+  /* width: 100%; */
   height: auto;
   min-height: 100%;
   z-index: 1;
-  background-color: rgba(255, 255, 255, 0.75);
+  background-color: rgba(255, 255, 255, 1);
+  padding-top: 3em;
+  padding-left: 10em;
+  padding-right: 10em;
 }
 
-#site-body.fade{
+.site-body.fade{
   display: block;
   opacity: 0;
   transition:opacity .3s linear;
@@ -132,7 +132,7 @@ p {
   -webkit-transition:opacity .3s linear;
 }
 
-#site-body.active{
+.site-body.active{
   display: block;
   opacity: 1;
   transition:opacity .3s linear;
@@ -140,7 +140,7 @@ p {
   -webkit-transition:opacity .3s linear;
 }
 
-#main {
+/* #main {
   position: relative;
   display: inherit;
   width: 75%;
@@ -148,4 +148,4 @@ p {
   margin: 0 auto;
   padding: 40px;
   background-color: white;
-}
+} */

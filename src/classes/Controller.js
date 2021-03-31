@@ -1,11 +1,12 @@
+import * as THREE from 'three'
+
 class Controller {
-    constructor(document) {
+    constructor(document, isEnabled) {
 
         this.moveCallback = (dir) => {console.log('Move callback never assigned');};
         
         // keyboard event listeners
         document.addEventListener('keydown', this.handleKeyDown.bind(this), false);
-        document.addEventListener('keyup', this.handleKeyUp.bind(this), false);
 
         // touch event listeners
         document.addEventListener('touchstart', this.handleTouchStart.bind(this), false);        
@@ -14,9 +15,14 @@ class Controller {
         // touch control variables
         this.xDown = null;                                                        
         this.yDown = null;
+
+        this.isEnabled = isEnabled
     }
 
     handleKeyDown(event) {
+        if (!this.isEnabled)
+          return
+        
         let keyCode = event.which;
         if (keyCode == 87 || keyCode == 38) {
             this.moveCallback('up');
@@ -29,11 +35,7 @@ class Controller {
         } else {
             console.log('Key pressed: ' + keyCode);
         }
-    }
-
-    handleKeyUp() {
-      this.moveCallback('still');
-  }
+    };
 
     getTouches(event) {
         return event.touches || event.originalEvent.touches;
@@ -43,12 +45,11 @@ class Controller {
         const firstTouch = this.getTouches(event)[0];                                      
         this.xDown = firstTouch.clientX;                                      
         this.yDown = firstTouch.clientY;                                      
-    }
+    };
 
     handleTouchMove(event) {
-        if (!this.xDown || !this.yDown) {
-            return;
-        }
+        if (!this.isEnabled || !this.xDown || !this.yDown)
+            return
 
         let xUp = event.touches[0].clientX;                                    
         let yUp = event.touches[0].clientY;
@@ -73,11 +74,7 @@ class Controller {
 
         this.xDown = null;
         this.yDown = null;                                             
-    }
-
-    unregister() {
-      console.log('unregistered controller');
-    }
+    };
 }
 
 export default Controller
