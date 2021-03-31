@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/marcusm009.github.io/portfolio-website-react/static/css/main.c1d5d763.chunk.css",
-    "main.js": "/marcusm009.github.io/portfolio-website-react/static/js/main.37c29366.chunk.js",
-    "main.js.map": "/marcusm009.github.io/portfolio-website-react/static/js/main.37c29366.chunk.js.map",
-    "runtime-main.js": "/marcusm009.github.io/portfolio-website-react/static/js/runtime-main.0dfd6037.js",
-    "runtime-main.js.map": "/marcusm009.github.io/portfolio-website-react/static/js/runtime-main.0dfd6037.js.map",
-    "static/js/2.02ff9803.chunk.js": "/marcusm009.github.io/portfolio-website-react/static/js/2.02ff9803.chunk.js",
-    "static/js/2.02ff9803.chunk.js.map": "/marcusm009.github.io/portfolio-website-react/static/js/2.02ff9803.chunk.js.map",
-    "static/js/3.2aab72e6.chunk.js": "/marcusm009.github.io/portfolio-website-react/static/js/3.2aab72e6.chunk.js",
-    "static/js/3.2aab72e6.chunk.js.map": "/marcusm009.github.io/portfolio-website-react/static/js/3.2aab72e6.chunk.js.map",
-    "index.html": "/marcusm009.github.io/portfolio-website-react/index.html",
-    "static/css/main.c1d5d763.chunk.css.map": "/marcusm009.github.io/portfolio-website-react/static/css/main.c1d5d763.chunk.css.map",
-    "static/js/2.02ff9803.chunk.js.LICENSE.txt": "/marcusm009.github.io/portfolio-website-react/static/js/2.02ff9803.chunk.js.LICENSE.txt"
+    "main.css": "/marcusm009.github.io/static/css/main.c1d5d763.chunk.css",
+    "main.js": "/marcusm009.github.io/static/js/main.db314a90.chunk.js",
+    "main.js.map": "/marcusm009.github.io/static/js/main.db314a90.chunk.js.map",
+    "runtime-main.js": "/marcusm009.github.io/static/js/runtime-main.ceb29475.js",
+    "runtime-main.js.map": "/marcusm009.github.io/static/js/runtime-main.ceb29475.js.map",
+    "static/js/2.02ff9803.chunk.js": "/marcusm009.github.io/static/js/2.02ff9803.chunk.js",
+    "static/js/2.02ff9803.chunk.js.map": "/marcusm009.github.io/static/js/2.02ff9803.chunk.js.map",
+    "static/js/3.2aab72e6.chunk.js": "/marcusm009.github.io/static/js/3.2aab72e6.chunk.js",
+    "static/js/3.2aab72e6.chunk.js.map": "/marcusm009.github.io/static/js/3.2aab72e6.chunk.js.map",
+    "index.html": "/marcusm009.github.io/index.html",
+    "static/css/main.c1d5d763.chunk.css.map": "/marcusm009.github.io/static/css/main.c1d5d763.chunk.css.map",
+    "static/js/2.02ff9803.chunk.js.LICENSE.txt": "/marcusm009.github.io/static/js/2.02ff9803.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.0dfd6037.js",
+    "static/js/runtime-main.ceb29475.js",
     "static/js/2.02ff9803.chunk.js",
     "static/css/main.c1d5d763.chunk.css",
-    "static/js/main.37c29366.chunk.js"
+    "static/js/main.db314a90.chunk.js"
   ]
 }
