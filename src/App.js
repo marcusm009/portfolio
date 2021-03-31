@@ -11,7 +11,7 @@ import Contact from './react-components/pages/Contact'
 
 const BASE_ROUTE = '/portfolio'
 
-console.log('VER: 0.1.6');
+console.log('VER: 0.2');
 
 const App = () => {  
   const [state, setState] = useState({
@@ -19,11 +19,6 @@ const App = () => {
       {
         text: 'About',
         route: '/about',
-        // template: [
-        //   ['x','x','x','x','x','x','x','x'],
-        //   ['x','x','','s','x','x','x','x'],
-        //   ['x','','x','x','x','x','g','x'],
-        //   ],
         completed: false,
         component: About
       }
