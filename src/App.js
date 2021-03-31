@@ -59,7 +59,7 @@ const App = () => {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename='/portfolio'>
       <Redirect exact from='/' to='about'/>
       <TitleBar/>
       <NavBar buttons={state.pages}/>
