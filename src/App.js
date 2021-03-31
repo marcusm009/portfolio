@@ -60,7 +60,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <Redirect exact from='/' to='about'/>
+      {/* <Redirect exact from='/' to='about'/> */}
       <TitleBar/>
       <NavBar buttons={state.pages}/>
       <CanvasSwitcher pages={state.pages} completeStageCallback={completeStage}/>
