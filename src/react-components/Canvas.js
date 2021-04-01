@@ -20,8 +20,8 @@ class Canvas extends Component {
       'floor': null,
       'controller': null,
       'player': null,
-      'initialScreenWidth': null,
-      'initialScreenHeight': null
+      'initialMountWidth': null,
+      'initialMountHeight': null
     }
   }
 
@@ -39,17 +39,30 @@ class Canvas extends Component {
     }
   }
 
-  async initThreeCanvas() {    
-    this.state.initialScreenWidth = window.innerWidth;
-    this.state.initialScreenHeight = window.innerHeight;
-  
+  async initThreeCanvas() {
+    this.state.initialMountWidth = this.mount.clientWidth;
+    this.state.initialMountHeight = this.mount.clientHeight;
+
+    console.log('width: ', window.innerWidth)
+    console.log('height: ', window.innerHeight)
+
+    let aspect = this.state.initialMountWidth / this.state.initialMountHeight
+
     this.state.scene = new THREE.Scene();
-    this.state.camera = new Camera(window, this.state.scene);
-    this.state.renderer = new THREE.WebGLRenderer({alpha: true})
+    this.state.camera = new Camera(
+      new THREE.Vector3(-1,1,1),
+      this.state.scene.position.clone(),
+      aspect
+    )
+    this.state.renderer = new THREE.WebGLRenderer({
+      alpha: true,
+    })
     
-    let container = this.mount
-    this.state.renderer.setSize(this.state.initialScreenWidth, this.state.initialScreenHeight)
-    container.appendChild(this.state.renderer.domElement)
+    // this.state.renderer.setPixelRatio(window.devicePixelRatio)
+    
+    // let container = this.mount
+    this.state.renderer.setSize(this.state.initialMountWidth, this.state.initialMountHeight, false)
+    this.mount.appendChild(this.state.renderer.domElement)
       
     this.state.renderer.domElement.style.zIndex = 0
   
@@ -87,6 +100,9 @@ class Canvas extends Component {
     let frame = 0;
   
     const animate = () => {
+        // if(frame%200 == 0)
+        this.resizeCanvasToMountSize()
+      
         this.state.renderer.render(this.state.scene, this.state.camera);
   
         if(this.state.player.playSound) {
@@ -109,6 +125,28 @@ class Canvas extends Component {
     }
     animate();
   }
+
+  resizeCanvasToMountSize() {
+    let canvas = this.state.renderer.domElement
+    let canvasWidth = canvas.clientWidth
+    let canvasHeight = canvas.clientHeight
+
+    let mountWidth = this.mount.clientWidth
+    let mountHeight = this.mount.clientHeight
+
+    console.log('canvas width: ', canvasWidth)
+    console.log('canvas height: ', canvasHeight)
+
+    console.log('mount width: ', mountWidth)
+    console.log('mount height: ', mountHeight)
+  
+    if (canvasWidth !== mountWidth || canvasHeight !== mountHeight) {
+      this.state.renderer.setSize(mountWidth, mountHeight, false);
+      this.state.camera.aspect = mountWidth / mountHeight;
+      this.state.camera.update();
+
+    }
+  }
   
   render() {
     return (
@@ -116,7 +154,9 @@ class Canvas extends Component {
         ref={ref => (this.mount = ref)}
         id={this.props.level}
         className='canvas-container'
-        style={{display: this.props.isActive ? 'block' : 'none'}}
+        style={{
+          display: this.props.isActive ? 'block' : 'none'
+        }}
       >
       </div>
     )

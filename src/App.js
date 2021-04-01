@@ -10,8 +10,9 @@ import Projects from './react-components/pages/Projects'
 import Contact from './react-components/pages/Contact'
 
 const BASE_ROUTE = '/portfolio'
+const VERSION = '0.2.1.3'
 
-console.log('VER: 0.2');
+console.log('VER: ', VERSION)
 
 const App = () => {  
   const [state, setState] = useState({
@@ -37,10 +38,6 @@ const App = () => {
       }
     ]
   })
-
-  // let pages = [
-    
-  // ]
 
   const completeStage = route => {
     console.log(route, ' completed!')
@@ -69,6 +66,15 @@ const App = () => {
         completeStageCallback={completeStage}
         baseRoute={BASE_ROUTE}
       />
+      <div
+        style={{
+          color: 'white',
+          position: 'absolute',
+          right: '2px',
+          bottom: '2px'
+        }}
+        >
+        Ver: {VERSION}</div>
     </BrowserRouter>
   )
 }

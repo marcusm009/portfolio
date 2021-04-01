@@ -1,25 +1,51 @@
 import * as THREE from 'three'
 
 class Camera extends THREE.OrthographicCamera {
-    constructor(window, scene, zoom=250) {
-        super();
-        this.left = window.innerWidth / -zoom;
-        this.right = window.innerWidth / zoom;
-        this.top = window.innerHeight / zoom;
-        this.bottom = window.innerHeight / -zoom;
+    constructor(position, focalPoint, aspect, frustumSize=10) {
+        super()
+        
+        this.spawnPos = position.clone()
+        this.focalPoint = focalPoint.clone()
+        this.aspect = aspect
+        this.frustumSize = frustumSize
+        
+        this.position.set(-1,1,1)
+        this.lookAt(this.focalPoint);
 
         this.near = -300;
         this.far = 1500;
-        this.focalPoint = scene.position.clone()
-        
-        this.updateProjectionMatrix();
 
-        this.position.set(-1, 1, 1);
+        this.update()
+    }
 
-        this.spawnPos = this.position.clone();
+    update() {
+      this.left = this.frustumSize * this.aspect / - 2
+      this.right = this.frustumSize * this.aspect / 2
+      this.top = this.frustumSize / 2
+      this.bottom = this.frustumSize / - 2
+      
+      this.updateProjectionMatrix();
+    }
 
-        this.lookAt(this.focalPoint);
-    };
+    // constructor(mount, scene, zoom=250) {
+    //   super()
+    //   this.left = mount.offsetWidth / -zoom;
+    //   this.right = mount.offsetWidth / zoom;
+    //   this.top = mount.offsetHeight / zoom;
+    //   this.bottom = mount.offsetHeight / -zoom;
+
+    //   this.near = -300;
+    //   this.far = 1500;
+    //   this.focalPoint = scene.position.clone()
+      
+    //   this.updateProjectionMatrix();
+
+    //   this.position.set(-1, 1, 1);
+
+    //   this.spawnPos = this.position.clone();
+
+    //   this.lookAt(this.focalPoint);
+    // }
 
     follow(player, maxSpeed=Number.MAX_SAFE_INTEGER) {
         let xDiff = player.position.x - this.position.x;
