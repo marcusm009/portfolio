@@ -40,11 +40,9 @@ class Canvas extends Component {
   }
 
   async initThreeCanvas() {
-    this.state.initialMountWidth = this.mount.clientWidth;
-    this.state.initialMountHeight = this.mount.clientHeight;
-
-    console.log('width: ', window.innerWidth)
-    console.log('height: ', window.innerHeight)
+    // client, offset, scroll, css
+    this.state.initialMountWidth = this.mount.offsetWidth;
+    this.state.initialMountHeight = this.mount.offsetHeight;
 
     let aspect = this.state.initialMountWidth / this.state.initialMountHeight
 
@@ -56,6 +54,7 @@ class Canvas extends Component {
     )
     this.state.renderer = new THREE.WebGLRenderer({
       alpha: true,
+      antialias: true
     })
     
     // this.state.renderer.setPixelRatio(window.devicePixelRatio)
@@ -128,17 +127,11 @@ class Canvas extends Component {
 
   resizeCanvasToMountSize() {
     let canvas = this.state.renderer.domElement
-    let canvasWidth = canvas.clientWidth
-    let canvasHeight = canvas.clientHeight
+    let canvasWidth = canvas.offsetWidth
+    let canvasHeight = canvas.offsetHeight
 
-    let mountWidth = this.mount.clientWidth
-    let mountHeight = this.mount.clientHeight
-
-    console.log('canvas width: ', canvasWidth)
-    console.log('canvas height: ', canvasHeight)
-
-    console.log('mount width: ', mountWidth)
-    console.log('mount height: ', mountHeight)
+    let mountWidth = this.mount.offsetWidth
+    let mountHeight = this.mount.offsetHeight
   
     if (canvasWidth !== mountWidth || canvasHeight !== mountHeight) {
       this.state.renderer.setSize(mountWidth, mountHeight, false);

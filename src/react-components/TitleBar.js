@@ -1,19 +1,19 @@
-import { Link } from 'react-router-dom'
-import { useLocation } from 'react-router-dom'
-
 const TitleBar = () => {
-  const location = useLocation().pathname
-  
+  const refresh = () => {
+    window.location.reload()
+  }
+
   return (
     <div
       id={'title-bar'}
       className={'top-bar'}>
-      <a
-        href={location}
+      <button
+        type='button'
         className={'title'}
+        onClick={refresh}
       >
-        Marcus Mills
-      </a>
+      {'Marcus Mills'}
+      </button>
     </div>
 
   )
