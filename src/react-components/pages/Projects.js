@@ -15,7 +15,7 @@ const Projects = ({ baseRoute }) => {
     }, [])
   
   return (
-    <div className={`site-body ${isFadingIn ? 'fade': ''} ${!isFadingIn && active ? 'active': ''}`}>
+    <div className={`page ${isFadingIn ? 'fade': ''} ${!isFadingIn && active ? 'active': ''}`}>
     <h1>Projects</h1>
         <img src={baseRoute + '/images/headshot.jpg'}
           style={{

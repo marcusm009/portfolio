@@ -28,15 +28,21 @@ class Canvas extends Component {
   async componentDidMount() {
     await this.initThreeCanvas()
     await this.resumeThreeCanvas()
+    window.addEventListener('resize', this.resizeCanvasToMountSize.bind(this))
   }
 
   async componentDidUpdate() {
+    this.resizeCanvasToMountSize()
     if(this.state.controller) {
       this.state.controller.isEnabled = this.props.isActive
       if(this.state.player.completedLevel) {
         console.log('completed - ', this.props.level)
       }
     }
+  }
+
+  async componentWillUnmount() {
+    window.removeEventListener('resize', this.resizeCanvasToMountSize.bind(this))
   }
 
   async initThreeCanvas() {
@@ -57,10 +63,8 @@ class Canvas extends Component {
       antialias: true
     })
     
-    // this.state.renderer.setPixelRatio(window.devicePixelRatio)
-    
-    // let container = this.mount
-    this.state.renderer.setSize(this.state.initialMountWidth, this.state.initialMountHeight, false)
+    this.state.renderer.setPixelRatio(window.devicePixelRatio)
+    this.state.renderer.setSize(this.state.initialMountWidth, this.state.initialMountHeight, true)
     this.mount.appendChild(this.state.renderer.domElement)
       
     this.state.renderer.domElement.style.zIndex = 0
@@ -99,9 +103,7 @@ class Canvas extends Component {
     let frame = 0;
   
     const animate = () => {
-        // if(frame%200 == 0)
-        this.resizeCanvasToMountSize()
-      
+
         this.state.renderer.render(this.state.scene, this.state.camera);
   
         if(this.state.player.playSound) {
@@ -132,12 +134,14 @@ class Canvas extends Component {
 
     let mountWidth = this.mount.offsetWidth
     let mountHeight = this.mount.offsetHeight
-  
-    if (canvasWidth !== mountWidth || canvasHeight !== mountHeight) {
-      this.state.renderer.setSize(mountWidth, mountHeight, false);
-      this.state.camera.aspect = mountWidth / mountHeight;
-      this.state.camera.update();
 
+    if (canvasWidth !== mountWidth || canvasHeight !== mountHeight) {
+      this.state.renderer.setPixelRatio(window.devicePixelRatio)
+      this.state.renderer.setSize(mountWidth, mountHeight, true)
+      this.state.camera.aspect = mountWidth / mountHeight
+      this.state.camera.update()
+      updateCanvasCSS(this.mount) // Must update CSS manually since THREE.js
+                                  // doesn't do it
     }
   }
   
@@ -156,18 +160,18 @@ class Canvas extends Component {
   }
 }
 
-// function onWindowResize() {
-//   camera.aspect = window.innerWidth / window.innerHeight;
-//   camera.updateProjectionMatrix();
-//   renderer.setSize(window.innerWidth, window.innerHeight);
-// }
-
 function scrollTransition() {
   window.scrollBy({
       top: window.innerHeight,
       left: 0,
       behavior: 'smooth'
   });
+}
+
+function updateCanvasCSS(mount) {
+  let canvas = mount.firstElementChild
+  canvas.style.width = mount.offsetWidth
+  canvas.style.height = mount.offsetHeight
 }
 
 export default Canvas

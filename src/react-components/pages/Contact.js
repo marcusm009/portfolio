@@ -15,7 +15,7 @@ const Contact = ({ baseRoute }) => {
     }, [])
 
   return (
-    <div className={`site-body ${isFadingIn ? 'fade': ''} ${!isFadingIn && active ? 'active': ''}`}>
+    <div className={`page ${isFadingIn ? 'fade': ''} ${!isFadingIn && active ? 'active': ''}`}>
     <h1>Contact</h1>
         <img src={baseRoute + '/images/headshot.jpg'}
           style={{

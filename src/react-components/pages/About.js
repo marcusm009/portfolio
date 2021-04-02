@@ -15,7 +15,7 @@ const About = ({ baseRoute }) => {
     }, [])
   
   return (
-      <div className={`site-body ${isFadingIn ? 'fade': ''} ${!isFadingIn && active ? 'active': ''}`}>
+      <div className={`page ${isFadingIn ? 'fade': ''} ${!isFadingIn && active ? 'active': ''}`}>
         <h1>About Me</h1>
         <img src={baseRoute + '/images/headshot.jpg'}
           style={{
