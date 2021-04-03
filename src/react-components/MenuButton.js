@@ -1,4 +1,5 @@
-import { useLocation } from 'react-router-dom'
+import { MdClose } from 'react-icons/md'
+import { FiMenu } from 'react-icons/fi'
 
 const MenuButton = ({ isOpen, setOpen }) => {
   
@@ -7,13 +8,9 @@ const MenuButton = ({ isOpen, setOpen }) => {
       id='menu-opener'
       onClick={() => setOpen(!isOpen)}>
       {isOpen ? (
-        <div></div>
+        <MdClose style={{width: '40px', height: '40px'}}/>
       ) : (
-        <svg viewBox="0 0 100 80" width="40" height="40">
-          <rect style={{fill: 'white'}} width="100" height="20"></rect>
-          <rect style={{fill: 'white'}} y="30" width="100" height="20"></rect>
-          <rect style={{fill: 'white'}} y="60" width="100" height="20"></rect>
-        </svg>
+        <FiMenu style={{width: '40px', height: '40px'}}/>
       )}
       
     </button>
