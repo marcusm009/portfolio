@@ -134,26 +134,27 @@ button, a {
 }
 
 #nav-bar.portrait {
-  &.closed > a {
-    display: none;
+  top: 5rem;
+  left: auto;
+  width: fit-content;
+  margin: initial;
+  transition: 1s;
+
+  a {
+    display: flex;
+    background-color: rgba($gray, 0.5);
+
+    &:hover, &.selected{
+      background-color: rgba($gray, .875);
+    }
   }
+  
+  &.closed {
+    right: -10rem;
+  } 
 
   &.open {
-    top: 5rem;
     right: 0rem;
-    left: auto;
-    width: fit-content;
-    margin: initial;
-
-    a {
-      display: flex;
-      background-color: rgba($gray, 0.5);
-
-      &:hover, &.selected{
-        // formula to calc alpha: αr = αa + αb (1 - αa)
-        background-color: rgba($gray, .875);
-      }
-    }
   }
 }
 
@@ -188,9 +189,9 @@ button, a {
 
   &.fade, &.active {
     display: block;
-    transition:opacity .3s linear;
-    -moz-transition:opacity .3s linear;
-    -webkit-transition:opacity .3s linear;
+    transition: opacity .3s linear;
+    -moz-transition: opacity .3s linear;
+    -webkit-transition: opacity .3s linear;
   }
 
   &.fade {
