@@ -21,19 +21,23 @@ class Canvas extends Component {
       'controller': null,
       'player': null,
       'initialMountWidth': null,
-      'initialMountHeight': null
+      'initialMountHeight': null,
+      'isInitialized': false
     }
   }
 
   async componentDidMount() {
+    console.log('Canvas mounted')
     await this.initThreeCanvas()
     await this.resumeThreeCanvas()
     window.addEventListener('resize', this.resizeCanvasToMountSize.bind(this))
   }
 
   async componentDidUpdate() {
-    this.resizeCanvasToMountSize()
-    if(this.state.controller) {
+    console.log('Canvas updated')
+    if(this.state.isInitialized) {
+      this.resizeCanvasToMountSize()
+      this.resumeThreeCanvas()
       this.state.controller.isEnabled = this.props.isActive
       if(this.state.player.completedLevel) {
         console.log('completed - ', this.props.level)
@@ -43,6 +47,7 @@ class Canvas extends Component {
 
   async componentWillUnmount() {
     window.removeEventListener('resize', this.resizeCanvasToMountSize.bind(this))
+    console.log('Canvas unmounted')
   }
 
   async initThreeCanvas() {
@@ -96,6 +101,8 @@ class Canvas extends Component {
     this.state.player.setController(this.state.controller);
     this.state.scene.add(this.state.player);
     this.state.camera.follow(this.state.player);
+
+    this.state.isInitialized = true
   }
 
   // main animation loop
@@ -104,25 +111,27 @@ class Canvas extends Component {
   
     const animate = () => {
 
-        this.state.renderer.render(this.state.scene, this.state.camera);
+        if(this.props.isActive) {
+          this.state.renderer.render(this.state.scene, this.state.camera);
   
-        if(this.state.player.playSound) {
-            this.state.audioManager.playSound('wooden-percussion-shot');
-        }
-
-        this.state.player.animate(this.state.floor);
-        this.state.camera.follow(this.state.player, .1);
-
-        if (this.state.player.completionPending && !this.props.isComplete) {
-            this.props.completeStageCallback()
-        }
+          if(this.state.player.playSound) {
+              this.state.audioManager.playSound('wooden-percussion-shot');
+          }
   
-        if(frame % 200 == 0) {
-            console.log(this.state.player.position);
-        }
+          this.state.player.animate(this.state.floor);
+          this.state.camera.follow(this.state.player, .1);
   
-        frame += 1;
-        requestAnimationFrame(animate);
+          if (this.state.player.completionPending && !this.props.isComplete) {
+              this.props.completeStageCallback()
+          }
+    
+          if(frame % 200 == 0) {
+              console.log(this.state.player.position);
+          }
+    
+          frame += 1;
+          requestAnimationFrame(animate);
+        }
     }
     animate();
   }
