@@ -10,7 +10,7 @@ import Projects from './react-components/pages/Projects'
 import Contact from './react-components/pages/Contact'
 
 const BASE_ROUTE = '/portfolio'
-const VERSION = '0.2.3'
+const VERSION = '0.2.4'
 
 console.log('VER: ', VERSION)
 
@@ -69,9 +69,10 @@ const App = () => {
       <div
         style={{
           color: 'white',
-          position: 'absolute',
+          position: 'fixed',
           right: '2px',
-          bottom: '2px'
+          bottom: '2px',
+          zIndex: '999'
         }}
         >
         Ver: {VERSION}</div>
