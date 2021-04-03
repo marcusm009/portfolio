@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import MenuButton from './MenuButton'
 import NavButton from './NavButton'
 
 const calcOrientation = (width, height) => {
@@ -39,13 +40,8 @@ const NavBar = ({ buttons }) => {
       id='nav-bar'
       ref={ref}
       className={`top-bar ${orientation} ${(isOpen) ? 'open' : 'closed'}`}>
-          {(orientation === 'portrait' && !isOpen) && (
-          <button
-            id='menu-opener'
-            onClick={() => setOpen(!isOpen)}>
-            {'='}
-          </button>
-          )}
+          {(orientation === 'portrait') && (
+            <MenuButton isOpen={isOpen} setOpen={setOpen}/>)}
           {buttons.map((button, idx) => (
             <NavButton
               key={idx}

@@ -88,7 +88,12 @@ button, a {
   display: inline-flex;
   margin: 0;
   padding: 2rem;
-  border-right:  2px solid rgba(32, 32, 32, 0.9);
+  border-style: collapse;
+  border-right: 2px solid rgba(32, 32, 32, 0.9);
+}
+
+#nav-bar > a:first-of-type {
+  border-left: 2px solid rgba(32, 32, 32, 0.9);
 }
 
 #nav-bar > a:hover {
@@ -115,12 +120,24 @@ button, a {
 #nav-bar.portrait.open {
   top: 5rem;
   right: 0rem;
+  left: auto;
   width: fit-content;
   margin: initial;
 }
 
 #nav-bar.portrait.open > a {
   display: flex;
+  background-color: rgba(64, 64, 64, 0.5);
+}
+
+#nav-bar.portrait.open > a:hover {
+  /* formula to calc alpha: αr = αa + αb (1 - αa) */
+  background-color: rgba(64, 64, 64, .875);
+}
+
+#nav-bar.portrait.open > a.selected {
+  /* formula to calc alpha: αr = αa + αb (1 - αa) */
+  background-color: rgba(64, 64, 64, .875);
 }
 
 #menu-opener {
