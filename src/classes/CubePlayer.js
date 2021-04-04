@@ -15,7 +15,6 @@ class CubePlayer extends THREE.Mesh {
 
         this.spawnPos = this.position.clone();
 
-        this.gravity = 0.025;
         this.fallVelocity = 0;
         
         this.isReadyToMove = true;
@@ -68,10 +67,28 @@ class CubePlayer extends THREE.Mesh {
     };
 
     animate(floor) {
+        /* Animations structure:
+           [
+             [
+               fn: animation,
+               int: tot_animation_frames,
+               int (optional): delay_in_frames_before_starting
+              ],
+             [...],
+             ...animations
+           ]
+        */
+      
         for (let i = 0; i < this.animations.length; i++) {
             if (this.animations[i][1] > 0) {
-                this.animations[i][0].bind(this)();
-                this.animations[i][1]--;
+              console.log('frames: ', this.animations[i][1])  
+              if (this.animations[i].length < 3 || this.animations[i][2] <= 0)
+                    this.animations[i][0].bind(this)();
+                this.animations[i][1]--;  // Decrement frames
+                if (this.animations[i].length >= 3) {
+                  console.log('delay: ', this.animations[i][1])     
+                  this.animations[i][2]--;  // Decrement delay (if specified)
+                }
             }
         }
         this.removeCompletedAnimations();        
@@ -109,23 +126,29 @@ class CubePlayer extends THREE.Mesh {
 
     checkFloor(floor) {        
         if (!floor.hasBlockInLocation(this.position.x, this.position.z)) { // fall
-            this.isFalling = true;
-            
-            this.animations.push([() => {
-                this.position.y -= this.fallVelocity;
-                this.fallVelocity += this.gravity;
-            }, 50]);
 
             // complete level
             if (floor.hasGoalInLocation(this.position.x, this.position.z)) {
-                this.beginCompletion()
+              this.fall(0.005, 100)
+              this.beginCompletion()
                 floor.completeLevel();
             // respawn once animation is finished
             } else {
-                this.respawnPending = true;
+              this.fall(0.02)  
+              this.respawnPending = true;
             }
         }
     };
+
+    fall(gravity, frames=50) {
+      this.isFalling = true
+      this.isReadyToMove = false
+
+      this.animations.push([() => {
+        this.position.y -= this.fallVelocity;
+        this.fallVelocity += gravity;
+      }, frames]);
+    }
 
     respawn() {
         this.fallVelocity = 0;
@@ -136,16 +159,18 @@ class CubePlayer extends THREE.Mesh {
         this.completionPending = true
 
         // Add completion animations
-        // let totalFrames = 10;
-        // let rotVel = (Math.PI/4) / totalFrames;
-        // this.animations.push([() => {
-        //     this.rotation.y -= rotVel;
-        // }, totalFrames]);
-        // this.animations.push([() => {
-        //   this.scale.x *= 1.1
-        //   this.scale.y *= 1.1
-        //   this.scale.z *= 1.1
-        // }, 5*totalFrames]);
+        let framesPerAnimation = 25
+        let rotVel = (Math.PI/4) / framesPerAnimation
+        let delay = framesPerAnimation
+        
+        this.animations.push([() => {
+            this.rotation.y -= rotVel;
+        }, framesPerAnimation]);
+        this.animations.push([() => {
+          this.scale.x *= 1.1
+          this.scale.y *= 1.1
+          this.scale.z *= 1.1
+        }, 3*framesPerAnimation, delay]);
     }
 
     complete() {

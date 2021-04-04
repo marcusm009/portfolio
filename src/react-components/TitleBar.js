@@ -18,7 +18,7 @@ const TitleBar = ({ baseRoute }) => {
         className={'title'}
         onClick={refresh}
       >
-      {'Marcus Mills'}
+      {'Marcus_Mills'}
       </button>
     </div>
 
