@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&family=Zilla+Slab+Highlight:wght@700&display=swap');
 
 $white: #fff;
+$lightGray: #606060;
 $gray: #404040;
 $darkGray: #202020;
 $black: #000;
@@ -56,9 +57,17 @@ body {
   font-family: $font;
 }
 
+body::-webkit-scrollbar-track {
+  background: $lightGray;
+}
+
 body::-webkit-scrollbar-thumb {
-  background-color: $gray;    /* color of the scroll thumb */
-  border-radius: 20px;       /* roundness of the scroll thumb */
+  background-color: $gray;
+  border-radius: 20px;
+
+  &:hover {
+    background-color: $darkGray;
+  }
 }
 
 // h1 {
@@ -135,11 +144,11 @@ button, a {
     // }
 
     &:hover {
-      background-color: rgba($gray, 0.75);
+      background-color: $gray;
     }
 
     &.selected {
-      background-color: rgba($gray, 0.75);
+      background-color: $gray;
 
       &:before {
         position: absolute;

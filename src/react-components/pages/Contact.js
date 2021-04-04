@@ -2,21 +2,9 @@ import { useState, useEffect } from 'react'
 import { useLocation } from 'react-router'
 
 const Contact = ({ baseRoute }) => {
-  const active = useLocation().pathname == '/contact'
-  const [isFadingIn, setFadingIn] = useState(true)
-  
-  useEffect(
-    () => {
-      let timer = setTimeout(() => setFadingIn(false), 1000)
-
-      return () => {
-        clearTimeout(timer)
-      }
-    }, [])
-
   return (
-    <div className={`page ${isFadingIn ? 'fade': ''} ${!isFadingIn && active ? 'active': ''}`}>
-    <h1>Contact</h1>
+    <>
+      <h1>Contact</h1>
         <img src={baseRoute + '/images/headshot.jpg'}
           style={{
             width: '500px',
@@ -29,7 +17,7 @@ const Contact = ({ baseRoute }) => {
           soluta! Perspiciatis minima quam exercitationem harum. Distinctio quas sint ad, sapiente praesentium veniam reiciendis consectetur
           deserunt laudantium.
         </p>
-      </div>
+      </>
   )
 }
 
