@@ -10,7 +10,7 @@ import Projects from './react-components/pages/Projects'
 import Contact from './react-components/pages/Contact'
 
 const BASE_ROUTE = '/portfolio'
-const VERSION = '0.2.4.7'
+const VERSION = '0.2.5.1'
 
 console.log('VER: ', VERSION)
 
@@ -52,15 +52,19 @@ const App = () => {
   }
 
   return (
-    <BrowserRouter basename={BASE_ROUTE}>
+    <BrowserRouter
+      basename={BASE_ROUTE}>
       <Redirect
         exact
         from='/'
         to='about'/>
-      <TitleBar/>
+      <TitleBar
+        baseRoute={BASE_ROUTE}
+      />
       <NavBar
         buttons={state.pages}
-        baseRoute={BASE_ROUTE}/>
+        baseRoute={BASE_ROUTE}
+      />
       <CanvasSwitcher
         pages={state.pages}
         completeStageCallback={completeStage}

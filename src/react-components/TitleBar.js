@@ -1,4 +1,4 @@
-const TitleBar = () => {
+const TitleBar = ({ baseRoute }) => {
   const refresh = () => {
     window.location.reload()
   }
@@ -7,6 +7,12 @@ const TitleBar = () => {
     <div
       id={'title-bar'}
       className={'top-bar'}>
+      <img src={baseRoute + '/images/favicon/favicon-64x64.png'}
+          style={{
+            width: '48px',
+            maxWidth: '100%',
+            height: 'auto'}}
+          title="Logo" />
       <button
         type='button'
         className={'title'}

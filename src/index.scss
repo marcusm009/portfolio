@@ -1,14 +1,19 @@
+// @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&family=Zilla+Slab+Highlight:wght@700&display=swap');
+
 $white: #fff;
 $gray: #404040;
 $darkGray: #202020;
 $black: #000;
 
-$font: 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
-$fontTitle: 'fantasy';
+$font: Roboto, sans-serif ;
+$fontTitle: 'Zilla Slab Highlight', cursive;
 
 $fontSizeLarge: 2rem;
 $fontSizeMed: 1.5rem;
 $fontSizeSmall: 1rem;
+
+$navBarSize: 4rem;
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -79,18 +84,24 @@ button, a {
 #title-bar {
   left: 0;
   right: 0;
-  height: 5rem;
+  height: $navBarSize;
   margin: 0;
-  background-color: rgba($gray, 0.5);
+  background-color: $darkGray;
+  $logoOffset: 2.5rem;
 
-  button {
+  button, img {
     position: fixed;
-    top: 1.25rem;
-    left: 2rem;
+    top: ($navBarSize - $fontSizeLarge) / 3;
+    left: $navBarSize / 2 + $logoOffset;
     z-index: 999;
     font-family: $fontTitle;
     font-size: $fontSizeLarge;
-    font-style: italic;
+    // font-style: italic;
+  }
+
+  img {
+    top: .35rem;
+    left: .75rem;
   }
 }
 
@@ -101,17 +112,19 @@ button, a {
   margin: auto;
   line-height: 100%;
   text-align: center;
+  transition: 0s;
+  font-size: $fontSizeMed;
 
   a {
     display: inline-flex;
     margin: 0;
-    padding: 2rem;
-    border-style: collapse;
-    border-right: 2px solid rgba($darkGray, 0.875);
+    padding: ($navBarSize - $fontSizeMed) / 2;
+    // border-style: collapse;
+    // border-right: 2px solid rgba($darkGray, 0.875);
 
-    &:first-of-type {
-      border-left: 2px solid rgba($darkGray, 0.875);
-    }
+    // &:first-of-type {
+    //   border-left: 2px solid rgba($darkGray, 0.875);
+    // }
 
     &:hover {
       background-color: rgba($gray, 0.75);
@@ -123,9 +136,10 @@ button, a {
       &:before {
         position: absolute;
         display: block;
-        top: 1rem;
+        top: .5rem;
         height: 100%;
         content: ".";
+        font-family: Arial;
         transform: scale(2);
       }
     }
@@ -134,7 +148,7 @@ button, a {
 }
 
 #nav-bar.portrait {
-  top: 5rem;
+  top: $navBarSize;
   left: auto;
   width: fit-content;
   margin: initial;
@@ -142,10 +156,10 @@ button, a {
 
   a {
     display: flex;
-    background-color: rgba($gray, 0.5);
+    background-color: $darkGray;
 
     &:hover, &.selected{
-      background-color: rgba($gray, .875);
+      background-color: $gray;
     }
   }
   
@@ -155,12 +169,13 @@ button, a {
 
   &.open {
     right: 0rem;
+    transition: 1s;
   }
 }
 
 #menu-opener {
   position: fixed;
-  top: 1rem;
+  top: .75rem;
   right: 1.5rem;
   font-size: .5rem;
 }
@@ -175,7 +190,7 @@ button, a {
 .page {
   position: fixed;
   display: none;
-  top: 5rem;
+  top: $navBarSize;
   bottom: 0;
   width: 100vw;
   overflow-x: hidden;
@@ -186,6 +201,10 @@ button, a {
   padding-left: calc(min(10em, 10vw));
   padding-right: calc(min(10em, 10vw));
   font-size: $fontSizeSmall;
+  font-weight: 300;
+  line-height: $fontSizeSmall * 2;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 
   &.fade, &.active {
     display: block;
