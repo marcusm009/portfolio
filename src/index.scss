@@ -20,7 +20,6 @@ $navBarSize: 4rem;
 }
 
 html {
-  position: fixed;
   left: 0;
   right: 0;
   width: 100vw;
@@ -29,14 +28,13 @@ html {
   padding: 0;
   touch-action: none;
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 body {
-  position: fixed;
   left: 0;
   right: 0;
-  width: 100vw;
-  height: 100vh;
   margin: 0;
   background: 
   -moz-linear-gradient(135deg, $black 25%, transparent 25%) -50px 0,
@@ -57,6 +55,16 @@ body {
   background-color: $darkGray;
   font-family: $font;
 }
+
+body::-webkit-scrollbar-thumb {
+  background-color: $gray;    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+}
+
+// h1 {
+//   font-family: $fontTitle;
+//   color: red;
+// }
 
 p {
   word-break: break-word;
@@ -188,13 +196,9 @@ button, a {
 }
 
 .page {
-  position: fixed;
+  position: absolute;
   display: none;
   top: $navBarSize;
-  bottom: 0;
-  width: 100vw;
-  overflow-x: hidden;
-  overflow-y: scroll;
   z-index: 1;
   background-color: rgba(255, 255, 255, 1);
   padding-top: 3em;
