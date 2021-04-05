@@ -81,12 +81,10 @@ class CubePlayer extends THREE.Mesh {
       
         for (let i = 0; i < this.animations.length; i++) {
             if (this.animations[i][1] > 0) {
-              console.log('frames: ', this.animations[i][1])  
               if (this.animations[i].length < 3 || this.animations[i][2] <= 0)
                     this.animations[i][0].bind(this)();
                 this.animations[i][1]--;  // Decrement frames
                 if (this.animations[i].length >= 3) {
-                  console.log('delay: ', this.animations[i][1])     
                   this.animations[i][2]--;  // Decrement delay (if specified)
                 }
             }

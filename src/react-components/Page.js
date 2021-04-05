@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import Footer from './Footer'
 
 const Page = ({ Component, isActive, baseRoute }) => {
   const [isFadingIn, setFadingIn] = useState(true)
@@ -15,6 +16,7 @@ const Page = ({ Component, isActive, baseRoute }) => {
   return (
       <div className={`page ${isFadingIn ? 'fade': ''} ${!isFadingIn && isActive ? 'active': ''}`}>
         <Component baseRoute={baseRoute}/>
+        <Footer />
       </div>
   )
 }

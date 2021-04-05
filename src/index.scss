@@ -208,11 +208,13 @@ button, a {
   position: absolute;
   display: none;
   top: $navBarSize;
+  min-height: calc(100vh - 5rem);
   z-index: 1;
   background-color: rgba(255, 255, 255, 1);
-  padding-top: 3em;
-  padding-left: calc(min(10em, 10vw));
-  padding-right: calc(min(10em, 10vw));
+  padding-top: 3rem;
+  padding-left: calc(min(10rem, 10vw));
+  padding-right: calc(min(10rem, 10vw));
+  padding-bottom: 10rem;
   font-size: $fontSizeSmall;
   font-weight: 300;
   line-height: $fontSizeSmall * 2;
@@ -233,4 +235,29 @@ button, a {
   &.active {
     opacity: 1;
   }
+}
+
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(20vh);
+  visibility: hidden;
+  transition: opacity 0.6s ease-out, transform 1.2s ease-out;
+  will-change: opacity, visibility;
+
+  &.is-visible {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+  }
+}
+
+#footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 1rem;
+  color: white;
+  background-color: $darkGray;
 }
