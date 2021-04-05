@@ -1,9 +1,25 @@
 import { useLocation } from 'react-router'
+import { useEffect } from 'react'
 import Canvas from './Canvas'
 import Page from './Page'
 
 const CanvasSwitcher = ({ pages, completeStageCallback, baseRoute }) => {
   const location = useLocation().pathname
+
+  useEffect(() => {
+    pages.forEach(element => {
+      if (location === element.route) {
+        let html = document.getElementsByTagName('html')[0]
+        if (html) {
+          if (element.completed) {
+            html.style.touchAction = 'auto'
+          } else {
+            html.style.touchAction = 'none'
+          }
+        }
+      }
+    });
+  })
 
   return (
     <>
