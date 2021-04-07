@@ -3,6 +3,7 @@ import { useState } from 'react'
 
 import NavBar from './react-components/NavBar'
 import TitleBar from './react-components/TitleBar'
+import EntryPage from './react-components/EntryPage'
 import CanvasSwitcher from './react-components/CanvasSwitcher'
 
 import About from './react-components/pages/About'
@@ -10,7 +11,7 @@ import Projects from './react-components/pages/Projects'
 import Contact from './react-components/pages/Contact'
 
 const BASE_ROUTE = '/portfolio'
-const VERSION = '0.2.7.2'
+const VERSION = '0.2.7.3'
 
 console.log('VER: ', VERSION)
 
@@ -65,6 +66,7 @@ const App = () => {
         buttons={state.pages}
         baseRoute={BASE_ROUTE}
       />
+      {/* <EntryPage isActive={true}/> */}
       <CanvasSwitcher
         pages={state.pages}
         completeStageCallback={completeStage}

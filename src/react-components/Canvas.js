@@ -94,10 +94,10 @@ class Canvas extends Component {
   
     // add player
     this.state.controller = new Controller(document, this.props.isActive);
-    if(this.props.level == 'projects')
-        this.state.player = new RectangularPrismPlayer(this.state.floor.spawnTile.position.x, this.state.floor.spawnTile.position.z);
-    else
-        this.state.player = new CubePlayer(this.state.floor.spawnTile.position.x, this.state.floor.spawnTile.position.z);
+    // if(this.props.level == 'projects')
+    //     this.state.player = new RectangularPrismPlayer(this.state.floor.spawnTile.position.x, this.state.floor.spawnTile.position.z);
+    // else
+    this.state.player = new CubePlayer(this.state.floor.spawnTile.position.x, this.state.floor.spawnTile.position.z);
     this.state.player.setController(this.state.controller);
     this.state.scene.add(this.state.player);
     this.state.camera.follow(this.state.player);

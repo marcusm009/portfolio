@@ -32,6 +32,11 @@ const CanvasSwitcher = ({ pages, completeStageCallback, baseRoute }) => {
             isActive={location === page.route}
             baseRoute={baseRoute}
           />)}
+          {(!page.completed && location === page.route) && (
+          <h1 id='directions-text'>
+            Beat the level to unlock the page!
+          </h1>
+          )}
           <Canvas
             level={page.route.replace('/','')}
             isActive={location === page.route}

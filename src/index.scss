@@ -197,6 +197,49 @@ button, a {
   font-size: .5rem;
 }
 
+#directions-text {
+  position: fixed;
+  top: $navBarSize + 5rem;
+  width: 100vw;
+  text-align: center;
+  color: $white;
+  z-index: 4;
+}
+
+#entry-page {
+  position: fixed;
+  display: flex;
+  top: $navBarSize;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $darkGray;
+  color: $white;
+  padding: 1rem;
+  align-items: center;
+  text-align: center;
+  z-index: 999;
+
+  h1 {
+    display: none;
+
+    &.fade, &.active {
+      display: block;
+      transition: opacity .3s linear;
+      -moz-transition: opacity .3s linear;
+      -webkit-transition: opacity .3s linear;
+    }
+  
+    &.fade {
+      opacity: 0;
+    }
+  
+    &.active {
+      opacity: 1;
+    }
+  }
+}
+
 .canvas-container {
   position: fixed;
   top: 0;
@@ -209,6 +252,7 @@ button, a {
   display: none;
   top: $navBarSize;
   min-height: calc(100vh - 5rem);
+  min-width: 100vw;
   z-index: 1;
   background-color: rgba(255, 255, 255, 1);
   padding-top: 3rem;
