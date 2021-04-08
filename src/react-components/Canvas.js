@@ -28,8 +28,7 @@ class Canvas extends Component {
 
   async componentDidMount() {
     console.log('Canvas mounted')
-    await this.initThreeCanvas()
-    await this.resumeThreeCanvas()
+    this.initThreeCanvas()
     window.addEventListener('resize', this.resizeCanvasToMountSize.bind(this))
   }
 
@@ -103,7 +102,7 @@ class Canvas extends Component {
     this.state.camera.follow(this.state.player);
 
     this.state.isInitialized = true
-    this.setState(this.state, this.resizeCanvasToMountSize)
+    this.setState(this.state)
   }
 
   // main animation loop
