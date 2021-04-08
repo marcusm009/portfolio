@@ -70,10 +70,17 @@ body::-webkit-scrollbar-thumb {
   }
 }
 
-// h1 {
-//   font-family: $fontTitle;
-//   color: red;
-// }
+h1 {
+  font-size: $fontSizeLarge;
+}
+
+h2 {
+  font-size: $fontSizeMed;
+}
+
+h3 {
+  font-size: $fontSizeSmall;
+}
 
 p {
   word-break: break-word;

@@ -103,6 +103,7 @@ class Canvas extends Component {
     this.state.camera.follow(this.state.player);
 
     this.state.isInitialized = true
+    this.setState(this.state, this.resizeCanvasToMountSize)
   }
 
   // main animation loop
