@@ -16,16 +16,13 @@ const About = ({ baseRoute }) => {
             maxWidth: '50%'}}
           title="Me!" />
           <div style={{
-            width: '400px',
             height: '400px',
-            marginLeft: 'auto',
-            marginRight: 0,
             padding: '2rem',
             border: `3px solid ${darkGray}`
           }}>
             <h2 style={{
               letterSpacing: '2px',
-              textDecoration: 'underline'
+              // textDecoration: 'underline'
             }}>Overview</h2>
             <h3>Occupation: Software Engineer</h3>
             <h3>Company: Motorola Solutions</h3>
@@ -35,29 +32,30 @@ const About = ({ baseRoute }) => {
           </div>
       </div>
       <br/>
-      <FadeInSection>
+      <FadeInSection>  
+        <h2>Objective</h2>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet dolorem ab, voluptatibus maiores placeat deleniti, tempora amet
-          rem voluptatum excepturi, maxime sapiente rerum corrupti repellendus ipsa mollitia architecto corporis nostrum velit cumque vero
-          soluta! Perspiciatis minima quam exercitationem harum. Distinctio quas sint ad, sapiente praesentium veniam reiciendis consectetur
-          deserunt laudantium.
+          To make society more productive through the use of software solutions
         </p>
       </FadeInSection>
-      <FadeInSection>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet dolorem ab, voluptatibus maiores placeat deleniti, tempora amet
-          rem voluptatum excepturi, maxime sapiente rerum corrupti repellendus ipsa mollitia architecto corporis nostrum velit cumque vero
-          soluta! Perspiciatis minima quam exercitationem harum. Distinctio quas sint ad, sapiente praesentium veniam reiciendis consectetur
-          deserunt laudantium.
-        </p>
+      <FadeInSection>  
+        <h2>CS Interests</h2>
+        <ul>
+          <li>Backend Development</li>
+          <li>Frontend Development</li>
+          <li>Machine Learning</li>
+        </ul>
       </FadeInSection>
       <FadeInSection>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet dolorem ab, voluptatibus maiores placeat deleniti, tempora amet
-          rem voluptatum excepturi, maxime sapiente rerum corrupti repellendus ipsa mollitia architecto corporis nostrum velit cumque vero
-          soluta! Perspiciatis minima quam exercitationem harum. Distinctio quas sint ad, sapiente praesentium veniam reiciendis consectetur
-          deserunt laudantium.
-        </p>
+      <h2>Extracurricular Interests</h2>
+        <ul>
+          <li>Investing / Economics</li>
+          <li>Disc Golf</li>
+          <li>Climbing</li>
+          <li>Hiking</li>
+          <li>Running</li>
+          <li>Weightlifting</li>
+        </ul>
       </FadeInSection>
       <FadeInSection>
         <p>
