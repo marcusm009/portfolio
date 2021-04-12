@@ -47,7 +47,7 @@ const About = ({ baseRoute }) => {
         </ul>
       </FadeInSection>
       <FadeInSection>
-      <h2>Extracurricular Interests</h2>
+        <h2>Extracurricular Interests</h2>
         <ul>
           <li>Investing / Economics</li>
           <li>Disc Golf</li>
@@ -58,6 +58,19 @@ const About = ({ baseRoute }) => {
         </ul>
       </FadeInSection>
       <FadeInSection>
+        <h2>Languages / Frameworks</h2>
+        <ul>
+          <li>Python - Proficient</li>
+          <li>Javascript - Experienced</li>
+          <li>HTML / CSS - Experienced</li>
+          <li>React.JS - Experienced</li>
+          <li>Git - Experienced</li>          
+          <li>SQL - Experienced</li>
+          <li>Node.JS - Some knowledge</li>
+        </ul>
+      </FadeInSection>
+      <FadeInSection>
+        <h2>Timeline</h2>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet dolorem ab, voluptatibus maiores placeat deleniti, tempora amet
           rem voluptatum excepturi, maxime sapiente rerum corrupti repellendus ipsa mollitia architecto corporis nostrum velit cumque vero
