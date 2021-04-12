@@ -1,22 +1,39 @@
-import { useState, useEffect } from 'react'
-import { useLocation } from 'react-router'
-
 const Contact = ({ baseRoute }) => {
   return (
     <>
       <h1>Contact</h1>
-        <img src={baseRoute + '/images/headshot.jpg'}
-          style={{
-            width: '500px',
-            maxWidth: '100%',
-            height: 'auto'}}
-          title="Me!" />
+        <form>
+          <label>First Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input type="text" placeholder="Your name.."/><br/>
+
+          <label>Last Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input type="text" placeholder="Your last name.."/><br/>
+
+          <label>Organization&nbsp;&nbsp;</label>
+          <input type="text" placeholder="Your organization's name.."/><br/>
+
+          <label for="subject">Message</label><br/>
+          <textarea
+            placeholder="Write something.."
+            style={{
+              width: '100%',
+              height: '100px'
+            }}
+          ></textarea><br/>
+
+          <input
+            type="submit"
+            value="Submit"
+            disabled/>
+        </form>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet dolorem ab, voluptatibus maiores placeat deleniti, tempora amet
-          rem voluptatum excepturi, maxime sapiente rerum corrupti repellendus ipsa mollitia architecto corporis nostrum velit cumque vero
-          soluta! Perspiciatis minima quam exercitationem harum. Distinctio quas sint ad, sapiente praesentium veniam reiciendis consectetur
-          deserunt laudantium.
+          Contact form under construction! In the mean time, please send any inquiries to:
         </p>
+        <p>
+          marcusm009@gmail.com
+        </p>
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        <br/><br/><br/><br/><br/><br/>
       </>
   )
 }
