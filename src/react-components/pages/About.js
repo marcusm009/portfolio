@@ -11,9 +11,11 @@ const About = ({ baseRoute }) => {
       }}>
         <img src={baseRoute + '/images/headshot.jpg'}
           style={{
-            width: '400px',
-            height: '400px',
-            maxWidth: '50%'}}
+            objectFit: 'cover',
+            maxWidth: '400px',
+            maxHeight: '400px',
+            width: '50%'
+          }}
           title="Me!" />
           <div style={{
             height: '400px',
