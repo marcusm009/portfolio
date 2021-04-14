@@ -90,9 +90,13 @@ class Canvas extends Component {
     )
     await this.state.floor.loadTemplate(`${this.props.baseRoute}/levels/${this.props.level}.tsv`);
     this.state.floor.addToScene(this.state.scene)
-  
+
     // add player
-    this.state.controller = new Controller(document, this.props.isActive);
+    this.state.controller = new Controller(
+      document,
+      this.props.isActive,
+      `${this.props.baseRoute}/levels/solutions/${this.props.level}.txt`
+    );
     // if(this.props.level == 'projects')
     //     this.state.player = new RectangularPrismPlayer(this.state.floor.spawnTile.position.x, this.state.floor.spawnTile.position.z);
     // else

@@ -20,7 +20,8 @@ const About = ({ baseRoute }) => {
           <div style={{
             height: '400px',
             padding: '2rem',
-            border: `3px solid ${darkGray}`
+            border: `3px solid ${darkGray}`,
+            overflow: 'hidden'
           }}>
             <h2 style={{
               letterSpacing: '2px',

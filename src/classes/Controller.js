@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 
 class Controller {
-    constructor(document, isEnabled) {
+    constructor(document, isEnabled, solutionPath=undefined) {
 
         this.moveCallback = (dir) => {console.log('Move callback never assigned');};
         
@@ -16,25 +16,64 @@ class Controller {
         this.xDown = null;                                                        
         this.yDown = null;
 
+        // auto-solver
+        if(solutionPath) {
+          this.solutionLoaded = false
+          this.loadSolution(solutionPath)
+          document.addEventListener('wheel', this.handleScroll.bind(this), false);
+        }
+
+        this.lastMoveWasManual = false
         this.isEnabled = isEnabled
+    }
+
+    async loadSolution(solutionPath) {
+        await fetch(solutionPath)
+        .then(res => res.text())
+        .then((solution) => {
+            this.solution = solution
+            this.solutionIdx = 0
+            this.solutionLoaded = true
+        });
+    }
+
+    handleScroll(event) {
+        if(!this.solutionLoaded || !this.isEnabled)
+            return
+        
+        if(event.deltaY == -100) {
+            // scroll up: unconditionally respawn
+            if(this.moveCallback('resp'))
+                this.solutionIdx = 0
+        } else if(event.deltaY == 100) {
+            // scroll down:
+            // if last move was manual, respawn; otherwise, move towards objective
+            if(this.lastMoveWasManual) {
+                if(this.moveCallback('resp'))
+                    this.solutionIdx = 0
+            } else if(this.moveCallback(this.solution[this.solutionIdx]))
+                this.solutionIdx++
+        }
+        this.lastMoveWasManual = false
     }
 
     handleKeyDown(event) {
         if (!this.isEnabled)
-          return
+            return
         
         let keyCode = event.which;
         if (keyCode == 87 || keyCode == 38) {
-            this.moveCallback('up');
+            this.moveCallback('u')
         } else if (keyCode == 83 || keyCode == 40) {
-            this.moveCallback('down');
+            this.moveCallback('d')
         } else if (keyCode == 65 || keyCode == 37) {
-            this.moveCallback('left');
+            this.moveCallback('l')
         } else if (keyCode == 68 || keyCode == 39) {
-            this.moveCallback('right');
+            this.moveCallback('r')
         } else {
             console.log('Key pressed: ' + keyCode);
         }
+        this.lastMoveWasManual = true
     };
 
     getTouches(event) {
@@ -60,13 +99,13 @@ class Controller {
         if (xDiff != 0 && yDiff != 0) {
             let angle = Math.atan2(yDiff,xDiff);
             if (0 <= angle && angle < Math.PI/2) {
-                this.moveCallback('left');
+                this.moveCallback('l');
             } else if (Math.PI/2 <= angle && angle <= Math.PI) {
-                this.moveCallback('up');
+                this.moveCallback('u');
             } else if (-Math.PI <= angle && angle < -Math.PI/2) {
-                this.moveCallback('right');
+                this.moveCallback('r');
             } else if (-Math.PI/2 <= angle && angle < 0) {
-                this.moveCallback('down');
+                this.moveCallback('d');
             } else {
                 console.log(`This should not happen - touch input angle: ${angle}`);
             }

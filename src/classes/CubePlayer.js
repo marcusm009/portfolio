@@ -31,39 +31,45 @@ class CubePlayer extends THREE.Mesh {
     setController(controller) {
         this.controller = controller;
         this.controller.moveCallback = (dir) => {
-            this.move(dir);
+            return this.move(dir);
         };
     };
 
     move(direction, framesPerRoll=10) {
         let rotVel = (Math.PI/2) / framesPerRoll;
+        let didMove = false
 
         if(this.isReadyToMove == true) {
-            if (direction == 'up') {
+            if (direction == 'u') {
                 this.animations.push([() => {
                     this.position.x += 1/framesPerRoll;
                     this.rotation.z -= rotVel;
                 }, framesPerRoll]);
-            } else if (direction == 'down') {
+            } else if (direction == 'd') {
                 this.animations.push([() => {
                     this.position.x -= 1/framesPerRoll;
                     this.rotation.z += rotVel;
                 }, framesPerRoll]);
-            } else if (direction == 'left') {
+            } else if (direction == 'l') {
                 this.animations.push([() => {
                     this.position.z -= 1/framesPerRoll;
                     this.rotation.x -= rotVel
                 }, framesPerRoll]);
-            } else if (direction == 'right') {
+            } else if (direction == 'r') {
                 this.animations.push([() => {
                     this.position.z += 1/framesPerRoll;
                     this.rotation.x += rotVel;
                 }, framesPerRoll]);
+            } else if (direction == 'resp') {
+              this.respawn()
             }
 
+            didMove = true;
             this.playSound = true;
             this.isReadyToMove = false;
         }
+      
+        return didMove;
     };
 
     animate(floor) {

@@ -1,19 +1,30 @@
+const EMAIL_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx0ftvrzfj7KimqSseC2Nacuez7WMrF6GVNa0L-bSiuB6nXJcgxeRbHaKT0_IRICwamBQ/exec";
+
 const Contact = ({ baseRoute }) => {
+
+  const test = (e) => {
+    e.preventDefault();
+    fetch(EMAIL_SCRIPT_URL)
+    console.log('hello');
+  }
+  
   return (
     <>
       <h1>Contact</h1>
-        <form>
-          <label>First Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-          <input type="text" placeholder="Your name.."/><br/>
+        <form
+          // action="https://script.google.com/macros/s/AKfycbx0ftvrzfj7KimqSseC2Nacuez7WMrF6GVNa0L-bSiuB6nXJcgxeRbHaKT0_IRICwamBQ/exec"
+          // method="POST"
+          >
+          
+          <label>Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input id="name" type="text" placeholder="Your name.."/><br/>
 
-          <label>Last Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-          <input type="text" placeholder="Your last name.."/><br/>
-
-          <label>Organization&nbsp;&nbsp;</label>
-          <input type="text" placeholder="Your organization's name.."/><br/>
+          <label>Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input id="email" type="text" placeholder="Your email.."/><br/>
 
           <label for="subject">Message</label><br/>
           <textarea
+            id="message"
             placeholder="Write something.."
             style={{
               width: '100%',
@@ -21,10 +32,13 @@ const Contact = ({ baseRoute }) => {
             }}
           ></textarea><br/>
 
-          <input
-            type="submit"
-            value="Submit"
-            disabled/>
+          <button
+            onClick={test}
+            style={{
+              color: 'black'
+            }}>
+            Submit
+          </button>
         </form>
         <p>
           Contact form under construction! In the mean time, please send any inquiries to:
