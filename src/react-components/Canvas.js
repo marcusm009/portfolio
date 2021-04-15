@@ -110,7 +110,7 @@ class Canvas extends Component {
   }
 
   // main animation loop
-  async resumeThreeCanvas() {
+  async resumeThreeCanvas(logLocation=false) {
     let frame = 0;
   
     const animate = () => {
@@ -129,7 +129,7 @@ class Canvas extends Component {
               this.props.completeStageCallback()
           }
     
-          if(frame % 200 == 0) {
+          if(frame % 200 == 0 && logLocation) {
               console.log(this.state.player.position);
           }
     
