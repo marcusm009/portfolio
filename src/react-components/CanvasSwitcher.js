@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import Canvas from './Canvas'
 import Page from './Page'
 
-const CanvasSwitcher = ({ pages, completeStageCallback, baseRoute }) => {
+const CanvasSwitcher = ({ pages, completeStageCallback, replayStageCallback, baseRoute }) => {
   const location = useLocation().pathname
 
   useEffect(() => {
@@ -30,6 +30,7 @@ const CanvasSwitcher = ({ pages, completeStageCallback, baseRoute }) => {
             key={page.route}
             Component={page.component}
             isActive={location === page.route}
+            replayStageCallback={() => replayStageCallback(page.route)}
             baseRoute={baseRoute}
           />)}
           {(!page.completed && location === page.route) && (

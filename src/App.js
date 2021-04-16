@@ -11,7 +11,7 @@ import Projects from './react-components/pages/Projects'
 import Contact from './react-components/pages/Contact'
 
 const BASE_ROUTE = '/portfolio'
-const VERSION = '0.4.1'
+const VERSION = '0.4.2'
 
 console.log('VER: ', VERSION)
 
@@ -52,6 +52,18 @@ const App = () => {
     });
   }
 
+  const replayStage = route => {
+    console.log(route, ' - replaying!')
+    state.pages.forEach((page, idx) => {
+      if (page.route === route){
+        let newState = {}
+        Object.assign(newState, state)
+        newState.pages[idx].completed = false
+        setState(newState)
+      }
+    });
+  }
+
   return (
     <BrowserRouter
       basename={BASE_ROUTE}>
@@ -70,6 +82,7 @@ const App = () => {
       <CanvasSwitcher
         pages={state.pages}
         completeStageCallback={completeStage}
+        replayStageCallback={replayStage}
         baseRoute={BASE_ROUTE}
       />
       <div

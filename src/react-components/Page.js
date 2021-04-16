@@ -1,19 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
 import Footer from './Footer'
+import useStateRef from './hooks'
 
-function useStateRef(initialValue) {
-  const [value, setValue] = useState(initialValue);
+const PRESSURE_NEEDED_FOR_PAGE_CHANGE = 20
 
-  const ref = useRef(value);
-
-  useEffect(() => {
-    ref.current = value;
-  }, [value]);
-
-  return [value, setValue, ref];
-}
-
-const Page = ({ Component, isActive, baseRoute }) => {
+const Page = ({ Component, isActive, replayStageCallback, baseRoute }) => {
   const scrollPos = useRef(0)
   const [pagePressure, setPagePressure, pagePressureRef] = useStateRef(0)
   const [isFadingIn, setFadingIn] = useState(true)
@@ -25,9 +16,9 @@ const Page = ({ Component, isActive, baseRoute }) => {
   }
 
   const listenToWheel = (event) => {
-    if(scrollPos.current === 0 && event.deltaY === -100) {
+    if(scrollPos.current === 0 && event.deltaY < 0) {
       setPagePressure(pagePressureRef.current - 1)
-    } else if(scrollPos.current === 1 && event.deltaY === 100) {
+    } else if(scrollPos.current === 1 && event.deltaY > 0) {
       setPagePressure(pagePressureRef.current + 1)
     } else {
       setPagePressure(0)
@@ -47,16 +38,47 @@ const Page = ({ Component, isActive, baseRoute }) => {
     }
   }, [])
 
+  useEffect(() => {
+    if(pagePressure < -PRESSURE_NEEDED_FOR_PAGE_CHANGE) {
+      console.log('goto prev page')
+      // replayStageCallback()
+    } else if(pagePressure > PRESSURE_NEEDED_FOR_PAGE_CHANGE) {
+      console.log('goto next page')
+    }
+  }, [pagePressure])
+
   return (
       <div
-        className={`page ${isFadingIn ? 'fade': ''} ${!isFadingIn && isActive ? 'active': ''}`}
-        style={{
-          transform: `translate(${
-            pagePressure !== 0 ? -Math.sign(pagePressure) * Math.log(Math.abs(pagePressure)) : 0
-          }%)`
-        }}>
-        <Component baseRoute={baseRoute}/>
-        <Footer />
+        className={`page-container ${isFadingIn ? 'fade': ''} ${!isFadingIn && isActive ? 'active': ''}`}>
+        <h1 style={{
+          position: 'absolute',
+          left: '0',
+          right: '0',
+          color: 'white',
+          textAlign: 'center',
+          zIndex: '-1',
+          textShadow: pagePressure < -PRESSURE_NEEDED_FOR_PAGE_CHANGE ? '1px 1px' : ''
+        }}>Replay level</h1>
+        <div
+          className={`page ${isFadingIn ? 'fade': ''} ${!isFadingIn && isActive ? 'active': ''}`}
+          style={{
+            transform: `translate(0,${
+              pagePressure !== 0 ? -Math.sign(pagePressure) * Math.log(Math.abs(pagePressure)) : 0
+            }%)`
+          }}>
+          <Component baseRoute={baseRoute}/>
+          <Footer />
+        </div>
+        <h1 style={{
+          position: 'absolute',
+          left: '0',
+          right: '0',
+          bottom: '.5rem',
+          color: 'white',
+          textAlign: 'center',
+          zIndex: '-1',
+          textShadow: pagePressure > PRESSURE_NEEDED_FOR_PAGE_CHANGE ? '1px 1px' : ''
+        }}>Next level</h1>
       </div>
   )
 }

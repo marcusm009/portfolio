@@ -6,7 +6,6 @@ import Camera from '../classes/Camera'
 import Controller from '../classes/Controller'
 import AudioManager from '../classes/AudioManager'
 import CubePlayer from '../classes/CubePlayer'
-import RectangularPrismPlayer from '../classes/RectangularPrismPlayer'
 import Floor from '../classes/Floor'
 
 class Canvas extends Component {

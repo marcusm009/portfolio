@@ -254,23 +254,14 @@ button, a {
   height: 100vh;
 }
 
-.page {
+.page-container {
   position: absolute;
-  display: none;
   top: $navBarSize;
+  display: none;
   min-height: calc(100vh - 5rem);
   min-width: 100vw;
   z-index: 1;
-  background-color: rgba(255, 255, 255, 1);
-  padding-top: 3rem;
-  padding-left: calc(min(10rem, 10vw));
-  padding-right: calc(min(10rem, 10vw));
-  padding-bottom: 7rem;
-  font-size: $fontSizeSmall;
-  font-weight: 300;
-  line-height: $fontSizeSmall * 2;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
+  background-color: rgba(255, 255, 255, 0);
 
   &.fade, &.active {
     display: block;
@@ -286,6 +277,20 @@ button, a {
   &.active {
     opacity: 1;
   }
+}
+
+.page {
+  background-color: rgba(255, 255, 255, 1);
+  padding-top: 3rem;
+  padding-left: calc(min(10rem, 10vw));
+  padding-right: calc(min(10rem, 10vw));
+  padding-bottom: 7rem;
+  font-size: $fontSizeSmall;
+  font-weight: 300;
+  line-height: $fontSizeSmall * 2;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  z-index: 2
 }
 
 .fade-in-section {
@@ -311,4 +316,5 @@ button, a {
   padding: 1rem;
   color: white;
   background-color: $darkGray;
+  z-index: 2
 }
