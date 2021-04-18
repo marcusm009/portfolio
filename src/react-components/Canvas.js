@@ -6,6 +6,7 @@ import Camera from '../classes/Camera'
 import Controller from '../classes/Controller'
 import AudioManager from '../classes/AudioManager'
 import CubePlayer from '../classes/CubePlayer'
+import RectangularPrismPlayer from '../classes/RectangularPrismPlayer'
 import Floor from '../classes/Floor'
 
 class Canvas extends Component {
@@ -96,10 +97,10 @@ class Canvas extends Component {
       this.props.isActive,
       `${this.props.baseRoute}/levels/solutions/${this.props.level}.txt`
     );
-    // if(this.props.level == 'projects')
-    //     this.state.player = new RectangularPrismPlayer(this.state.floor.spawnTile.position.x, this.state.floor.spawnTile.position.z);
-    // else
-    this.state.player = new CubePlayer(this.state.floor.spawnTile.position.x, this.state.floor.spawnTile.position.z);
+    if(this.props.level == 'projects')
+        this.state.player = new RectangularPrismPlayer(this.state.floor.spawnTile.position.x, this.state.floor.spawnTile.position.z);
+    else
+        this.state.player = new CubePlayer(this.state.floor.spawnTile.position.x, this.state.floor.spawnTile.position.z);
     this.state.player.setController(this.state.controller);
     this.state.scene.add(this.state.player);
     this.state.camera.follow(this.state.player);
@@ -109,7 +110,7 @@ class Canvas extends Component {
   }
 
   // main animation loop
-  async resumeThreeCanvas(logLocation=false) {
+  async resumeThreeCanvas(logLocation=true) {
     let frame = 0;
   
     const animate = () => {
@@ -129,7 +130,8 @@ class Canvas extends Component {
           }
     
           if(frame % 200 == 0 && logLocation) {
-              console.log(this.state.player.position);
+              // console.log(this.state.player.position)
+              console.log(this.state.player.getWorldDirection())
           }
     
           frame += 1;

@@ -47,7 +47,7 @@ const Contact = ({ baseRoute }) => {
           marcusm009@gmail.com
         </p>
         <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-        <br/><br/><br/><br/><br/><br/>
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
       </>
   )
 }

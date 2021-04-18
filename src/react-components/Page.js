@@ -63,7 +63,7 @@ const Page = ({ Component, isActive, replayStageCallback, baseRoute }) => {
           className={`page ${isFadingIn ? 'fade': ''} ${!isFadingIn && isActive ? 'active': ''}`}
           style={{
             transform: `translate(0,${
-              pagePressure !== 0 ? -Math.sign(pagePressure) * Math.log(Math.abs(pagePressure)) : 0
+              pagePressure !== 0 ? -Math.sign(pagePressure) * Math.log(3*Math.abs(pagePressure)) : 0
             }%)`
           }}>
           <Component baseRoute={baseRoute}/>
