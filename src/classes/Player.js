@@ -57,22 +57,21 @@ class Player extends THREE.Mesh {
       if (direction == 'u') {
         this.animations.push([() => {
           this.position.x += 1 / framesPerRoll
-          this.rotation.z -= rotVel
-        }, framesPerRoll])
+          this.rotateOnWorldAxis(new THREE.Vector3(0,0,1),-rotVel)        }, framesPerRoll])
       } else if (direction == 'd') {
         this.animations.push([() => {
           this.position.x -= 1 / framesPerRoll
-          this.rotation.z += rotVel
+          this.rotateOnWorldAxis(new THREE.Vector3(0,0,1), rotVel)
         }, framesPerRoll])
       } else if (direction == 'l') {
         this.animations.push([() => {
           this.position.z -= 1 / framesPerRoll
-          this.rotation.x -= rotVel
+          this.rotateOnWorldAxis(new THREE.Vector3(1,0,0), -rotVel)
         }, framesPerRoll])
       } else if (direction == 'r') {
         this.animations.push([() => {
           this.position.z += 1 / framesPerRoll
-          this.rotation.x += rotVel
+          this.rotateOnWorldAxis(new THREE.Vector3(1,0,0), rotVel)
         }, framesPerRoll])
       } else if (direction == 'resp') {
         this.respawn()
@@ -136,7 +135,7 @@ class Player extends THREE.Mesh {
       this.respawnPending = false
       this.respawn()
     } else {
-      this.rotation.set(0, 0, 0)
+      // this.rotation.set(0, 0, 0)
       this.position.round()
       this.isReadyToMove = true
     }
@@ -171,6 +170,7 @@ class Player extends THREE.Mesh {
   respawn() {
     this.fallVelocity = 0
     this.position.copy(this.spawnPos)
+    this.setRotationFromQuaternion(new THREE.Quaternion(0,0,0,1))
   }
 
   beginCompletion() {

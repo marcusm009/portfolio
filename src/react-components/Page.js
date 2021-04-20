@@ -3,6 +3,7 @@ import Footer from './Footer'
 import useStateRef from './hooks'
 
 const PRESSURE_NEEDED_FOR_PAGE_CHANGE = 20
+const PRESSURE_NEEDED_FOR_TO_START_ANIMATION = 5
 
 const Page = ({ Component, isActive, replayStageCallback, baseRoute }) => {
   const scrollPos = useRef(0)
@@ -63,7 +64,9 @@ const Page = ({ Component, isActive, replayStageCallback, baseRoute }) => {
           className={`page ${isFadingIn ? 'fade': ''} ${!isFadingIn && isActive ? 'active': ''}`}
           style={{
             transform: `translate(0,${
-              pagePressure !== 0 ? -Math.sign(pagePressure) * Math.log(3*Math.abs(pagePressure)) : 0
+              Math.abs(pagePressure) > PRESSURE_NEEDED_FOR_TO_START_ANIMATION ? 
+              -Math.sign(pagePressure-PRESSURE_NEEDED_FOR_TO_START_ANIMATION) * Math.log(
+                2*Math.abs(pagePressure)-PRESSURE_NEEDED_FOR_TO_START_ANIMATION): 0
             }%)`
           }}>
           <Component baseRoute={baseRoute}/>

@@ -130,8 +130,15 @@ class Canvas extends Component {
           }
     
           if(frame % 200 == 0 && logLocation) {
+              // let dir = this.state.player.getWorldDirection()
+              // dir.round()
+              // console.log(dir)
               // console.log(this.state.player.position)
-              console.log(this.state.player.getWorldDirection())
+              // console.log(this.state.player.rotation)
+              // let vector = new THREE.Vector3(0,0,1)
+              // vector.applyQuaternion(this.state.player.quaternion)
+              // console.log(vector)
+              console.log(this.state.player.getWorldQuaternion())
           }
     
           frame += 1;

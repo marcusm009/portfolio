@@ -1,10 +1,39 @@
 import * as THREE from 'three'
 import Player from './Player'
 
-const UPRIGHT_QUATERNION = new THREE.Quaternion(0,0,0,1)
+// const UPRIGHT_QUATERNION = new THREE.Quaternion(0,0,0,1)
 
-const ROTATIONS = {
+const ORIENTATION = {
+  // 16 unique quaternions for upright
+  UPRIGHT: [
+    new THREE.Quaternion(1,0,0,0),
+    new THREE.Quaternion(-1,0,0,0),
+    new THREE.Quaternion(0,1,0,0),
+    new THREE.Quaternion(0,-1,0,0),
+    new THREE.Quaternion(0,0,1,0),
+    new THREE.Quaternion(0,0,-1,0),
+    new THREE.Quaternion(0,0,0,1),
+    new THREE.Quaternion(0,0,0,-1),
+    new THREE.Quaternion(Math.sqrt(2)/2,0,Math.sqrt(2)/2,0),
+    new THREE.Quaternion(Math.sqrt(2)/2,0,-Math.sqrt(2)/2,0),
+    new THREE.Quaternion(-Math.sqrt(2)/2,0,Math.sqrt(2)/2,0),
+    new THREE.Quaternion(-Math.sqrt(2)/2,0,-Math.sqrt(2)/2,0),
+    new THREE.Quaternion(0,Math.sqrt(2)/2,0,Math.sqrt(2)/2),
+    new THREE.Quaternion(0,Math.sqrt(2)/2,0,-Math.sqrt(2)/2),
+    new THREE.Quaternion(0,-Math.sqrt(2)/2,0,Math.sqrt(2)/2),
+    new THREE.Quaternion(0,-Math.sqrt(2)/2,0,-Math.sqrt(2)/2),
+  ],
+  UPDOWN: [
+    new THREE.Quaternion(.5,.5,.5,-.5),
+    new THREE.Quaternion(.5,-.5,.5,.5),
+    new THREE.Quaternion(-.5,.5,.5,.5),
+    new THREE.Quaternion(-.5,-.5,.5,-.5),
+    new THREE.Quaternion(Math.sqrt(2)/2,Math.sqrt(2)/2,0,0),
+    new THREE.Quaternion(-Math.sqrt(2)/2,Math.sqrt(2)/2,0,0),
+    new THREE.Quaternion(0,0,Math.sqrt(2)/2,Math.sqrt(2)/2),
+    new THREE.Quaternion(0,0,-Math.sqrt(2)/2,Math.sqrt(2)/2),
 
+  ]
 }
 
 class RectangularPrismPlayer extends Player {
@@ -24,118 +53,40 @@ class RectangularPrismPlayer extends Player {
 
     if (this.isReadyToMove === true) {
       
-      let deltaGrid = (this.isUpright === true ? 1.5 : 1) / framesPerRoll
-      let deltaY = (this.isUpright === true ? -1 : 1) * .25 * this.size[1] / framesPerRoll
-
-      let slerpFactor = (this.isUpright === true) ? 1 : .5
-
-      let quaternion = new THREE.Quaternion()
+      let orientation = this.getOrientation()
+      let deltaGrid = ((
+        (orientation === 'UPRIGHT') ||
+        (orientation === 'UPDOWN' && (direction === 'u' || direction === 'd')) ||
+        (orientation === 'LEFTRIGHT' && (direction === 'l' || direction === 'r'))
+      ) ? 1.5 : 1) / framesPerRoll
+      // let deltaY = (this.isUpright === true ? -1 : 1) * .25 * this.size[1] / framesPerRoll
 
       if(direction === 'u') {
         this.animations.push([() => {
-          // let correctAxis = 
           this.position.x += deltaGrid
-          // correctAxis.applyQuaternion(this.quaternion)
-          this.rotateOnWorldAxis(new THREE.Vector3(0,0,1),-Math.PI/2/framesPerRoll)
+          this.rotateOnWorldAxis(new THREE.Vector3(0,0,1),-rotVel)
           }, framesPerRoll])
-          // this.translateOnAxis(
-          //   new THREE.Vector3(0,1,0).applyQuaternion(this.quaternion),
-          //   deltaGrid/framesPerRoll)
       }
       if(direction === 'd') {
         this.animations.push([() => {
           this.position.x -= deltaGrid
-          this.applyQuaternion(
-            quaternion.setFromEuler(new THREE.Euler(0,0,Math.PI/2/framesPerRoll,'XYZ')))
+          this.rotateOnWorldAxis(new THREE.Vector3(0,0,1), rotVel)
           }, framesPerRoll])
       }
       if(direction === 'r') {
         this.animations.push([() => {
           this.position.z += deltaGrid
-          this.applyQuaternion(
-            quaternion.setFromEuler(new THREE.Euler(Math.PI/2/framesPerRoll,0,0,'XYZ')))
+          this.rotateOnWorldAxis(new THREE.Vector3(1,0,0), rotVel)
           }, framesPerRoll])
       }
       if(direction === 'l') {
         this.animations.push([() => {
             this.position.z -= deltaGrid
-            this.applyQuaternion(
-              quaternion.setFromEuler(new THREE.Euler(-Math.PI/2/framesPerRoll,0,0,'XYZ')))
+            this.rotateOnWorldAxis(new THREE.Vector3(1,0,0), -rotVel)
             }, framesPerRoll])
       }
 
-      console.log(this.getWorldDirection())
-
-      // if(direction === 'u') {
-      //   this.animations.push([() => {
-      //     this.position.x += deltaGrid
-      //     this.applyQuaternion(
-      //       new THREE.Quaternion(0,0,-Math.sqrt(2)/2,Math.sqrt(2)/2))
-      //     }, framesPerRoll])
-      // }
-
-      // if(direction === 'd') {
-      //   this.animations.push([() => {
-      //     this.position.x -= deltaGrid
-      //     this.applyQuaternion(
-      //       new THREE.Quaternion(0,0,Math.sqrt(2)/2,Math.sqrt(2)/2))
-      //     }, framesPerRoll])
-      // }
-
-      // if(direction === 'r') {
-      //   if(this.isUpright) {
-      //     this.animations.push([() => {
-      //       this.quaternion.slerp(
-      //         new THREE.Quaternion(Math.sqrt(2)/2,0,0,Math.sqrt(2)/2),
-      //         slerpFactor/framesPerRoll)
-      //       }, framesPerRoll])
-      //     }
-      // }
-
-      // if(direction === 'l') {
-      //   this.animations.push([() => {
-      //       // this.position.z += deltaGrid
-      //       this.quaternion.slerp(
-      //         new THREE.Quaternion(-Math.sqrt(2)/2,0,0,Math.sqrt(2)/2),
-      //         slerpFactor/framesPerRoll)
-      //     }, framesPerRoll])
-      // }
-
-      this.isUpright = false
-
-      // if (direction === 'u') {
-      //   this.animations.push([() => {
-      //     this.position.x += deltaGrid
-      //     this.position.y += deltaY
-      //     this.rotation.z -= rotVel
-      //   }, framesPerRoll])
-      //   this.isUpright = !this.isUpright
-      // } else if (direction === 'd') {
-      //   this.animations.push([() => {
-      //     this.position.x -= deltaGrid
-      //     this.position.y += deltaY
-      //     this.setRotationFromEuler(new THREE.Euler(0,0,Math.PI/2,'XYZ'))
-      //     // this.rotation.z += rotVel
-      //   }, framesPerRoll])
-      //   this.isUpright = !this.isUpright
-      // } else if (direction === 'l') {
-      //   this.animations.push([() => {
-      //     this.position.z -= deltaGrid
-      //     this.position.y += deltaY
-      //     this.rotation.x -= rotVel
-      //   }, framesPerRoll])
-      //   this.isUpright = !this.isUpright
-      // } else if (direction === 'r') {
-      //   this.animations.push([() => {
-      //     this.position.z += deltaGrid
-      //     this.position.y += deltaY
-      //     this.rotation.x += rotVel
-      //   }, framesPerRoll])
-      //   this.isUpright = !this.isUpright
-      // } else if (direction === 'resp') {
-      //   this.respawn()
-      //   this.isUpright = true
-      // }
+      // this.isUpright = false
 
       didMove = true
       this.playSound = true
@@ -145,14 +96,21 @@ class RectangularPrismPlayer extends Player {
     return didMove
   }
 
-  // updateOrientation()
+  getOrientation() {
+    for (const [orientation, quaternions] of Object.entries(ORIENTATION)) {
+      for(const q of quaternions) {
+        if(this.quaternion.equals(q))
+          return orientation
+      }
+    }
+    return 'LEFTRIGHT'
+  }
 
-  getRotationAxis(dir) {
-    let newGridPos
-    if (dir === 'u') {
-      newGridPos = this.gridPos.map((pos) => {
-        pos.x += 1
-      })
+  updateOrientation() {
+    const orientation = this.getOrientation()
+    // console.log(orientation)
+    if(orientation === 'UPRIGHT') {
+      this.isUpright = true
     }
   }
 
@@ -163,15 +121,58 @@ class RectangularPrismPlayer extends Player {
       this.respawnPending = false
       this.respawn()
     } else {
-      if(this.quaternion.equals(UPRIGHT_QUATERNION)) {
-        this.isUpright = true
-      }
+      this.roundQuaternion()
+      // console.log(this.quaternion._x)
+      // if (this.quaternion._x != undefined)
+      this.updateOrientation()
       // this.rotation.set(0,0,0);
       // this.position.round()
       // this.position.y = prevY
       this.isReadyToMove = true
     }
-  };
+  }
+
+  roundQuaternion() {
+    let x, y, z, w
+    if(this.quaternion._x != undefined && 
+       this.quaternion._y != undefined &&
+       this.quaternion._z != undefined && 
+       this.quaternion._w != undefined) {
+      x = roundQuaternionComponent(this.quaternion._x)
+      y = roundQuaternionComponent(this.quaternion._y)
+      z = roundQuaternionComponent(this.quaternion._z)
+      w = roundQuaternionComponent(this.quaternion._w)
+      let q = new THREE.Quaternion(x,y,z,w)
+      this.setRotationFromQuaternion(q)
+    }
+  }
+}
+
+function roundQuaternionComponent(q) {
+  // round to 0
+  if(Math.abs(q) < 1e-10)
+    return 0
+  // round to (+/-) .5
+  if(Math.abs(q) - .5 < 1e-10) {
+    if(q < 0)
+      return -.5
+    else
+      return .5
+  }
+  // round to (+/-) sqrt(2) / 2
+  if(Math.abs(q) - (Math.sqrt(2) / 2) < 1e-10) {
+    if(q < 0)
+      return -Math.sqrt(2) / 2
+    else
+      return Math.sqrt(2) / 2
+  }
+  // round to (+/-) 1
+  if(Math.abs(q) - 1 < 1e-10) {
+    if(q < 0)
+      return -1
+    else
+      return 1
+  }
 }
 
 export default RectangularPrismPlayer
