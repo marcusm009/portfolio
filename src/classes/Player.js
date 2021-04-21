@@ -35,6 +35,9 @@ class Player extends THREE.Mesh {
     this.isFalling = false
     this.completedLevel = false
 
+    this.lastDirection = 'resp'
+    this.lastRotation = new THREE.Vector3(0,0,0)
+
     this.respawnPending = false
     this.completionPending = false
 
@@ -80,6 +83,7 @@ class Player extends THREE.Mesh {
       didMove = true
       this.playSound = true
       this.isReadyToMove = false
+      this.lastDirection = direction
     }
 
     return didMove
@@ -142,18 +146,17 @@ class Player extends THREE.Mesh {
   }
 
   checkFloor(floor) {
-    if (!floor.hasBlockInLocation(this.position.x, this.position.z)) { // fall
-
-      // complete level
-      if (floor.hasGoalInLocation(this.position.x, this.position.z)) {
-        this.fall(0.005, 100)
-        this.beginCompletion()
-        floor.completeLevel()
-        // respawn once animation is finished
-      } else {
-        this.fall(0.02)
-        this.respawnPending = true
-      }
+    let pos = this.getGridPosition()
+    // fall
+    if (!floor.hasBlockInLocation(pos)) {
+      this.fall(0.02)
+      this.respawnPending = true
+    }
+    // complete level
+    else if (floor.hasGoalInLocation(pos)) {
+      this.fall(0.005, 100)
+      this.beginCompletion()
+      floor.completeLevel()
     }
   }
 
@@ -165,6 +168,10 @@ class Player extends THREE.Mesh {
       this.position.y -= this.fallVelocity
       this.fallVelocity += gravity
     }, frames])
+  }
+
+  getGridPosition() {
+    return [this.position.x, this.position.z]
   }
 
   roundPosition() {

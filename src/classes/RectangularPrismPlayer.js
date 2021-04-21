@@ -1,60 +1,9 @@
 import * as THREE from 'three'
 import Player from './Player'
 
-// const UPRIGHT_QUATERNION = new THREE.Quaternion(0,0,0,1)
-
-const ORIENTATION = {
-  UPRIGHT: [
-    new THREE.Quaternion(1,0,0,0),
-    new THREE.Quaternion(-1,0,0,0),
-    new THREE.Quaternion(0,1,0,0),
-    new THREE.Quaternion(0,-1,0,0),
-    new THREE.Quaternion(0,0,1,0),
-    new THREE.Quaternion(0,0,-1,0),
-    new THREE.Quaternion(0,0,0,1),
-    new THREE.Quaternion(0,0,0,-1),
-    new THREE.Quaternion(Math.sqrt(2)/2,0,Math.sqrt(2)/2,0),
-    new THREE.Quaternion(Math.sqrt(2)/2,0,-Math.sqrt(2)/2,0),
-    new THREE.Quaternion(-Math.sqrt(2)/2,0,Math.sqrt(2)/2,0),
-    new THREE.Quaternion(-Math.sqrt(2)/2,0,-Math.sqrt(2)/2,0),
-    new THREE.Quaternion(0,Math.sqrt(2)/2,0,Math.sqrt(2)/2),
-    new THREE.Quaternion(0,Math.sqrt(2)/2,0,-Math.sqrt(2)/2),
-    new THREE.Quaternion(0,-Math.sqrt(2)/2,0,Math.sqrt(2)/2),
-    new THREE.Quaternion(0,-Math.sqrt(2)/2,0,-Math.sqrt(2)/2),
-  ],
-  UPDOWN: [
-    new THREE.Quaternion(.5,.5,.5,-.5),
-    new THREE.Quaternion(.5,-.5,.5,.5),
-    new THREE.Quaternion(-.5,.5,.5,.5),
-    new THREE.Quaternion(-.5,-.5,.5,-.5),
-    
-    new THREE.Quaternion(Math.sqrt(2)/2,Math.sqrt(2)/2,0,0),
-    new THREE.Quaternion(-Math.sqrt(2)/2,Math.sqrt(2)/2,0,0),
-    new THREE.Quaternion(0,0,Math.sqrt(2)/2,Math.sqrt(2)/2),
-    new THREE.Quaternion(0,0,-Math.sqrt(2)/2,Math.sqrt(2)/2),
-
-    new THREE.Quaternion(-.5,-.5,-.5,.5),
-    new THREE.Quaternion(-.5,.5,-.5,-.5),
-    new THREE.Quaternion(.5,-.5,-.5,-.5),
-    new THREE.Quaternion(.5,.5,-.5,.5),
-    
-    new THREE.Quaternion(-Math.sqrt(2)/2,-Math.sqrt(2)/2,0,0),
-    new THREE.Quaternion(Math.sqrt(2)/2,-Math.sqrt(2)/2,0,0),
-    new THREE.Quaternion(0,0,-Math.sqrt(2)/2,-Math.sqrt(2)/2),
-    new THREE.Quaternion(0,0,Math.sqrt(2)/2,-Math.sqrt(2)/2),
-
-  ]
-}
-
 class RectangularPrismPlayer extends Player {
   constructor(x, z, y = 1, scale = [.9, 1.8, .9], color = 'blue') {
     super(x, z, y + .25 * scale[1], scale, color)
-    this.isUpright = true
-    this.gridPos = [{
-      x: x,
-      z: z
-    }]
-    this.orientation = 'XYZ'
   }
 
   move(direction, framesPerRoll = 10) {
@@ -67,48 +16,53 @@ class RectangularPrismPlayer extends Player {
       let deltaGrid = 1 / framesPerRoll
       let deltaY = 0
       
-      console.log(orientation)
+      let rotation
 
       if((orientation === 'UPRIGHT') ||
-         (orientation === 'UPDOWN' && (direction === 'u' || direction === 'd')) ||
-         (orientation === 'LEFTRIGHT' && (direction === 'l' || direction === 'r'))) {
+         (orientation === 'UP-DOWN' && (direction === 'u' || direction === 'd')) ||
+         (orientation === 'LEFT-RIGHT' && (direction === 'l' || direction === 'r'))) {
           
         deltaGrid *= 1.5
         deltaY = (orientation === 'UPRIGHT' ? -1 : 1) * .25 * this.size[1] / framesPerRoll
       }
 
       if(direction === 'u') {
+        rotation = new THREE.Vector3(0,0,-1)
         this.animations.push([() => {
           this.position.x += deltaGrid
           this.position.y += deltaY
-          this.rotateOnWorldAxis(new THREE.Vector3(0,0,1),-rotVel)
+          this.rotateOnWorldAxis(rotation, rotVel)
           }, framesPerRoll])
-      }
-      if(direction === 'd') {
+      } else if(direction === 'd') {
+        rotation = new THREE.Vector3(0,0,1)
         this.animations.push([() => {
           this.position.x -= deltaGrid
           this.position.y += deltaY
-          this.rotateOnWorldAxis(new THREE.Vector3(0,0,1), rotVel)
+          this.rotateOnWorldAxis(rotation, rotVel)
           }, framesPerRoll])
-      }
-      if(direction === 'r') {
+      } else if(direction === 'r') {
+        rotation = new THREE.Vector3(1,0,0)
         this.animations.push([() => {
           this.position.z += deltaGrid
           this.position.y += deltaY
-          this.rotateOnWorldAxis(new THREE.Vector3(1,0,0), rotVel)
+          this.rotateOnWorldAxis(rotation, rotVel)
           }, framesPerRoll])
-      }
-      if(direction === 'l') {
+      } else if(direction === 'l') {
+        rotation = new THREE.Vector3(-1,0,0)
         this.animations.push([() => {
             this.position.z -= deltaGrid
             this.position.y += deltaY
-            this.rotateOnWorldAxis(new THREE.Vector3(1,0,0), -rotVel)
+            this.rotateOnWorldAxis(rotation, rotVel)
             }, framesPerRoll])
+      } else if (direction == 'resp') {
+        this.respawn()
       }
 
       didMove = true
       this.playSound = true
       this.isReadyToMove = false
+      this.lastDirection = direction
+      this.lastRotation = rotation
     }
 
     return didMove
@@ -121,61 +75,77 @@ class RectangularPrismPlayer extends Player {
     if(x === toInt(x) && z === toInt(z))
       return 'UPRIGHT'
     if(x === toInt(x))
-      return 'LEFTRIGHT'
+      return 'LEFT-RIGHT'
     if(z === toInt(z))
-      return 'UPDOWN'
-
-    console.log('x: ', x)
-    console.log('z: ', z)
+      return 'UP-DOWN'
   }
-
-  // getOrientation() {
-  //   for (const [orientation, quaternions] of Object.entries(ORIENTATION)) {
-  //     for(const q of quaternions) {
-  //       if(this.quaternion.equals(q))
-  //         return orientation
-  //     }
-  //   }
-  //   return 'LEFTRIGHT'
-  // }
-
-  // getNextAction() {
-  //   let prevY = this.position.y
-  //   if (this.respawnPending) {
-  //     this.respawnPending = false
-  //     this.respawn()
-  //   } else {
-  //     this.roundQuaternion()
-  //     this.isReadyToMove = true
-  //   }
-  // }
 
   checkFloor(floor) {
-    let x = this.position.x
-    let z = this.position.z
+    let pos = this.getGridPosition()
+    let orientation = this.getOrientation()
+    let lastDir = this.lastDirection
 
-    if(x !== toInt(x) || z !== toInt(z)) {
-      console.log('not upright')
+    // regular checkFloor handling
+    if(orientation === 'UPRIGHT') {
+      return super.checkFloor(floor)
     }
     
-    if (!floor.hasBlockInLocation(this.position.x, this.position.z)) { // fall
-
-      // complete level
-      if (floor.hasGoalInLocation(this.position.x, this.position.z)) {
-        this.fall(0.005, 100)
-        this.beginCompletion()
-        floor.completeLevel()
-        // respawn once animation is finished
-      } else {
-        this.fall(0.02)
-        this.respawnPending = true
+    // any fall
+    if (!floor.hasBlockInLocation(pos[0]) || !floor.hasBlockInLocation(pos[1])) {
+      // both blocks off the grid
+      if (!floor.hasBlockInLocation(pos[0]) && !floor.hasBlockInLocation(pos[1])) {
+        // this.quickRotate(this.lastRotation)
       }
+      // first block off grid
+      else if (!floor.hasBlockInLocation(pos[0])) {
+        console.log('first off')
+        if(orientation === 'UP-DOWN')
+          this.quickRotate(new THREE.Vector3(0,0,1))
+        else
+          this.quickRotate(new THREE.Vector3(-1,0,0))
+      }
+      // second block off grid
+      else {
+        console.log('second off')
+        if(orientation === 'UP-DOWN')
+          this.quickRotate(new THREE.Vector3(0,0,-1))
+        else
+          this.quickRotate(new THREE.Vector3(1,0,0), false)
+      }
+      
+      this.fall(0.02)
+      this.respawnPending = true
     }
   }
 
-  // getBothPositions() {
+  quickRotate(axis, invertPos=true, posFrames=10, rotFrames=25) {
+    // push position change
+    let x = (invertPos ? -1 : 1) * axis.z
+    let z = (invertPos ? -1 : 1) * axis.x
+    this.animations.push([() => {
+      this.position.x += .5*x / posFrames
+      this.position.z += .5*z / posFrames
+    }, posFrames])
 
-  // }
+    // push rot change
+    let rotVel = (Math.PI / 2) / rotFrames
+    this.animations.push([() => {
+      this.rotateOnWorldAxis(axis, rotVel)
+    }, rotFrames])
+  }
+
+  getGridPosition() {
+    let x = this.position.x
+    let z = this.position.z
+    let orientation = this.getOrientation()
+
+    if(orientation === 'UPRIGHT')
+      return [x,z]
+    if(orientation === 'UP-DOWN')
+      return [[x-.5,z],[x+.5,z]]
+    if(orientation === 'LEFT-RIGHT')
+      return [[x,z-.5],[x,z+.5]]
+  }
 
   // Rounds the position to the nearest .5
   roundPosition() {

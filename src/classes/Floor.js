@@ -58,21 +58,21 @@ class Floor {
         }
     }
 
-    getBlockInLocation(x, z) {
-        let xInt = Math.round(x);
-        let zInt = Math.round(z);
+    getBlockInLocation(pos) {
+        let xInt = Math.round(pos[0]);
+        let zInt = Math.round(pos[1]);
         if (xInt < 0 || zInt < 0 || xInt >= this.template[0].length || zInt >= this.template.length) {
             return '';
         }
         return this.template[zInt][xInt].toLowerCase();
     }
 
-    hasBlockInLocation(x, z) {
-        return ['x','s'].includes(this.getBlockInLocation(x, z));
+    hasBlockInLocation(pos) {
+        return ['x','s','g'].includes(this.getBlockInLocation(pos));
     }
 
-    hasGoalInLocation(x, z) {
-        return this.getBlockInLocation(x, z) == 'g';
+    hasGoalInLocation(pos) {
+        return this.getBlockInLocation(pos) == 'g';
     }
 
     getPositions() {

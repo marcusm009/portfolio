@@ -97,7 +97,7 @@ class Canvas extends Component {
       this.props.isActive,
       `${this.props.baseRoute}/levels/solutions/${this.props.level}.txt`
     );
-    if(this.props.level == 'projects')
+    if(this.props.level === 'projects' || this.props.level === 'contact')
         this.state.player = new RectangularPrismPlayer(this.state.floor.spawnTile.position.x, this.state.floor.spawnTile.position.z);
     else
         this.state.player = new CubePlayer(this.state.floor.spawnTile.position.x, this.state.floor.spawnTile.position.z);
@@ -138,7 +138,7 @@ class Canvas extends Component {
               // let vector = new THREE.Vector3(0,0,1)
               // vector.applyQuaternion(this.state.player.quaternion)
               // console.log(vector)
-              console.log(this.state.player.getWorldQuaternion())
+              console.log(this.state.player.getGridPosition())
           }
     
           frame += 1;
