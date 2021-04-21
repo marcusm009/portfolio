@@ -11,7 +11,7 @@ class Player extends THREE.Mesh {
     for(let i = 0; i < 6; i++) {
       materials.push(
         new THREE.MeshBasicMaterial({
-          map: new THREE.TextureLoader().load(`textures/${i+1}.png`),
+          map: new THREE.TextureLoader().load(`textures/player/${(i === 2 || i === 3) ? '1' : '2'}.png`),
           side: THREE.DoubleSide
         })
       )

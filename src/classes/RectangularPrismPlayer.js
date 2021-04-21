@@ -102,7 +102,7 @@ class RectangularPrismPlayer extends Player {
         if(orientation === 'UP-DOWN')
           this.quickRotate(new THREE.Vector3(0,0,1))
         else
-          this.quickRotate(new THREE.Vector3(-1,0,0))
+          this.quickRotate(new THREE.Vector3(-1,0,0), false)
       }
       // second block off grid
       else {
