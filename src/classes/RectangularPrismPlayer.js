@@ -66,20 +66,16 @@ class RectangularPrismPlayer extends Player {
       let orientation = this.getOrientation()
       let deltaGrid = 1 / framesPerRoll
       let deltaY = 0
-      // let deltaY = (this.isUpright === true ? -1 : 1) * .25 * this.size[1] / framesPerRoll
       
+      console.log(orientation)
+
       if((orientation === 'UPRIGHT') ||
          (orientation === 'UPDOWN' && (direction === 'u' || direction === 'd')) ||
          (orientation === 'LEFTRIGHT' && (direction === 'l' || direction === 'r'))) {
           
         deltaGrid *= 1.5
         deltaY = (orientation === 'UPRIGHT' ? -1 : 1) * .25 * this.size[1] / framesPerRoll
-        console.log('special')
-      } else {
-        console.log(orientation)
-        console.log(this.quaternion)
       }
-      
 
       if(direction === 'u') {
         this.animations.push([() => {
@@ -110,8 +106,6 @@ class RectangularPrismPlayer extends Player {
             }, framesPerRoll])
       }
 
-      // this.isUpright = false
-
       didMove = true
       this.playSound = true
       this.isReadyToMove = false
@@ -121,82 +115,75 @@ class RectangularPrismPlayer extends Player {
   }
 
   getOrientation() {
-    for (const [orientation, quaternions] of Object.entries(ORIENTATION)) {
-      for(const q of quaternions) {
-        if(this.quaternion.equals(q))
-          return orientation
+    let x = this.position.x
+    let z = this.position.z
+
+    if(x === toInt(x) && z === toInt(z))
+      return 'UPRIGHT'
+    if(x === toInt(x))
+      return 'LEFTRIGHT'
+    if(z === toInt(z))
+      return 'UPDOWN'
+
+    console.log('x: ', x)
+    console.log('z: ', z)
+  }
+
+  // getOrientation() {
+  //   for (const [orientation, quaternions] of Object.entries(ORIENTATION)) {
+  //     for(const q of quaternions) {
+  //       if(this.quaternion.equals(q))
+  //         return orientation
+  //     }
+  //   }
+  //   return 'LEFTRIGHT'
+  // }
+
+  // getNextAction() {
+  //   let prevY = this.position.y
+  //   if (this.respawnPending) {
+  //     this.respawnPending = false
+  //     this.respawn()
+  //   } else {
+  //     this.roundQuaternion()
+  //     this.isReadyToMove = true
+  //   }
+  // }
+
+  checkFloor(floor) {
+    let x = this.position.x
+    let z = this.position.z
+
+    if(x !== toInt(x) || z !== toInt(z)) {
+      console.log('not upright')
+    }
+    
+    if (!floor.hasBlockInLocation(this.position.x, this.position.z)) { // fall
+
+      // complete level
+      if (floor.hasGoalInLocation(this.position.x, this.position.z)) {
+        this.fall(0.005, 100)
+        this.beginCompletion()
+        floor.completeLevel()
+        // respawn once animation is finished
+      } else {
+        this.fall(0.02)
+        this.respawnPending = true
       }
     }
-    return 'LEFTRIGHT'
   }
 
-  updateOrientation() {
-    const orientation = this.getOrientation()
-    // console.log(orientation)
-    if(orientation === 'UPRIGHT') {
-      this.isUpright = true
-    }
-  }
+  // getBothPositions() {
 
-  // Change to something better
-  getNextAction() {
-    let prevY = this.position.y
-    if (this.respawnPending) {
-      this.respawnPending = false
-      this.respawn()
-    } else {
-      this.roundQuaternion()
-      // console.log(this.quaternion._x)
-      // if (this.quaternion._x != undefined)
-      this.updateOrientation()
-      // this.rotation.set(0,0,0);
-      // this.position.round()
-      // this.position.y = prevY
-      this.isReadyToMove = true
-    }
-  }
+  // }
 
-  roundQuaternion() {
-    let x, y, z, w
-    if(this.quaternion._x != undefined && 
-       this.quaternion._y != undefined &&
-       this.quaternion._z != undefined && 
-       this.quaternion._w != undefined) {
-      x = roundQuaternionComponent(this.quaternion._x)
-      y = roundQuaternionComponent(this.quaternion._y)
-      z = roundQuaternionComponent(this.quaternion._z)
-      w = roundQuaternionComponent(this.quaternion._w)
-      let q = new THREE.Quaternion(x,y,z,w)
-      this.setRotationFromQuaternion(q)
-    }
+  // Rounds the position to the nearest .5
+  roundPosition() {
+    this.position.x = Math.round(this.position.x*2)/2
+    this.position.z = Math.round(this.position.z*2)/2
   }
 }
 
-function roundQuaternionComponent(q) {
-  // round to 0
-  if(Math.abs(q) < 1e-10)
-    return 0
-  // round to (+/-) .5
-  if(Math.abs(q) - .5 < 1e-10) {
-    if(q < 0)
-      return -.5
-    else
-      return .5
-  }
-  // round to (+/-) sqrt(2) / 2
-  if(Math.abs(q) - (Math.sqrt(2) / 2) < 1e-10) {
-    if(q < 0)
-      return -Math.sqrt(2) / 2
-    else
-      return Math.sqrt(2) / 2
-  }
-  // round to (+/-) 1
-  if(Math.abs(q) - 1 < 1e-10) {
-    if(q < 0)
-      return -1
-    else
-      return 1
-  }
-}
+const toInt = (num) => ~~num
 
 export default RectangularPrismPlayer

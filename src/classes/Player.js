@@ -135,11 +135,11 @@ class Player extends THREE.Mesh {
       this.respawnPending = false
       this.respawn()
     } else {
-      // this.rotation.set(0, 0, 0)
-      this.position.round()
+      this.roundPosition()
+      this.roundQuaternion()
       this.isReadyToMove = true
     }
-  };
+  }
 
   checkFloor(floor) {
     if (!floor.hasBlockInLocation(this.position.x, this.position.z)) { // fall
@@ -155,7 +155,7 @@ class Player extends THREE.Mesh {
         this.respawnPending = true
       }
     }
-  };
+  }
 
   fall(gravity, frames = 50) {
     this.isFalling = true
@@ -165,6 +165,25 @@ class Player extends THREE.Mesh {
       this.position.y -= this.fallVelocity
       this.fallVelocity += gravity
     }, frames])
+  }
+
+  roundPosition() {
+    this.position.round()
+  }
+
+  roundQuaternion() {
+    let x, y, z, w
+    if(this.quaternion._x != undefined && 
+       this.quaternion._y != undefined &&
+       this.quaternion._z != undefined && 
+       this.quaternion._w != undefined) {
+      x = roundQuaternionComponent(this.quaternion._x)
+      y = roundQuaternionComponent(this.quaternion._y)
+      z = roundQuaternionComponent(this.quaternion._z)
+      w = roundQuaternionComponent(this.quaternion._w)
+      let q = new THREE.Quaternion(x,y,z,w)
+      this.setRotationFromQuaternion(q)
+    }
   }
 
   respawn() {
@@ -196,6 +215,33 @@ class Player extends THREE.Mesh {
     this.position.y = 9999999
     this.position.z = 9999999
     this.completedLevel = true
+  }
+}
+
+const roundQuaternionComponent = (q) => {
+  // round to 0
+  if(Math.abs(q) < 1e-10)
+    return 0
+  // round to (+/-) .5
+  if(Math.abs(q) - .5 < 1e-10) {
+    if(q < 0)
+      return -.5
+    else
+      return .5
+  }
+  // round to (+/-) sqrt(2) / 2
+  if(Math.abs(q) - (Math.sqrt(2) / 2) < 1e-10) {
+    if(q < 0)
+      return -Math.sqrt(2) / 2
+    else
+      return Math.sqrt(2) / 2
+  }
+  // round to (+/-) 1
+  if(Math.abs(q) - 1 < 1e-10) {
+    if(q < 0)
+      return -1
+    else
+      return 1
   }
 }
 
