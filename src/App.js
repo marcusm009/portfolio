@@ -1,6 +1,8 @@
 import { BrowserRouter, Redirect } from 'react-router-dom'
 import { useState } from 'react'
 
+import { CssBaseline } from '@material-ui/core'
+
 import NavBar from './react-components/NavBar'
 import TitleBar from './react-components/TitleBar'
 import EntryPage from './react-components/EntryPage'
@@ -11,7 +13,7 @@ import Projects from './react-components/pages/Projects'
 import Contact from './react-components/pages/Contact'
 
 const BASE_ROUTE = '/portfolio'
-const VERSION = '0.5.3'
+const VERSION = '0.5.4'
 
 console.log('VER: ', VERSION)
 
@@ -71,6 +73,7 @@ const App = () => {
         exact
         from='/'
         to='about'/>
+      <CssBaseline />
       <TitleBar
         baseRoute={BASE_ROUTE}
       />

@@ -1,7 +1,9 @@
 // @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&family=Zilla+Slab+Highlight:wght@700&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&family=Zilla+Slab+Highlight:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Zilla+Slab+Highlight:wght@700&display=swap');
 
 $white: #fff;
+$veryLightGray: #ddd;
 $lightGray: #606060;
 $gray: #404040;
 $darkGray: #202020;
@@ -16,9 +18,9 @@ $fontSizeSmall: 1rem;
 
 $navBarSize: 4rem;
 
-*, *::before, *::after {
-  box-sizing: border-box;
-}
+// *, *::before, *::after {
+//   box-sizing: border-box;
+// }
 
 html {
   left: 0;
@@ -37,24 +39,24 @@ body {
   left: 0;
   right: 0;
   margin: 0;
-  background: 
-  -moz-linear-gradient(135deg, $black 25%, transparent 25%) -50px 0,
-  -moz-linear-gradient(225deg, $black 25%, transparent 25%) -50px 0,
-  -moz-linear-gradient(315deg, $black 25%, transparent 25%),
-  -moz-linear-gradient(45deg, $black 25%, transparent 25%);
-  background:
-  -webkit-linear-gradient(135deg, $black 25%, transparent 25%) -50px 0,
-  -webkit-linear-gradient(225deg, $black 25%, transparent 25%) -50px 0,
-  -webkit-linear-gradient(315deg, $black 25%, transparent 25%),
-  -webkit-linear-gradient(45deg, $black 25%, transparent 25%);
-  background:
-  linear-gradient(135deg, $black 25%, transparent 25%) -50px 0,
-  linear-gradient(225deg, $black 25%, transparent 25%) -50px 0,
-  linear-gradient(315deg, $black 25%, transparent 25%),
-  linear-gradient(45deg, $black 25%, transparent 25%);
-  background-size: 2em 2em;
+  // background: 
+  // -moz-linear-gradient(135deg, $black 25%, transparent 25%) -50px 0,
+  // -moz-linear-gradient(225deg, $black 25%, transparent 25%) -50px 0,
+  // -moz-linear-gradient(315deg, $black 25%, transparent 25%),
+  // -moz-linear-gradient(45deg, $black 25%, transparent 25%);
+  // background:
+  // -webkit-linear-gradient(135deg, $black 25%, transparent 25%) -50px 0,
+  // -webkit-linear-gradient(225deg, $black 25%, transparent 25%) -50px 0,
+  // -webkit-linear-gradient(315deg, $black 25%, transparent 25%),
+  // -webkit-linear-gradient(45deg, $black 25%, transparent 25%);
+  // background:
+  // linear-gradient(135deg, $black 25%, transparent 25%) -50px 0,
+  // linear-gradient(225deg, $black 25%, transparent 25%) -50px 0,
+  // linear-gradient(315deg, $black 25%, transparent 25%),
+  // linear-gradient(45deg, $black 25%, transparent 25%);
+  // background-size: 2em 2em;
   background-color: $darkGray;
-  font-family: $font;
+  // font-family: $font;
 }
 
 body::-webkit-scrollbar-track {
@@ -70,21 +72,21 @@ body::-webkit-scrollbar-thumb {
   }
 }
 
-h1 {
-  font-size: $fontSizeLarge;
-}
+// h1 {
+//   font-size: $fontSizeLarge;
+// }
 
-h2 {
-  font-size: $fontSizeMed;
-}
+// h2 {
+//   font-size: $fontSizeMed;
+// }
 
-h3 {
-  font-size: $fontSizeSmall;
-}
+// h3 {
+//   font-size: $fontSizeSmall;
+// }
 
-p {
-  word-break: break-word;
-}
+// p {
+//   word-break: break-word;
+// }
 
 button, a {
   border: none;
@@ -252,6 +254,7 @@ button, a {
   top: 0;
   width: 100vw;
   height: 100vh;
+  background-color: $gray;
 }
 
 .page-container {
@@ -261,7 +264,9 @@ button, a {
   min-height: calc(100vh - 5rem);
   min-width: 100vw;
   z-index: 1;
-  background-color: rgba(255, 255, 255, 0);
+  padding-top: 50px;
+  // background-color: rgba(255, 255, 255, 0);
+  background-color: $white;
 
   &.fade, &.active {
     display: block;
@@ -279,19 +284,19 @@ button, a {
   }
 }
 
-.page {
-  background-color: rgba(255, 255, 255, 1);
-  padding-top: 3rem;
-  padding-left: calc(min(10rem, 10vw));
-  padding-right: calc(min(10rem, 10vw));
-  padding-bottom: 7rem;
-  font-size: $fontSizeSmall;
-  font-weight: 300;
-  line-height: $fontSizeSmall * 2;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  z-index: 2
-}
+// .page {
+//   background-color: rgba(255, 255, 255, 1);
+//   padding-top: 3rem;
+//   padding-left: calc(min(10rem, 10vw));
+//   padding-right: calc(min(10rem, 10vw));
+//   padding-bottom: 7rem;
+//   font-size: $fontSizeSmall;
+//   font-weight: 300;
+//   line-height: $fontSizeSmall * 2;
+//   text-rendering: optimizeLegibility;
+//   -webkit-font-smoothing: antialiased;
+//   z-index: 2
+// }
 
 .fade-in-section {
   opacity: 0;
@@ -319,8 +324,8 @@ button, a {
   z-index: 2
 }
 
-.timeline {
-  display: grid;
-  background-color: red;
-}
+// .timeline {
+//   background-color: $veryLightGray;
+//   border: 2px solid $darkGray;
+// }
 
