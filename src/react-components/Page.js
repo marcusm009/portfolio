@@ -29,14 +29,14 @@ const Page = ({ Component, isActive, replayStageCallback, baseRoute }) => {
   useEffect(() => {
     let timer = setTimeout(() => setFadingIn(false), 1000)
 
-    window.addEventListener('scroll', listenToScroll)
-    document.addEventListener('wheel', listenToWheel)
+    // window.addEventListener('scroll', listenToScroll)
+    // document.addEventListener('wheel', listenToWheel)
 
-    return () => {
-      clearTimeout(timer)
-      window.removeEventListener('scroll', listenToScroll)
-      document.removeEventListener('wheel', listenToWheel)
-    }
+    // return () => {
+    //   clearTimeout(timer)
+    //   window.removeEventListener('scroll', listenToScroll)
+    //   document.removeEventListener('wheel', listenToWheel)
+    // }
   }, [])
 
   useEffect(() => {

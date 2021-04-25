@@ -11,7 +11,7 @@ import Projects from './react-components/pages/Projects'
 import Contact from './react-components/pages/Contact'
 
 const BASE_ROUTE = '/portfolio'
-const VERSION = '0.5.2'
+const VERSION = '0.5.3'
 
 console.log('VER: ', VERSION)
 

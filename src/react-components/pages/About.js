@@ -1,4 +1,5 @@
 import FadeInSection from '../FadeInSection'
+import Timeline from '../Timeline'
 
 const darkGray = '#202020'
 
@@ -72,63 +73,8 @@ const About = ({ baseRoute }) => {
           <li>Node.JS - Some knowledge</li>
         </ul>
       </FadeInSection>
-      <FadeInSection>
-        <h2>Timeline</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet dolorem ab, voluptatibus maiores placeat deleniti, tempora amet
-          rem voluptatum excepturi, maxime sapiente rerum corrupti repellendus ipsa mollitia architecto corporis nostrum velit cumque vero
-          soluta! Perspiciatis minima quam exercitationem harum. Distinctio quas sint ad, sapiente praesentium veniam reiciendis consectetur
-          deserunt laudantium.
-        </p>
-      </FadeInSection>
-      <FadeInSection>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet dolorem ab, voluptatibus maiores placeat deleniti, tempora amet
-          rem voluptatum excepturi, maxime sapiente rerum corrupti repellendus ipsa mollitia architecto corporis nostrum velit cumque vero
-          soluta! Perspiciatis minima quam exercitationem harum. Distinctio quas sint ad, sapiente praesentium veniam reiciendis consectetur
-          deserunt laudantium.
-        </p>
-      </FadeInSection>
-      <FadeInSection>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet dolorem ab, voluptatibus maiores placeat deleniti, tempora amet
-          rem voluptatum excepturi, maxime sapiente rerum corrupti repellendus ipsa mollitia architecto corporis nostrum velit cumque vero
-          soluta! Perspiciatis minima quam exercitationem harum. Distinctio quas sint ad, sapiente praesentium veniam reiciendis consectetur
-          deserunt laudantium.
-        </p>
-      </FadeInSection>
-      <FadeInSection>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet dolorem ab, voluptatibus maiores placeat deleniti, tempora amet
-          rem voluptatum excepturi, maxime sapiente rerum corrupti repellendus ipsa mollitia architecto corporis nostrum velit cumque vero
-          soluta! Perspiciatis minima quam exercitationem harum. Distinctio quas sint ad, sapiente praesentium veniam reiciendis consectetur
-          deserunt laudantium.
-        </p>
-      </FadeInSection>
-      <FadeInSection>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet dolorem ab, voluptatibus maiores placeat deleniti, tempora amet
-          rem voluptatum excepturi, maxime sapiente rerum corrupti repellendus ipsa mollitia architecto corporis nostrum velit cumque vero
-          soluta! Perspiciatis minima quam exercitationem harum. Distinctio quas sint ad, sapiente praesentium veniam reiciendis consectetur
-          deserunt laudantium.
-        </p>
-      </FadeInSection>
-      <FadeInSection>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet dolorem ab, voluptatibus maiores placeat deleniti, tempora amet
-          rem voluptatum excepturi, maxime sapiente rerum corrupti repellendus ipsa mollitia architecto corporis nostrum velit cumque vero
-          soluta! Perspiciatis minima quam exercitationem harum. Distinctio quas sint ad, sapiente praesentium veniam reiciendis consectetur
-          deserunt laudantium.
-        </p>
-      </FadeInSection>
-      <FadeInSection>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet dolorem ab, voluptatibus maiores placeat deleniti, tempora amet
-          rem voluptatum excepturi, maxime sapiente rerum corrupti repellendus ipsa mollitia architecto corporis nostrum velit cumque vero
-          soluta! Perspiciatis minima quam exercitationem harum. Distinctio quas sint ad, sapiente praesentium veniam reiciendis consectetur
-          deserunt laudantium.
-        </p>
-      </FadeInSection>
+      <h2>Timeline</h2>
+      <Timeline />
     </>
   )
 }
