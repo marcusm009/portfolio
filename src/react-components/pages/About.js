@@ -1,7 +1,11 @@
 import FadeInSection from '../FadeInSection'
 // import { Timeline, TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent, TimelineDot} from '@material-ui/lab'
 
-import { Box, Typography, List, ListItem } from '@material-ui/core'
+import { Avatar, Paper, Box, Grid, Typography, List, ListItem } from '@material-ui/core'
+
+import ComputerIcon from '@material-ui/icons/Computer'
+import DirectionsRunIcon from '@material-ui/icons/DirectionsRun'
+import CodeIcon from '@material-ui/icons/Code'
 
 import CustomizedTimeline from '../CustomizedTimeline'
 
@@ -11,34 +15,37 @@ const About = ({ baseRoute }) => {
   return (
     <>
       <Typography variant='h3' gutterBottom>About Me</Typography>
-      <div style={{
-        display: 'flex'
-      }}>
-        <img src={baseRoute + '/images/headshot.jpg'}
-          style={{
-            objectFit: 'cover',
-            maxWidth: '400px',
-            maxHeight: '400px',
-            width: '50%'
-          }}
-          title="Me!" />
-          <div style={{
-            height: '400px',
-            padding: '2rem',
-            border: `3px solid ${darkGray}`,
-            overflow: 'hidden'
-          }}>
-            <h2 style={{
-              letterSpacing: '2px',
-              // textDecoration: 'underline'
-            }}>Overview</h2>
-            <h3>Occupation: Software Engineer</h3>
-            <h3>Company: Motorola Solutions</h3>
-            <h3>Location: Denver, CO</h3>
-            <h3>Total Experience: 5+ years</h3>
-            <h3>Industry Experience: 1+ year</h3>
-          </div>
-      </div>
+      <Paper>
+        <div style={{
+          display: 'flex'
+        }}>
+          <Avatar src={baseRoute + '/images/headshot.jpg'}
+            style={{
+              // objectFit: 'cover',
+              // maxWidth: '400px',
+              // maxHeight: '400px',
+              // width: '50%'
+              height: '400px',
+              width: '400px'
+            }}
+            alt="Me!" />
+            <div style={{
+              height: '400px',
+              padding: '2rem',
+              // border: `3px solid ${darkGray}`,
+              overflow: 'hidden'
+            }}>
+              <Typography variant='h4' gutterBottom style={{
+                letterSpacing: '2px',
+              }}>Overview</Typography>
+              <Typography variant='h5'>Occupation: Software Engineer</Typography>
+              <Typography variant='h5'>Company: Motorola Solutions</Typography>
+              <Typography variant='h5'>Location: Denver, CO</Typography>
+              <Typography variant='h5'>Total Experience: 5+ years</Typography>
+              <Typography variant='h5'>Industry Experience: 1+ year</Typography>
+            </div>
+        </div>
+      </Paper>
       <br/>
       <FadeInSection>  
         <Typography variant='h4' gutterBottom>Objective</Typography>
@@ -48,41 +55,50 @@ const About = ({ baseRoute }) => {
       </FadeInSection>
       <br/>
       <FadeInSection>  
-      <Typography variant='h4' gutterBottom>CS Interests</Typography>
-        <Typography>
-          <ul>
-            <li>Backend Development</li>
-            <li>Frontend Development</li>
-            <li>Machine Learning</li>
-          </ul>
+        <Paper>
+          <ComputerIcon/>
+          <Typography variant='h4' gutterBottom>CS Interests</Typography>
+          <Typography>
+            <ul>
+              <li>Backend Development</li>
+              <li>Frontend Development</li>
+              <li>Machine Learning</li>
+            </ul>
           </Typography>
+        </Paper>
       </FadeInSection>
       <FadeInSection>
-        <Typography variant='h4' gutterBottom>Extracurricular Interests</Typography>
-        <Typography>
-          <ul>
-            <li>Investing / Economics</li>
-            <li>Disc Golf</li>
-            <li>Climbing</li>
-            <li>Hiking</li>
-            <li>Running</li>
-            <li>Weightlifting</li>
-          </ul>
-        </Typography>
+        <Paper>
+          <DirectionsRunIcon/>
+          <Typography variant='h4' gutterBottom>Extracurricular Interests</Typography>
+          <Typography>
+            <ul>
+              <li>Investing / Economics</li>
+              <li>Disc Golf</li>
+              <li>Climbing</li>
+              <li>Hiking</li>
+              <li>Running</li>
+              <li>Weightlifting</li>
+            </ul>
+          </Typography>
+        </Paper>
       </FadeInSection>
       <FadeInSection>
-        <Typography variant='h4' gutterBottom>Languages / Frameworks</Typography>
-        <Typography>
-          <ul>
-            <li>Python - Proficient</li>
-            <li>Javascript - Experienced</li>
-            <li>HTML / CSS - Experienced</li>
-            <li>React.JS - Experienced</li>
-            <li>Git - Experienced</li>          
-            <li>SQL - Experienced</li>
-            <li>Node.JS - Some knowledge</li>
-          </ul>
-        </Typography>
+        <Paper>
+          <CodeIcon/>
+          <Typography variant='h4' gutterBottom>Languages / Frameworks</Typography>
+          <Typography>
+            <ul>
+              <li>Python - Proficient</li>
+              <li>Javascript - Experienced</li>
+              <li>HTML / CSS - Experienced</li>
+              <li>React.JS - Experienced</li>
+              <li>Git - Experienced</li>          
+              <li>SQL - Experienced</li>
+              <li>Node.JS - Some knowledge</li>
+            </ul>
+          </Typography>
+        </Paper>
       </FadeInSection>
       <FadeInSection>
         <Typography variant='h4' gutterBottom>Timeline</Typography>

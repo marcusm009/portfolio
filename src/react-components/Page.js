@@ -12,7 +12,7 @@ const Page = ({ Component, isActive, replayStageCallback, baseRoute }) => {
   return (
       <div
         className={`page-container ${isFadingIn ? 'fade': ''} ${!isFadingIn && isActive ? 'active': ''}`}>
-        <Container maxWidth='md' >
+        <Container maxWidth='lg' >
           <Component baseRoute={baseRoute}/>
           <Footer />
         </Container>

@@ -42,11 +42,11 @@ export default function CustomizedTimeline() {
             <CardMedia
               className={classes.media}
               image="/portfolio/images/about/uf.jpg"
-              title="Contemplative Reptile"
+              title="UR"
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
-                University of Florida
+                CS Student
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
                 Began pursing a BS in CS at the University of Florida
@@ -58,7 +58,7 @@ export default function CustomizedTimeline() {
       <TimelineItem>
         <TimelineOppositeContent>
           <Typography variant='body2' color='textSecondary'>
-            10:00 am
+            2018
           </Typography>
         </TimelineOppositeContent>
         <TimelineSeparator>
@@ -68,15 +68,29 @@ export default function CustomizedTimeline() {
           <TimelineConnector />
         </TimelineSeparator>
         <TimelineContent>
-          <Paper elevation={3} className={classes.paper}>
-            <Typography variant='h6' component='h1'>
-              Code
-            </Typography>
-            <Typography>Because it&apos;s awesome!</Typography>
-          </Paper>
+          <Card className={classes.root}>
+            <CardMedia
+              className={classes.media}
+              image="/portfolio/images/about/fics.png"
+              title="FICS"
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                Undergraduate Research Assistant
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                Became a machine learning research assistant at Florida Institute of Cybersecurity
+              </Typography>
+            </CardContent>
+          </Card>
         </TimelineContent>
       </TimelineItem>
       <TimelineItem>
+      <TimelineOppositeContent>
+          <Typography variant='body2' color='textSecondary'>
+            2020
+          </Typography>
+        </TimelineOppositeContent>
         <TimelineSeparator>
           <TimelineDot color='primary' variant='outlined'>
             <LaptopMacIcon />
@@ -84,12 +98,21 @@ export default function CustomizedTimeline() {
           <TimelineConnector className={classes.secondaryTail} />
         </TimelineSeparator>
         <TimelineContent>
-          <Paper elevation={3} className={classes.paper}>
-            <Typography variant='h6' component='h1'>
-              Sleep
-            </Typography>
-            <Typography>Because you need rest</Typography>
-          </Paper>
+          <Card className={classes.root}>
+            <CardMedia
+              className={classes.media}
+              image="/portfolio/images/about/motorola.jpg"
+              title="Motorola Solutions"
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                Jr. Software Engineer
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                Became a full time software engineer at Motorola Solutions
+              </Typography>
+            </CardContent>
+          </Card>
         </TimelineContent>
       </TimelineItem>
       <TimelineItem>
@@ -101,9 +124,9 @@ export default function CustomizedTimeline() {
         <TimelineContent>
           <Paper elevation={3} className={classes.paper}>
             <Typography variant='h6' component='h1'>
-              Repeat
+              Future
             </Typography>
-            <Typography>Because this is the life you love!</Typography>
+            <Typography>Who knows what it will hold...</Typography>
           </Paper>
         </TimelineContent>
       </TimelineItem>
