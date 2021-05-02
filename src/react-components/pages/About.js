@@ -21,12 +21,13 @@ const About = ({ baseRoute }) => {
         }}>
           <Avatar src={baseRoute + '/images/headshot.jpg'}
             style={{
-              // objectFit: 'cover',
-              // maxWidth: '400px',
-              // maxHeight: '400px',
-              // width: '50%'
-              height: '400px',
-              width: '400px'
+              objectFit: 'cover',
+              maxWidth: '400px',
+              maxHeight: '400px',
+              width: '50%',
+              height: '50%'
+              // height: '400px',
+              // width: '400px'
             }}
             alt="Me!" />
             <div style={{
