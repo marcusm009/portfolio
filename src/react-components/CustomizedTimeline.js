@@ -2,9 +2,9 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Timeline, TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent,
          TimelineOppositeContent, TimelineDot } from '@material-ui/lab'
+import { Card, CardContent, CardMedia, Typography, useMediaQuery} from '@material-ui/core'
+
 import LaptopMacIcon from '@material-ui/icons/LaptopMac'
-import { Card, CardContent, CardMedia, Paper, Typography } from '@material-ui/core'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,34 +24,48 @@ const CustomizedTimeline = () => {
 
   const content = [
     {
-      year: '2016',
+      year: '2016-2020',
       icon: (<LaptopMacIcon />),
       image: {
         title: 'UF',
         link: 'about/uf.jpg'
       },
-      title: 'CS Student',
+      title: 'B.S. in Computer Science',
+      subtitle: 'University of Florida',
       content: 'Began pursing a BS in CS at the University of Florida'
     },
     {
-      year: '2018',
+      year: '2018-2020',
       icon: (<LaptopMacIcon />),
       image: {
         title: 'Research',
         link: 'about/fics.png'
       },
       title: 'Undergraduate Research Assistant',
-      content: 'Became a machine learning research assistant at Florida Institute of Cybersecurity'
+      subtitle: 'Florida Institute of Cybersecurity',
+      content: 'Became a machine learning research assistant at FICS under Vincent Bindschadler'
     },
     {
-      year: '2020',
+      year: '2020-',
       icon: (<LaptopMacIcon />),
       image: {
         title: 'Motorola',
         link: 'about/motorola.jpg'
       },
       title: 'Jr. Software Engineer',
+      subtitle: 'Motorola Solutions',
       content: 'Became a full time software engineer at Motorola Solutions'
+    },
+    {
+      year: '2021-',
+      icon: (<LaptopMacIcon />),
+      image: {
+        title: 'OMSCS',
+        link: 'about/omscs.png'
+      },
+      title: 'M.S. in Computer Science',
+      subtitle: 'Georgia Institute of Technology',
+      content: 'Currently pursuring a masters of science in computer science at Georgia Tech'
     },
     {
       year: '????',
@@ -90,9 +104,12 @@ const CustomizedTimeline = () => {
                 />
               )}
               <CardContent>
-                <Typography gutterBottom variant='h5' component='h2'>
+                <Typography gutterBottom variant='h5'>
                   {info.title}
-                  </Typography>
+                </Typography>
+                <Typography gutterBottom variant='h6' style={{fontStyle:'italic'}}>
+                  {info.subtitle}
+                </Typography>
                 <Typography variant='body2' color='textSecondary' component='p'>
                   {info.content}
                 </Typography>
