@@ -172,7 +172,7 @@ class Canvas extends Component {
         id={this.props.level}
         className='canvas-container'
         style={{
-          display: this.props.isActive ? 'block' : 'none'
+          display: (this.props.isActive) ? 'block' : 'none'
         }}
       >
       </div>

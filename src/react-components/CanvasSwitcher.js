@@ -25,19 +25,19 @@ const CanvasSwitcher = ({ pages, completeStageCallback, replayStageCallback, bas
     <>
     {pages.map((page, idx) => (
         <>
-          {(page.completed) && (
-          <Page
-            key={page.route}
-            Component={page.component}
-            isActive={location === page.route}
-            replayStageCallback={() => replayStageCallback(page.route)}
-            baseRoute={baseRoute}
-          />)}
-          {(!page.completed && location === page.route) && (
+          {page.completed &&
+            <Page
+              key={page.route}
+              Component={page.component}
+              isActive={location === page.route}
+              replayStageCallback={() => replayStageCallback(page.route)}
+              baseRoute={baseRoute}
+            />}
+          {/* {(!page.completed && location === page.route) && (
           <h1 id='directions-text'>
             Beat the level to unlock the page!
           </h1>
-          )}
+          )} */}
           <Canvas
             level={page.route.replace('/','')}
             isActive={location === page.route}

@@ -25,13 +25,13 @@ $navBarSize: 4rem;
 html {
   left: 0;
   right: 0;
-  width: 100vw;
+  // width: 100vw;
   height: 100vh;
   margin: 0;
   padding: 0;
   touch-action: none;
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  // overflow-x: hidden;
   overflow-y: auto;
 }
 
@@ -262,7 +262,8 @@ button, a {
   top: $navBarSize;
   display: none;
   min-height: calc(100vh - 5rem);
-  min-width: 100vw;
+  width: 100%;
+  // min-width: 100vw;
   z-index: 1;
   padding-top: 50px;
   // background-color: rgba(255, 255, 255, 0);

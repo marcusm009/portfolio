@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Timeline, TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent,
          TimelineOppositeContent, TimelineDot } from '@material-ui/lab'
@@ -18,10 +18,10 @@ const useStyles = makeStyles((theme) => ({
   secondaryTail: {
     backgroundColor: theme.palette.secondary.main,
   },
-}));
+}))
 
 export default function CustomizedTimeline() {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <Timeline align='alternate'>
