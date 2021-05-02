@@ -31,6 +31,7 @@ const CanvasSwitcher = ({ pages, completeStageCallback, replayStageCallback, bas
               Component={page.component}
               isActive={location === page.route}
               replayStageCallback={() => replayStageCallback(page.route)}
+              nextLevel={pages[idx+1]}
               baseRoute={baseRoute}
             />}
           {/* {(!page.completed && location === page.route) && (

@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
+import { useHistory } from 'react-router-dom'
+
 import { Container, Button, Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -7,8 +9,9 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
 import Footer from './Footer'
 
-const Page = ({ Component, isActive, replayStageCallback, baseRoute }) => {
+const Page = ({ Component, isActive, replayStageCallback, nextLevel, baseRoute }) => {
   const [isFadingIn, setFadingIn] = useState(true)
+  const history = useHistory()
 
   const useStyles = makeStyles(() => ({
     root: {
@@ -46,7 +49,8 @@ const Page = ({ Component, isActive, replayStageCallback, baseRoute }) => {
           <Button
             variant='contained'
             gutterBottom
-            startIcon={<ReplayIcon/>}>
+            startIcon={<ReplayIcon/>}
+            onClick={() => {window.location.reload()}}>
               Replay Level
             </Button>
           <br/><br/>
@@ -56,6 +60,9 @@ const Page = ({ Component, isActive, replayStageCallback, baseRoute }) => {
               variant='contained'
               gutterBottom
               endIcon={<NavigateNextIcon/>}
+              onClick={() => {
+                console.log(nextLevel)
+                history.push(nextLevel.route)}}
               style={{
                 right: 0
               }}>

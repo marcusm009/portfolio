@@ -13,7 +13,7 @@ import Projects from './react-components/pages/Projects'
 import Contact from './react-components/pages/Contact'
 
 const BASE_ROUTE = '/portfolio'
-const VERSION = '0.5.11'
+const VERSION = '0.5.12'
 
 console.log('VER: ', VERSION)
 
@@ -25,8 +25,7 @@ const App = () => {
         route: '/about',
         completed: false,
         component: About
-      }
-      ,
+      },
       {
         text: 'Projects',
         route: '/projects',
@@ -51,7 +50,7 @@ const App = () => {
         newState.pages[idx].completed = true
         setState(newState)
       }
-    });
+    })
   }
 
   const replayStage = route => {
@@ -63,7 +62,7 @@ const App = () => {
         newState.pages[idx].completed = false
         setState(newState)
       }
-    });
+    })
   }
 
   return (
