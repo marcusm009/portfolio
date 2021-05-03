@@ -13,7 +13,7 @@ import Projects from './react-components/pages/Projects'
 import Contact from './react-components/pages/Contact'
 
 const BASE_ROUTE = '/portfolio'
-const VERSION = '0.5.12'
+const VERSION = '0.6'
 
 console.log('VER: ', VERSION)
 

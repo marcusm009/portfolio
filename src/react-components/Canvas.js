@@ -98,8 +98,8 @@ class Canvas extends Component {
       `${this.props.baseRoute}/levels/solutions/${this.props.level}.txt`
     );
     // if(this.props.level === 'projects' || this.props.level === 'contact')
-    // this.state.player = new RectangularPrismPlayer(this.state.floor.spawnTile.position.x, this.state.floor.spawnTile.position.z);
-    this.state.player = new CubePlayer(this.state.floor.spawnTile.position.x, this.state.floor.spawnTile.position.z);
+    this.state.player = new RectangularPrismPlayer(this.state.floor.spawnTile.position.x, this.state.floor.spawnTile.position.z);
+    // this.state.player = new CubePlayer(this.state.floor.spawnTile.position.x, this.state.floor.spawnTile.position.z);
     this.state.player.setController(this.state.controller);
     this.state.scene.add(this.state.player);
     this.state.camera.follow(this.state.player);
