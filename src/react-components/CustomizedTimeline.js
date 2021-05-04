@@ -29,7 +29,7 @@ const CustomizedTimeline = () => {
       icon: (<LaptopMacIcon />),
       image: {
         title: 'UF',
-        link: 'about/uf.jpg'
+        link: 'about/uf.png'
       },
       title: 'B.S. in Computer Science',
       subtitle: 'University of Florida',
@@ -103,7 +103,8 @@ const CustomizedTimeline = () => {
                 image={'/portfolio/images/' + info.image.link}
                 title={info.image.title}
                 style={{
-                  backgroundSize: 'contain'
+                  backgroundSize: 'contain',
+                  margin: '.5rem'
                 }}
                 />
               )}
