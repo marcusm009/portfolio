@@ -21,7 +21,9 @@ const Overview = () => {
             style={{
               objectFit: 'cover',
               height: '400px',
-              width: '400px'
+              width: '400px',
+              maxHeight: '75vw',
+              maxWidth: '75vw'
             }}
             alt="Me!" />
       <CardContent>

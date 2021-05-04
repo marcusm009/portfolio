@@ -8,7 +8,8 @@ import LaptopMacIcon from '@material-ui/icons/LaptopMac'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 0
+    padding: 0
+    // flexGrow: 0
   },
   card: {
     // maxWidth: 345,
@@ -101,6 +102,9 @@ const CustomizedTimeline = () => {
                 className={classes.media}
                 image={'/portfolio/images/' + info.image.link}
                 title={info.image.title}
+                style={{
+                  backgroundSize: 'contain'
+                }}
                 />
               )}
               <CardContent>
