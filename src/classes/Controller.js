@@ -3,22 +3,24 @@ import * as THREE from 'three'
 class Controller {
     constructor(document, isEnabled, solutionPath=undefined) {
 
-        this.moveCallback = (dir) => {console.log('Move callback never assigned');};
+        this.moveCallback = (dir) => {console.log('Move callback never assigned');}
         
         // keyboard event listeners
-        document.addEventListener('keydown', this.handleKeyDown.bind(this), false);
+        document.addEventListener('keydown', this.handleKeyDown.bind(this), false)
 
         // touch event listeners
-        document.addEventListener('touchstart', this.handleTouchStart.bind(this), false);        
-        document.addEventListener('touchmove', this.handleTouchMove.bind(this), false);
+        document.addEventListener('touchstart', this.handleTouchStart.bind(this), false)        
+        document.addEventListener('touchmove', this.handleTouchMove.bind(this), false)
 
         // touch control variables
-        this.xDown = null;                                                        
-        this.yDown = null;
+        this.xDown = null                                                     
+        this.yDown = null
 
         // auto-solver
+        this.solutionLoaded = false
+        this.autoSolveTimer = null
+
         if(solutionPath) {
-          this.solutionLoaded = false
           this.loadSolution(solutionPath)
           document.addEventListener('wheel', this.handleScroll.bind(this), false);
         }
@@ -40,7 +42,7 @@ class Controller {
     handleScroll(event) {
         if(!this.solutionLoaded || !this.isEnabled)
             return
-        
+
         if(event.deltaY == -100) {
             // scroll up: unconditionally respawn
             if(this.moveCallback('resp'))
@@ -70,21 +72,27 @@ class Controller {
             this.moveCallback('l')
         } else if (keyCode == 68 || keyCode == 39) {
             this.moveCallback('r')
+        } else if (keyCode == 13) {
+            this.autoSolve(.25)
         } else {
             console.log('Key pressed: ' + keyCode);
         }
-        this.lastMoveWasManual = true
-    };
+        
+        if (keyCode != 13) {
+          clearTimeout(this.autoSolveTimer)  
+          this.lastMoveWasManual = true
+        }
+    }
 
     getTouches(event) {
         return event.touches || event.originalEvent.touches;
-    };
+    }
 
     handleTouchStart(event) {
         const firstTouch = this.getTouches(event)[0];                                      
         this.xDown = firstTouch.clientX;                                      
         this.yDown = firstTouch.clientY;                                      
-    };
+    }
 
     handleTouchMove(event) {
         if (!this.isEnabled || !this.xDown || !this.yDown)
@@ -111,9 +119,24 @@ class Controller {
             }
         }
 
-        this.xDown = null;
-        this.yDown = null;                                             
-    };
+        this.xDown = null
+        this.yDown = null
+
+        clearTimeout(this.autoSolveTimer)
+        this.lastMoveWasManual = true
+    }
+
+    autoSolve(stepTimeInSeconds) {      
+        if(!this.solutionLoaded || !this.isEnabled)
+            return
+
+        if(this.solutionIdx < this.solution.length) {
+            this.handleScroll({deltaY: 100})
+            this.autoSolveTimer = setTimeout(() => {
+                this.autoSolve(stepTimeInSeconds)
+            }, stepTimeInSeconds * 1000)
+        }
+    }
 }
 
 export default Controller

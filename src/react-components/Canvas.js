@@ -9,6 +9,8 @@ import CubePlayer from '../classes/CubePlayer'
 import RectangularPrismPlayer from '../classes/RectangularPrismPlayer'
 import Floor from '../classes/Floor'
 
+import { Container, Button, Grid } from '@material-ui/core'
+
 class Canvas extends Component {
   constructor(props) {
     super(props)
@@ -167,6 +169,7 @@ class Canvas extends Component {
   
   render() {
     return (
+      <>
       <div
         ref={ref => (this.mount = ref)}
         id={this.props.level}
@@ -176,6 +179,31 @@ class Canvas extends Component {
         }}
       >
       </div>
+      <h1
+        id='directions-text'
+        style={{
+          display: (this.props.isActive && !this.props.isComplete) ? 'block' : 'none',
+        }}>
+        Beat the level to unlock the page!
+      </h1>
+      <Button
+        variant='contained'
+        onClick={() => {
+          this.state.controller.autoSolve(.25)
+        }}
+        style={{
+          display: (this.props.isActive && !this.props.isComplete) ? 'block' : 'none',
+          position: 'fixed',
+          margin: 'auto',
+          bottom: '2rem',
+          left: 0,
+          right: 0,
+          textAlign: 'center',
+          zIndex: '4'
+        }}>
+        Auto-solve
+      </Button>
+      </>
     )
   }
 }

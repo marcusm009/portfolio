@@ -37,27 +37,6 @@ const CanvasSwitcher = ({ pages, completeStageCallback, replayStageCallback, bas
               nextLevel={pages[idx+1]}
               baseRoute={baseRoute}
             />}
-          {(!page.completed && location === page.route) && (
-            <>
-              <h1 id='directions-text'>
-                Beat the level to unlock the page!
-              </h1>
-              <Button
-                variant='contained'
-                onClick={() => completeStageCallback(page.route)}
-                style={{
-                  position: 'fixed',
-                  margin: 'auto',
-                  bottom: '2rem',
-                  left: 0,
-                  right: 0,
-                  textAlign: 'center',
-                  zIndex: '4'
-                }}>
-                Auto-solve
-              </Button>
-            </>
-          )}
           <Canvas
             level={page.route.replace('/','')}
             isActive={location === page.route}
