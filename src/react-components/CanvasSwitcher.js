@@ -28,7 +28,6 @@ const CanvasSwitcher = ({ pages, completeStageCallback, replayStageCallback, bas
         <>
           {page.completed &&
             <Page
-              key={page.route}
               Component={page.component}
               isActive={location === page.route}
               replayStageCallback={() => replayStageCallback(page.route)}

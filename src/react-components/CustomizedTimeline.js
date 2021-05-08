@@ -80,8 +80,8 @@ const CustomizedTimeline = () => {
   return (
     <Timeline style={{flexGrow: 0}} className={classes.root}
       align={shouldAlternate ? 'alternate' : 'left'}>
-      {content.map(info => (
-        <TimelineItem>
+      {content.map((info, idx) => (
+        <TimelineItem key={idx}>
           <TimelineOppositeContent style={{
             flexGrow: shouldAlternate ? 1 : 0
           }}>

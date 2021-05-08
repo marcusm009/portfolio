@@ -9,7 +9,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
 import Footer from './Footer'
 
-const Page = ({ key, Component, isActive, replayStageCallback, nextLevel, baseRoute }) => {
+const Page = ({ Component, isActive, replayStageCallback, nextLevel, baseRoute }) => {
   const [isFadingIn, setFadingIn] = useState(true)
   const history = useHistory()
 
@@ -46,11 +46,9 @@ const Page = ({ key, Component, isActive, replayStageCallback, nextLevel, baseRo
       <>
       {isActive &&
         <Container
-          key={key}
           className={`${classes.root} ${isFadingIn ? classes.fade : ''} ${!isFadingIn && isActive ? classes.active: ''}`} maxWidth='lg' >
           <Button
             variant='contained'
-            gutterBottom
             startIcon={<ReplayIcon/>}
             onClick={() => {replayStageCallback()}}>
               Replay Level
@@ -60,7 +58,6 @@ const Page = ({ key, Component, isActive, replayStageCallback, nextLevel, baseRo
           <Grid container justify='flex-end'>
             <Button
               variant='contained'
-              gutterBottom
               endIcon={<NavigateNextIcon/>}
               onClick={() => {
                 console.log(nextLevel)

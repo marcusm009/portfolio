@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const About = ({ baseRoute }) => {
+const About = () => {
   const classes = useStyles()
   
   const cards = [
@@ -68,19 +68,17 @@ const About = ({ baseRoute }) => {
         </Typography>
       </FadeInSection>
       <br/>
-      {cards.map((card) => (
+      {cards.map((card, i) => (
         <>
         <FadeInSection>  
           <Paper className={classes.paper}>
             {card.icon}
             <Typography variant='h4' gutterBottom>{card.title}</Typography>
-            <Typography>
-              <ul>
-                {card.interests.map((interest) => (
-                  <li>{interest}</li>
-                  ))}
-              </ul>
-            </Typography>
+            <ul>
+              {card.interests.map((interest, j) => (
+                <li key={`${i}-${j}`}><Typography>{interest}</Typography></li>
+                ))}
+            </ul>
           </Paper>
         </FadeInSection>
         <br/>

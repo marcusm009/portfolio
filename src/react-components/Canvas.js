@@ -53,12 +53,12 @@ class Canvas extends Component {
 
   async initThreeCanvas() {
     // client, offset, scroll, css
-    this.state.initialMountWidth = this.mount.offsetWidth;
-    this.state.initialMountHeight = this.mount.offsetHeight;
+    this.state.initialMountWidth = this.mount.offsetWidth
+    this.state.initialMountHeight = this.mount.offsetHeight
 
     let aspect = this.state.initialMountWidth / this.state.initialMountHeight
 
-    this.state.scene = new THREE.Scene();
+    this.state.scene = new THREE.Scene()
     this.state.camera = new Camera(
       new THREE.Vector3(-1,1,1),
       this.state.scene.position.clone(),
@@ -75,14 +75,14 @@ class Canvas extends Component {
       
     this.state.renderer.domElement.style.zIndex = 0
   
-    let dirLight = new THREE.DirectionalLight();
-    this.state.scene.add(dirLight);
-    dirLight.position.set(-20,100,50);
+    let dirLight = new THREE.DirectionalLight()
+    this.state.scene.add(dirLight)
+    dirLight.position.set(-20,100,50)
 
-    this.state.audioManager = new AudioManager(window, this.props.baseRoute);
+    this.state.audioManager = new AudioManager(window, this.props.baseRoute)
   
-    this.state.camera.add(this.state.audioManager.listener);
-    this.state.audioManager.loadSound('wooden-percussion-shot');
+    this.state.camera.add(this.state.audioManager.listener)
+    this.state.audioManager.loadSound('block-move', 4)
   
     // add floor
     this.state.floor = new Floor(
@@ -90,7 +90,7 @@ class Canvas extends Component {
         [0xacff78,0x292929],
         [0,1]
     )
-    await this.state.floor.loadTemplate(`${this.props.baseRoute}/levels/${this.props.level}.tsv`);
+    await this.state.floor.loadTemplate(`${this.props.baseRoute}/levels/${this.props.level}.tsv`)
     this.state.floor.addToScene(this.state.scene)
 
     // add player
@@ -100,11 +100,11 @@ class Canvas extends Component {
       `${this.props.baseRoute}/levels/solutions/${this.props.level}.txt`
     );
     // if(this.props.level === 'projects' || this.props.level === 'contact')
-    this.state.player = new RectangularPrismPlayer(this.state.floor.spawnTile.position.x, this.state.floor.spawnTile.position.z);
+    this.state.player = new RectangularPrismPlayer(this.state.floor.spawnTile.position.x, this.state.floor.spawnTile.position.z)
     // this.state.player = new CubePlayer(this.state.floor.spawnTile.position.x, this.state.floor.spawnTile.position.z);
-    this.state.player.setController(this.state.controller);
-    this.state.scene.add(this.state.player);
-    this.state.camera.follow(this.state.player);
+    this.state.player.setController(this.state.controller)
+    this.state.scene.add(this.state.player)
+    this.state.camera.follow(this.state.player)
 
     this.state.isInitialized = true
     this.setState(this.state)
@@ -117,17 +117,17 @@ class Canvas extends Component {
     const animate = () => {
 
         if(this.props.isActive && !this.state.player.completedLevel) {
-          this.state.renderer.render(this.state.scene, this.state.camera);
+          this.state.renderer.render(this.state.scene, this.state.camera)
   
           if(this.state.player.playSound) {
-              this.state.audioManager.playSound('block-hit-1');
+              this.state.audioManager.playSound('block-move')
           }
   
           if (this.state.player.completionPending && !this.props.isComplete) {
             this.props.completeStageCallback()
           }
 
-          this.state.player.animate(this.state.floor);
+          this.state.player.animate(this.state.floor)
           this.state.camera.follow(this.state.player, .1);
     
           if(frame % 200 === 0 && logLocation) {
