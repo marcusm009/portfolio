@@ -1,4 +1,3 @@
-import * as THREE from 'three'
 import Player from './Player'
 
 class CubePlayer extends Player {

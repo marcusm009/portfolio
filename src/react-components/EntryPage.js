@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import FadeInSection from './FadeInSection'
 
 const EntryPage = ({ isActive, baseRoute }) => {
   const [isFadingIn, setFadingIn] = useState(true)

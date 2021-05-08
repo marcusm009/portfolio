@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import { Container, Button, Grid } from '@material-ui/core'
@@ -9,7 +9,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
 import Footer from './Footer'
 
-const Page = ({ Component, isActive, replayStageCallback, nextLevel, baseRoute }) => {
+const Page = ({ key, Component, isActive, replayStageCallback, nextLevel, baseRoute }) => {
   const [isFadingIn, setFadingIn] = useState(true)
   const history = useHistory()
 
@@ -37,7 +37,7 @@ const Page = ({ Component, isActive, replayStageCallback, nextLevel, baseRoute }
   }))
 
   useEffect(() => {
-    let timer = setTimeout(() => setFadingIn(false), 1000)
+    setTimeout(() => setFadingIn(false), 1000)
   }, [])
 
   const classes = useStyles()
@@ -45,12 +45,14 @@ const Page = ({ Component, isActive, replayStageCallback, nextLevel, baseRoute }
   return (
       <>
       {isActive &&
-        <Container className={`${classes.root} ${isFadingIn ? classes.fade : ''} ${!isFadingIn && isActive ? classes.active: ''}`} maxWidth='lg' >
+        <Container
+          key={key}
+          className={`${classes.root} ${isFadingIn ? classes.fade : ''} ${!isFadingIn && isActive ? classes.active: ''}`} maxWidth='lg' >
           <Button
             variant='contained'
             gutterBottom
             startIcon={<ReplayIcon/>}
-            onClick={() => {window.location.reload()}}>
+            onClick={() => {replayStageCallback()}}>
               Replay Level
             </Button>
           <br/><br/>

@@ -1,10 +1,6 @@
-import FadeInSection from '../FadeInSection'
+import { Typography, Card, CardContent, CardMedia } from '@material-ui/core'
 
-import { Avatar, Paper, Box, Grid, Typography, List, ListItem, Card, CardContent, CardMedia } from '@material-ui/core'
-
-const darkGray = '#202020'
-
-const Projects = ({ baseRoute }) => {
+const Projects = () => {
   return (
     <>
     <Typography variant='h3' gutterBottom>Projects</Typography>

@@ -13,11 +13,11 @@ class AudioManager {
     }
 
     playSound(sound, volume=1) {
-        if(this.context == null) {
+        if(this.context === null) {
             console.log('context loaded');
             this.loadContext();
         }
-        if(!this.loadedSound == sound) {
+        if(!this.loadedSound === sound) {
             this.loadSound(sound, volume);
             console.log(`loaded sound: ${sound}`);
         }
@@ -40,7 +40,7 @@ class AudioManager {
     }
 
     loadSound(sound, volume=1) {
-        this.loader.load(`${this.baseRoute}/sounds/${sound}.ogg`, (buffer) => {
+        this.loader.load(`${this.baseRoute}/sounds/${sound}.wav`, (buffer) => {
             this.sound.setBuffer(buffer);
             this.sound.setLoop(false);
             this.sound.setVolume(volume);

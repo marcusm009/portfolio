@@ -1,5 +1,3 @@
-import fs from 'fs'
-import * as THREE from 'three'
 import Tile from './Tile'
 
 class Floor {
@@ -31,18 +29,18 @@ class Floor {
     addTiles() {
         for (let z = 0; z < this.template.length; z++) {
             for (let x = 0; x < this.template[z].length; x++) {
-                if (this.template[z][x].toLowerCase() == 'x') {
+                if (this.template[z][x].toLowerCase() === 'x') {
                     this.tiles.push(new Tile(x, z));
                 }
-                else if (this.template[z][x].toLowerCase() == 's') {
-                    if (this.spawnTile != undefined) {
+                else if (this.template[z][x].toLowerCase() === 's') {
+                    if (this.spawnTile !== undefined) {
                         console.log('ERROR: Multiple spawn tiles! Please fix level template')
                     }
                     this.spawnTile = new Tile(x, z, 0, .9, 0xd4d4d4, 'spawn');
                     this.tiles.push(this.spawnTile);
                 }
-                else if (this.template[z][x].toLowerCase() == 'g') {
-                    if (this.goalTile != undefined) {
+                else if (this.template[z][x].toLowerCase() === 'g') {
+                    if (this.goalTile !== undefined) {
                         console.log('ERROR: Multiple goal tiles! Please fix level template')
                     }
                     this.goalTile = new Tile(x, z, 0, .9, 0xffbd9e, 'goal');
@@ -72,7 +70,7 @@ class Floor {
     }
 
     hasGoalInLocation(pos) {
-        return this.getBlockInLocation(pos) == 'g';
+        return this.getBlockInLocation(pos) === 'g';
     }
 
     getPositions() {

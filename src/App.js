@@ -5,7 +5,6 @@ import { CssBaseline } from '@material-ui/core'
 
 import NavBar from './react-components/NavBar'
 import TitleBar from './react-components/TitleBar'
-import EntryPage from './react-components/EntryPage'
 import CanvasSwitcher from './react-components/CanvasSwitcher'
 
 import About from './react-components/pages/About'
@@ -13,7 +12,7 @@ import Projects from './react-components/pages/Projects'
 import Contact from './react-components/pages/Contact'
 
 const BASE_ROUTE = '/portfolio'
-const VERSION = '0.7'
+const VERSION = '0.7.1'
 
 console.log('VER: ', VERSION)
 
@@ -88,6 +87,7 @@ const App = () => {
         baseRoute={BASE_ROUTE}
       />
       <div
+        id={'ver'}
         style={{
           color: 'white',
           position: 'fixed',

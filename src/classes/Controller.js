@@ -1,5 +1,3 @@
-import * as THREE from 'three'
-
 class Controller {
     constructor(document, isEnabled, solutionPath=undefined) {
 
@@ -43,11 +41,11 @@ class Controller {
         if(!this.solutionLoaded || !this.isEnabled)
             return
 
-        if(event.deltaY == -100) {
+        if(event.deltaY === -100) {
             // scroll up: unconditionally respawn
             if(this.moveCallback('resp'))
                 this.solutionIdx = 0
-        } else if(event.deltaY == 100) {
+        } else if(event.deltaY === 100) {
             // scroll down:
             // if last move was manual, respawn; otherwise, move towards objective
             if(this.lastMoveWasManual) {
@@ -64,21 +62,21 @@ class Controller {
             return
         
         let keyCode = event.which;
-        if (keyCode == 87 || keyCode == 38) {
+        if (keyCode === 87 || keyCode === 38) {
             this.moveCallback('u')
-        } else if (keyCode == 83 || keyCode == 40) {
+        } else if (keyCode === 83 || keyCode === 40) {
             this.moveCallback('d')
-        } else if (keyCode == 65 || keyCode == 37) {
+        } else if (keyCode === 65 || keyCode === 37) {
             this.moveCallback('l')
-        } else if (keyCode == 68 || keyCode == 39) {
+        } else if (keyCode === 68 || keyCode === 39) {
             this.moveCallback('r')
-        } else if (keyCode == 13) {
+        } else if (keyCode === 13) {
             this.autoSolve(.25)
         } else {
             console.log('Key pressed: ' + keyCode);
         }
         
-        if (keyCode != 13) {
+        if (keyCode !== 13) {
           clearTimeout(this.autoSolveTimer)  
           this.lastMoveWasManual = true
         }
@@ -104,7 +102,7 @@ class Controller {
         let xDiff = this.xDown - xUp;
         let yDiff = this.yDown - yUp;
         
-        if (xDiff != 0 && yDiff != 0) {
+        if (xDiff !== 0 && yDiff !== 0) {
             let angle = Math.atan2(yDiff,xDiff);
             if (0 <= angle && angle < Math.PI/2) {
                 this.moveCallback('l');

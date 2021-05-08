@@ -17,6 +17,7 @@
 
 # sounds
 *.ogg
+*.wav
 
 # misc
 .DS_Store

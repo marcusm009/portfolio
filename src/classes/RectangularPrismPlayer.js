@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import Player from './Player'
 
 class RectangularPrismPlayer extends Player {
-  constructor(x, z, y = 1, scale = [.9, 1.8, .9], color = 'blue') {
+  constructor(x, z, y = 1, scale = [.9, 1.8, .9], color = 'red') {
     super(x, z, y + .25 * scale[1], scale, color)
   }
 
@@ -54,7 +54,7 @@ class RectangularPrismPlayer extends Player {
             this.position.y += deltaY
             this.rotateOnWorldAxis(rotation, rotVel)
             }, framesPerRoll])
-      } else if (direction == 'resp') {
+      } else if (direction === 'resp') {
         this.respawn()
       }
 
@@ -83,7 +83,6 @@ class RectangularPrismPlayer extends Player {
   checkFloor(floor) {
     let pos = this.getGridPosition()
     let orientation = this.getOrientation()
-    let lastDir = this.lastDirection
 
     // regular checkFloor handling
     if(orientation === 'UPRIGHT') {

@@ -12,6 +12,7 @@ const TitleBar = ({ baseRoute }) => {
             width: '48px',
             maxWidth: '100%',
             height: 'auto'}}
+          alt="Logo"
           title="Logo" />
       <button
         type='button'

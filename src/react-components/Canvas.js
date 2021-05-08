@@ -5,11 +5,10 @@ import * as THREE from 'three'
 import Camera from '../classes/Camera'
 import Controller from '../classes/Controller'
 import AudioManager from '../classes/AudioManager'
-import CubePlayer from '../classes/CubePlayer'
 import RectangularPrismPlayer from '../classes/RectangularPrismPlayer'
 import Floor from '../classes/Floor'
 
-import { Container, Button, Grid } from '@material-ui/core'
+import { Button } from '@material-ui/core'
 
 class Canvas extends Component {
   constructor(props) {
@@ -42,6 +41,7 @@ class Canvas extends Component {
       this.state.controller.isEnabled = this.props.isActive
       if(this.state.player.completedLevel) {
         console.log('completed - ', this.props.level)
+        console.log(this.props.isComplete)
       }
     }
   }
@@ -116,21 +116,21 @@ class Canvas extends Component {
   
     const animate = () => {
 
-        if(this.props.isActive) {
+        if(this.props.isActive && !this.state.player.completedLevel) {
           this.state.renderer.render(this.state.scene, this.state.camera);
   
           if(this.state.player.playSound) {
-              this.state.audioManager.playSound('wooden-percussion-shot');
+              this.state.audioManager.playSound('block-hit-1');
           }
-  
-          this.state.player.animate(this.state.floor);
-          this.state.camera.follow(this.state.player, .1);
   
           if (this.state.player.completionPending && !this.props.isComplete) {
-              this.props.completeStageCallback()
+            this.props.completeStageCallback()
           }
+
+          this.state.player.animate(this.state.floor);
+          this.state.camera.follow(this.state.player, .1);
     
-          if(frame % 200 == 0 && logLocation) {
+          if(frame % 200 === 0 && logLocation) {
               // let dir = this.state.player.getWorldDirection()
               // dir.round()
               // console.log(dir)
@@ -142,8 +142,8 @@ class Canvas extends Component {
               console.log(this.state.player.getGridPosition())
           }
     
-          frame += 1;
-          requestAnimationFrame(animate);
+          frame += 1
+          requestAnimationFrame(animate)
         }
     }
     animate();
@@ -178,42 +178,34 @@ class Canvas extends Component {
           display: (this.props.isActive) ? 'block' : 'none'
         }}
       >
+        <h1
+          id='directions-text'
+          style={{
+            display: (this.props.isActive && !this.props.isComplete) ? 'block' : 'none',
+          }}>
+          Beat the level to unlock the page!
+        </h1>
+        <Button
+          variant='contained'
+          onClick={() => {
+            this.state.controller.autoSolve(.25)
+          }}
+          style={{
+            display: (this.props.isActive && !this.props.isComplete) ? 'block' : 'none',
+            position: 'fixed',
+            margin: 'auto',
+            bottom: '2rem',
+            left: 0,
+            right: 0,
+            textAlign: 'center',
+            zIndex: '4'
+          }}>
+          Auto-solve
+        </Button>
       </div>
-      <h1
-        id='directions-text'
-        style={{
-          display: (this.props.isActive && !this.props.isComplete) ? 'block' : 'none',
-        }}>
-        Beat the level to unlock the page!
-      </h1>
-      <Button
-        variant='contained'
-        onClick={() => {
-          this.state.controller.autoSolve(.25)
-        }}
-        style={{
-          display: (this.props.isActive && !this.props.isComplete) ? 'block' : 'none',
-          position: 'fixed',
-          margin: 'auto',
-          bottom: '2rem',
-          left: 0,
-          right: 0,
-          textAlign: 'center',
-          zIndex: '4'
-        }}>
-        Auto-solve
-      </Button>
       </>
     )
   }
-}
-
-function scrollTransition() {
-  window.scrollBy({
-      top: window.innerHeight,
-      left: 0,
-      behavior: 'smooth'
-  });
 }
 
 function updateCanvasCSS(mount) {

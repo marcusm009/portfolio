@@ -1,6 +1,6 @@
 import FadeInSection from '../FadeInSection'
 
-import { Paper, Box, Grid, Typography, List, ListItem } from '@material-ui/core'
+import { Paper, Box, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
 import ComputerIcon from '@material-ui/icons/Computer'
@@ -9,8 +9,6 @@ import CodeIcon from '@material-ui/icons/Code'
 
 import CustomizedTimeline from '../CustomizedTimeline'
 import Overview from '../Overview'
-
-const darkGray = '#202020'
 
 const useStyles = makeStyles(() => ({
   paper: {

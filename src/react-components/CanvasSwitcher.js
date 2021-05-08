@@ -1,8 +1,6 @@
 import { useLocation } from 'react-router'
 import { useEffect } from 'react'
 
-import { Container, Button, Grid } from '@material-ui/core'
-
 import Canvas from './Canvas'
 import Page from './Page'
 

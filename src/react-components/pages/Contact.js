@@ -1,4 +1,4 @@
-import { Avatar, Paper, Box, Grid, Typography, List, ListItem, Card, CardContent, CardMedia } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 
 const EMAIL_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx0ftvrzfj7KimqSseC2Nacuez7WMrF6GVNa0L-bSiuB6nXJcgxeRbHaKT0_IRICwamBQ/exec";
 

@@ -3,22 +3,24 @@ import * as THREE from 'three'
 class Player extends THREE.Mesh {
   constructor(x, z, y = 1, scale = [.9, .9, .9], color = 'red') {
     let cubeGeometry = new THREE.BoxGeometry(scale[0], scale[1], scale[2])
+    let cubeMaterial = new THREE.MeshPhongMaterial()
     // let cubeMaterial = new THREE.MeshPhongMaterial({map: texture})
-    // cubeMaterial.color = new THREE.Color(color)
-    // cubeMaterial.blending = THREE.NoBlending
+    cubeMaterial.color = new THREE.Color(color)
+    cubeMaterial.blending = THREE.NoBlending
+    super(cubeGeometry, cubeMaterial)
     
-    let materials = []
-    for(let i = 0; i < 6; i++) {
-      materials.push(
-        new THREE.MeshBasicMaterial({
-          map: new THREE.TextureLoader().load(`textures/player/${(i === 2 || i === 3) ? '1' : '2'}.png`),
-          side: THREE.DoubleSide
-        })
-      )
-    }
+    // let materials = []
+    // for(let i = 0; i < 6; i++) {
+    //   materials.push(
+    //     new THREE.MeshBasicMaterial({
+    //       map: new THREE.TextureLoader().load(`textures/player/${(i === 2 || i === 3) ? '1' : '2'}.png`),
+    //       side: THREE.DoubleSide
+    //     })
+    //   )
+    // }
 
-    let cubeMaterial = new THREE.MeshFaceMaterial(materials)
-    super(cubeGeometry, materials)
+    // let cubeMaterial = new THREE.MeshFaceMaterial(materials)
+    // super(cubeGeometry, materials)
 
     this.name = 'player'
     this.position.x = x
@@ -56,27 +58,28 @@ class Player extends THREE.Mesh {
     let rotVel = (Math.PI / 2) / framesPerRoll
     let didMove = false
 
-    if (this.isReadyToMove == true) {
-      if (direction == 'u') {
+    if (this.isReadyToMove === true) {
+      if (direction === 'u') {
         this.animations.push([() => {
           this.position.x += 1 / framesPerRoll
-          this.rotateOnWorldAxis(new THREE.Vector3(0,0,1),-rotVel)        }, framesPerRoll])
-      } else if (direction == 'd') {
+          this.rotateOnWorldAxis(new THREE.Vector3(0,0,1),-rotVel)
+        }, framesPerRoll])
+      } else if (direction === 'd') {
         this.animations.push([() => {
           this.position.x -= 1 / framesPerRoll
           this.rotateOnWorldAxis(new THREE.Vector3(0,0,1), rotVel)
         }, framesPerRoll])
-      } else if (direction == 'l') {
+      } else if (direction === 'l') {
         this.animations.push([() => {
           this.position.z -= 1 / framesPerRoll
           this.rotateOnWorldAxis(new THREE.Vector3(1,0,0), -rotVel)
         }, framesPerRoll])
-      } else if (direction == 'r') {
+      } else if (direction === 'r') {
         this.animations.push([() => {
           this.position.z += 1 / framesPerRoll
           this.rotateOnWorldAxis(new THREE.Vector3(1,0,0), rotVel)
         }, framesPerRoll])
-      } else if (direction == 'resp') {
+      } else if (direction === 'resp') {
         this.respawn()
       }
 
@@ -114,7 +117,7 @@ class Player extends THREE.Mesh {
     }
     this.removeCompletedAnimations();
 
-    if (this.animations.length == 0) {
+    if (this.animations.length === 0) {
       if (this.completionPending) {
         this.complete()
       } else {
@@ -180,10 +183,10 @@ class Player extends THREE.Mesh {
 
   roundQuaternion() {
     let x, y, z, w
-    if(this.quaternion._x != undefined && 
-       this.quaternion._y != undefined &&
-       this.quaternion._z != undefined && 
-       this.quaternion._w != undefined) {
+    if(this.quaternion._x !== undefined && 
+       this.quaternion._y !== undefined &&
+       this.quaternion._z !== undefined && 
+       this.quaternion._w !== undefined) {
       x = roundQuaternionComponent(this.quaternion._x)
       y = roundQuaternionComponent(this.quaternion._y)
       z = roundQuaternionComponent(this.quaternion._z)
@@ -218,10 +221,12 @@ class Player extends THREE.Mesh {
   }
 
   complete() {
+    this.completionPending = false
+    this.completedLevel = true
     this.position.x = 9999999
     this.position.y = 9999999
     this.position.z = 9999999
-    this.completedLevel = true
+    console.log('completion called')
   }
 }
 
