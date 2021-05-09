@@ -12,7 +12,7 @@ import Projects from './react-components/pages/Projects'
 import Contact from './react-components/pages/Contact'
 
 const BASE_ROUTE = '/portfolio'
-const VERSION = '0.7.5'
+const VERSION = '0.7.6'
 
 console.log('VER: ', VERSION)
 
@@ -67,10 +67,7 @@ const App = () => {
   return (
     <BrowserRouter
       basename={BASE_ROUTE}>
-      <Redirect
-        exact
-        from='/'
-        to='about'/>
+      
       <CssBaseline />
       <TitleBar
         baseRoute={BASE_ROUTE}

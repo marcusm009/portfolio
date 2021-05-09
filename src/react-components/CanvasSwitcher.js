@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router'
+import { useLocation, useHistory } from 'react-router'
 import { useEffect } from 'react'
 
 import Canvas from './Canvas'
@@ -6,8 +6,14 @@ import Page from './Page'
 
 const CanvasSwitcher = ({ pages, completeStageCallback, replayStageCallback, baseRoute }) => {
   const location = useLocation().pathname
+  const history = useHistory()
 
   useEffect(() => {
+    if(location === '/')
+      history.push('/about')
+  })
+
+  useEffect(() => {    
     pages.forEach(element => {
       if (location === element.route) {
         let html = document.getElementsByTagName('html')[0]
