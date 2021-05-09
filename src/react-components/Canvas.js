@@ -122,15 +122,21 @@ class Canvas extends Component {
 
   // main animation loop
   async resumeThreeCanvas(logLocation=true) {
-    let frame = 0;
+    let frame = 0
+    let shouldRender = true
   
     const animate = () => {
 
-        if(this.props.isActive && !this.state.player.completedLevel) {
+        if(this.props.isActive && shouldRender) {
           this.state.renderer.render(this.state.scene, this.state.camera)
   
+          // Move this before render to use block zoom in as background
+          if(this.state.player.completedLevel) {
+            shouldRender = false
+          }
+
           if(this.state.player.playSound) {
-              this.state.audioManager.playSound('block-move')
+            this.state.audioManager.playSound('block-move')
           }
   
           if (this.state.player.completionPending && !this.props.isComplete) {

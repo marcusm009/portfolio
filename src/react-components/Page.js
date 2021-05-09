@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { Container, Button, Grid } from '@material-ui/core'
+import { Container, Button, Grid, Paper } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
 import ReplayIcon from '@material-ui/icons/Replay'
@@ -46,7 +46,12 @@ const Page = ({ Component, isActive, replayStageCallback, nextLevel, baseRoute }
       <>
       {isActive &&
         <Container
-          className={`${classes.root} ${isFadingIn ? classes.fade : ''} ${!isFadingIn && isActive ? classes.active: ''}`} maxWidth='lg' >
+          className={`${classes.root} ${isFadingIn ? classes.fade : ''} ${!isFadingIn && isActive ? classes.active: ''}`}
+          maxWidth='lg'
+          style={{
+            minHeight: '96vh'
+          }}
+          >
           <Button
             variant='contained'
             startIcon={<ReplayIcon/>}

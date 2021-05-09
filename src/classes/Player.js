@@ -199,6 +199,7 @@ class Player extends THREE.Mesh {
 
   respawn() {
     this.fallVelocity = 0
+    this.animations = []
     this.position.copy(this.spawnPos)
     this.scale.copy(this.spawnScale)
     this.setRotationFromQuaternion(new THREE.Quaternion(0,0,0,1))
@@ -223,11 +224,11 @@ class Player extends THREE.Mesh {
   }
 
   complete() {
-    this.completionPending = false
-    this.completedLevel = true
     this.position.x = 9999999
     this.position.y = 9999999
     this.position.z = 9999999
+    this.completionPending = false
+    this.completedLevel = true
     console.log('completion called')
   }
 }
