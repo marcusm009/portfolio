@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { Container, Button, Grid, Paper } from '@material-ui/core'
+import { Container, Button, Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
 import ReplayIcon from '@material-ui/icons/Replay'
@@ -68,6 +68,7 @@ const Page = ({ Component, isActive, replayStageCallback, nextLevel, baseRoute }
                 console.log(nextLevel)
                 history.push(nextLevel.route)}}
               style={{
+                display: (nextLevel !== undefined) ? 'block' : 'none',
                 right: 0
               }}>
                 Next Level
