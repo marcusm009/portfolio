@@ -39,9 +39,19 @@ class Canvas extends Component {
       this.resizeCanvasToMountSize()
       this.resumeThreeCanvas()
       this.state.controller.isEnabled = this.props.isActive
-      if(this.state.player.completedLevel) {
+      // If props are set to complete and player state complete, player completed level
+      if(this.props.isComplete && this.state.player.completedLevel) {
         console.log('completed - ', this.props.level)
-        console.log(this.props.isComplete)
+      }
+      // If props are not set to complete but player state is, this implies that the level
+      // needs to be restarted
+      if(!this.props.isComplete && this.state.player.completedLevel) {
+        this.state.player.completedLevel = false
+        this.state.player.respawn()
+        this.state.camera.reset()
+        this.state.controller.reset()
+        this.setState(this.state)
+        console.log(this.state)
       }
     }
   }

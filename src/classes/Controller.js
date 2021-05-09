@@ -135,6 +135,10 @@ class Controller {
             }, stepTimeInSeconds * 1000)
         }
     }
+
+    reset() {
+      this.solutionIdx = 0
+    }
 }
 
 export default Controller

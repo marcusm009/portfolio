@@ -30,6 +30,7 @@ class Player extends THREE.Mesh {
     this.size = scale
 
     this.spawnPos = this.position.clone()
+    this.spawnScale = this.scale.clone()
 
     this.fallVelocity = 0
 
@@ -199,6 +200,7 @@ class Player extends THREE.Mesh {
   respawn() {
     this.fallVelocity = 0
     this.position.copy(this.spawnPos)
+    this.scale.copy(this.spawnScale)
     this.setRotationFromQuaternion(new THREE.Quaternion(0,0,0,1))
   }
 
