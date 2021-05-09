@@ -327,7 +327,11 @@ button, a {
   padding: 1rem;
   color: white;
   background-color: $darkGray;
-  z-index: 2
+  z-index: 2;
+}
+
+#message {
+  height: 10rem;
 }
 
 // .timeline {

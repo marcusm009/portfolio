@@ -1,16 +1,19 @@
-import { Typography } from '@material-ui/core'
-
 import { useState } from 'react'
-import { Button } from '@material-ui/core'
+import { Typography, Button, TextField } from '@material-ui/core'
 
 const EMAIL_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzp6ZdgtfOM6Mz0BSM9KU8Gupa-pKaaJk0iGPCxzRDBb5nD4EZdb_9a8i_znB30nYIZ2w/exec'
 
 const Contact = () => {
   const [form, setForm] = useState({
-    'name': '',
-    'email': '',
-    'message': ''
+    name: '',
+    email: '',
+    message: ''
   })
+  const [error, setError] = useState({
+    name: false,
+    email: false
+  })
+  const [emailSent, setEmailSent] = useState(false)
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -20,16 +23,22 @@ const Contact = () => {
     httpRequest += '&email=' + encodeURI(form.email)
     httpRequest += '&message=' + encodeURI(form.message)
     
-    fetch(httpRequest, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    })
-    console.log(form)
-    console.log('hello')
+    if(form.name !== '' && form.email !== '') {
+      fetch(httpRequest, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+      setEmailSent(true)
+    } else {
+      setError({
+        name: form.name === '',
+        email: form.email === ''
+      })
+    }
   }
 
   const handleChange = (event) => {
@@ -45,50 +54,68 @@ const Contact = () => {
     <>
       <Typography variant='h3' gutterBottom>Contact</Typography>
         <form>
-          
-          <Typography variant='h5'>Name</Typography>
-          <input
-            id='name'
-            type='text'
-            value={form.name}
-            onChange={handleChange}
-            placeholder='Your name...'
-          />
-          <br/><br/>
+            <TextField 
+              id='name'
+              label='Full Name'
+              placeholder='Your name...'
+              value={form.name}
+              onChange={handleChange}
+              variant='outlined'
+              error={error.name && form.name === ''}
+              helperText={
+                error.name && form.name === '' && 'Name is required'
+              }
+              fullWidth
+              required
+            />
+            <br/><br/>
+            <TextField 
+              id='email'
+              label='Email'
+              placeholder='Your email...'
+              value={form.email}
+              onChange={handleChange}
+              variant='outlined'
+              error={error.email && form.email === ''}
+              helperText={
+                error.email && form.email === '' && 'Email is required'
+              }
+              fullWidth
+              required
+            />
+            <br/><br/>
+            <TextField 
+              id='message'
+              label='Message'
+              placeholder='Write something...'
+              value={form.message}
+              onChange={handleChange}
+              variant='outlined'
+              multiline
+              fullWidth
+              rows={2}
+              rowMax={4}
+            />
+            <br/><br/>
 
-          <Typography variant='h5'>Email</Typography>
-          <input
-            id='email'
-            type='text'
-            value={form.email}
-            onChange={handleChange}
-            placeholder='Your email...'
-          />
-          <br/><br/>
+            {!emailSent && (
+              <Button
+                variant='contained'
+                onClick={handleSubmit}
+                >
+                Submit
+              </Button>
+            )}
+            {emailSent && (
+              <Typography variant='h6'>
+                Email sent!
+              </Typography>
+            )}
 
-          <Typography variant='h5'>Message</Typography>
-          <textarea
-            id='message'
-            placeholder='Write something...'
-            value={form.message}
-            onChange={handleChange}
-            style={{
-              width: '100%',
-              height: '100px'
-            }}
-          ></textarea>
-          <br/><br/>
-
-          <Button
-            variant='contained'
-            onClick={handleSubmit}
-            >
-            Submit
-          </Button>
-          <br/><br/>
+            <br/><br/>
+          </form>
         
-        </form>
-        <Typography variant='body2' color='textSecondary' component='p' gutterBottom>
+        <Typography variant='body2' color='textSecondary' component='p'>
           Please use the contact form above or send an email to: marcusm009@gmail.com
         </Typography>
         <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
