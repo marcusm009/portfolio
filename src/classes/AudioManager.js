@@ -1,10 +1,11 @@
 import * as THREE from 'three'
 
 class AudioManager {
-    constructor(window, baseRoute, context=null) {
+    constructor(window, baseRoute, audioiOS, context=null) {
         this.window = window
         this.loadedSound = null
         this.baseRoute = baseRoute
+        this.audioiOS = audioiOS
 
         this.context = context
         this.listener = new THREE.AudioListener()
@@ -16,28 +17,44 @@ class AudioManager {
         const randIdx = (max) => Math.floor(Math.random() * max)
         const randVol = (min, max) => Math.random() * (max - min) + min
 
-        if(!(sound in this.sounds)) {
-            console.log(`Sound: ${sound} -- not loaded!`)
-            return
-        }
-        if(this.context === null) {
-            console.log('context loaded')
-            this.loadContext()
-        }
-        for(let s of this.sounds[sound]) {
-            if(s.isPlaying) {
-                s.stop()
-            }
-        }
-        
         if(idx === 'rand')
             idx = randIdx(this.sounds[sound].length)
 
         if(volume === 'rand')
             volume = randVol(volMin, volMax)
 
-        this.sounds[sound][idx].setVolume(volume)
-        this.sounds[sound][idx].play()
+        if(this.audioiOS.isiOS)
+          this._playSoundiOS(sound, idx, volume)
+        else
+          this._playSound(sound, idx, volume)
+    }
+
+    _playSound(sound, idx, volume) {
+      if(!(sound in this.sounds)) {
+          console.log(`Sound: ${sound} -- not loaded!`)
+          return
+      }
+      if(this.context === null) {
+          console.log('context loaded')
+          this.loadContext()
+      }
+      for(let s of this.sounds[sound]) {
+          if(s.isPlaying) {
+              s.stop()
+          }
+      }
+
+      this.sounds[sound][idx].setVolume(volume)
+      this.sounds[sound][idx].play()
+      console.log('playing sound')
+  }
+
+    _playSoundiOS(sound, idx, volume) {
+      // this.audioiOS.source.src = 'http://mmills.io/portfolio/sounds/block-move-ios/0.wav'
+      this.audioiOS.source.src = `http://mmills.io/portfolio/sounds/${sound}-ios/${idx}.wav`
+      this.audioiOS.controller.play()
+      // .then(() => this.audioiOS.pause())
+      console.log('playing ios sound')
     }
 
     loadContext() {

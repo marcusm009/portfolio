@@ -334,6 +334,17 @@ button, a {
   height: 10rem;
 }
 
+#init {
+  position: absolute;
+  right: 0px;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  z-index: 1000;
+  background-color: red;
+  display: none;
+}
+
 // .timeline {
 //   background-color: $veryLightGray;
 //   border: 2px solid $darkGray;

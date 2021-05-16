@@ -107,9 +107,14 @@ const Contact = () => {
               </Button>
             )}
             {emailSent && (
-              <Typography variant='h6'>
-                Email sent!
-              </Typography>
+              <>
+                <Typography variant='h6'>
+                  Email sent!
+                </Typography>
+                <Typography variant='body2'>
+                  Thanks for contacting me! I will get back to you as soon as possible!
+                </Typography>
+              </>
             )}
 
             <br/><br/>

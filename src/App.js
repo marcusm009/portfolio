@@ -12,7 +12,7 @@ import Projects from './react-components/pages/Projects'
 import Contact from './react-components/pages/Contact'
 
 const BASE_ROUTE = '/portfolio'
-const VERSION = '0.7.7'
+const VERSION = '0.7.7.4'
 
 console.log('VER: ', VERSION)
 
@@ -82,6 +82,7 @@ const App = () => {
         completeStageCallback={completeStage}
         replayStageCallback={replayStage}
         baseRoute={BASE_ROUTE}
+        isiOS={isiOS()}
       />
       <div
         id={'ver'}
@@ -96,6 +97,14 @@ const App = () => {
         Ver: {VERSION}</div>
     </BrowserRouter>
   )
+}
+
+function isiOS() {
+  let isiOS = false
+  if (/iP(hone|od|ad)/.test(navigator.platform)) {
+      isiOS = true
+  }
+  return isiOS
 }
 
 export default App;

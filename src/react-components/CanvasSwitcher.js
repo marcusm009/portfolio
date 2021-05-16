@@ -1,12 +1,19 @@
 import { useLocation, useHistory } from 'react-router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import Canvas from './Canvas'
 import Page from './Page'
 
-const CanvasSwitcher = ({ pages, completeStageCallback, replayStageCallback, baseRoute }) => {
+const CanvasSwitcher = ({ pages, completeStageCallback, replayStageCallback, baseRoute, isiOS }) => {
   const location = useLocation().pathname
   const history = useHistory()
+  const audioiOS = useState({
+    'audioiOS': {
+      'isiOS': isiOS,
+      'controller': null,
+      'source': null
+    }
+  })
 
   useEffect(() => {
     if(location === '/')
@@ -46,6 +53,7 @@ const CanvasSwitcher = ({ pages, completeStageCallback, replayStageCallback, bas
             completeStageCallback={() => completeStageCallback(page.route)}
             isComplete={page.completed}
             baseRoute={baseRoute}
+            isiOS={isiOS}
             />
         </>
     ))}

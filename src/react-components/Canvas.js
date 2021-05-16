@@ -23,7 +23,12 @@ class Canvas extends Component {
       'player': null,
       'initialMountWidth': null,
       'initialMountHeight': null,
-      'isInitialized': false
+      'isInitialized': false,
+      'audioiOS': {
+        'isiOS': this.props.isiOS,
+        'controller': null,
+        'source': null
+      }
     }
   }
 
@@ -62,6 +67,8 @@ class Canvas extends Component {
   }
 
   async initThreeCanvas() {
+    console.log(navigator.platform)
+
     // client, offset, scroll, css
     this.state.initialMountWidth = this.mount.offsetWidth
     this.state.initialMountHeight = this.mount.offsetHeight
@@ -89,8 +96,8 @@ class Canvas extends Component {
     this.state.scene.add(dirLight)
     dirLight.position.set(-20,100,50)
 
-    this.state.audioManager = new AudioManager(window, this.props.baseRoute)
-  
+    this.state.audioManager = new AudioManager(window, this.props.baseRoute, this.state.audioiOS)
+
     this.state.camera.add(this.state.audioManager.listener)
     this.state.audioManager.loadSound('block-move', 4)
   
@@ -186,6 +193,32 @@ class Canvas extends Component {
   render() {
     return (
       <>
+      {this.props.isActive && (
+        <audio
+          id='init'
+          ref={ref => (this.state.audioiOS.controller = ref)}
+          controls>
+          <source
+            ref={ref => (this.state.audioiOS.source = ref)}
+            src='http://mmills.io/portfolio/sounds/block-move-ios/0.wav'
+            type='audio/mpeg'></source>
+            Your browser does not support the audio tag.
+        </audio>
+      )}
+
+      {this.props.isActive && (
+        <button  
+          id='intro'
+          variant='contained'
+          onClick={() => {
+            this.state.audioiOS.controller.play()
+          }}
+          style={{
+            zIndex: 1000
+          }}>
+          Hello
+        </button>
+      )}
       <div
         ref={ref => (this.mount = ref)}
         id={this.props.level}
