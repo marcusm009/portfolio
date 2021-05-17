@@ -8,7 +8,9 @@ import AudioManager from '../classes/AudioManager'
 import RectangularPrismPlayer from '../classes/RectangularPrismPlayer'
 import Floor from '../classes/Floor'
 
-import { Button } from '@material-ui/core'
+import { Button, IconButton } from '@material-ui/core'
+import VolumeOffIcon from '@material-ui/icons/VolumeOff'
+import VolumeUpIcon from '@material-ui/icons/VolumeUp'
 
 class Canvas extends Component {
   constructor(props) {
@@ -28,7 +30,9 @@ class Canvas extends Component {
         'isiOS': this.props.isiOS,
         'controller': null,
         'source': null
-      }
+      },
+      'isMuted': this.props.isiOS,
+      'isRunning': false
     }
   }
 
@@ -41,8 +45,10 @@ class Canvas extends Component {
   async componentDidUpdate() {
     console.log('Canvas updated')
     if(this.state.isInitialized) {
+      if(!this.state.isRunning)
+        this.resumeThreeCanvas()
+      
       this.resizeCanvasToMountSize()
-      this.resumeThreeCanvas()
       this.state.controller.isEnabled = this.props.isActive
       // If props are set to complete and player state complete, player completed level
       if(this.props.isComplete && this.state.player.completedLevel) {
@@ -142,7 +148,7 @@ class Canvas extends Component {
             shouldRender = false
           }
 
-          if(this.state.player.playSound) {
+          if(this.state.player.playSound && !this.state.isMuted) {
             this.state.audioManager.playSound('block-move')
           }
   
@@ -166,10 +172,11 @@ class Canvas extends Component {
           }
     
           frame += 1
+          this.state.isRunning = true
           requestAnimationFrame(animate)
         }
     }
-    animate();
+    animate()
   }
 
   resizeCanvasToMountSize() {
@@ -206,18 +213,25 @@ class Canvas extends Component {
         </audio>
       )}
 
-      {this.props.isActive && (
-        <button  
+      {this.props.isActive && !this.props.isComplete && (
+        <IconButton  
           id='intro'
-          variant='contained'
+          size='large'
+          aria-label='delete'
           onClick={() => {
             this.state.audioiOS.controller.play()
+            this.state.isMuted = !this.state.isMuted
+            this.setState(this.state)
           }}
           style={{
-            zIndex: 1000
+            zIndex: 1000,
+            color: 'white',
+            top: '5rem',
+            left: '1rem',
+            transform: 'scale(2)'
           }}>
-          Hello
-        </button>
+            {this.state.isMuted ? <VolumeOffIcon/> : <VolumeUpIcon/>}
+        </IconButton>
       )}
       <div
         ref={ref => (this.mount = ref)}

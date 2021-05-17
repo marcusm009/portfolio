@@ -52,8 +52,10 @@ class AudioManager {
     _playSoundiOS(sound, idx, volume) {
       // this.audioiOS.source.src = 'http://mmills.io/portfolio/sounds/block-move-ios/0.wav'
       this.audioiOS.source.src = `http://mmills.io/portfolio/sounds/${sound}-ios/${idx}.wav`
+      this.audioiOS.controller.pause()
+      this.audioiOS.controller.load()
       this.audioiOS.controller.play()
-      // .then(() => this.audioiOS.pause())
+      // .then(() => this.audioiOS.controller.pause())
       console.log('playing ios sound')
     }
 
