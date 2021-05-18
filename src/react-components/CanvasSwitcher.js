@@ -7,13 +7,6 @@ import Page from './Page'
 const CanvasSwitcher = ({ pages, completeStageCallback, replayStageCallback, baseRoute, isiOS }) => {
   const location = useLocation().pathname
   const history = useHistory()
-  const audioiOS = useState({
-    'audioiOS': {
-      'isiOS': isiOS,
-      'controller': null,
-      'source': null
-    }
-  })
 
   useEffect(() => {
     if(location === '/')

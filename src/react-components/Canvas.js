@@ -32,7 +32,7 @@ class Canvas extends Component {
         'source': null
       },
       'isMuted': this.props.isiOS,
-      'isRunning': false
+      'shouldResumeCanvas': true
     }
   }
 
@@ -45,8 +45,10 @@ class Canvas extends Component {
   async componentDidUpdate() {
     console.log('Canvas updated')
     if(this.state.isInitialized) {
-      if(!this.state.isRunning)
+      if(this.state.shouldResumeCanvas)
         this.resumeThreeCanvas()
+      else
+        this.state.shouldResumeCanvas = true
       
       this.resizeCanvasToMountSize()
       this.state.controller.isEnabled = this.props.isActive
@@ -219,8 +221,12 @@ class Canvas extends Component {
           size='large'
           aria-label='delete'
           onClick={() => {
-            this.state.audioiOS.controller.play()
+            if(this.state.audioiOS.isiOS && this.state.isMuted) {
+              alert('Warning: Real-time sound on iOS is experimental and may have bugs!')
+              this.state.audioiOS.controller.play()
+            }
             this.state.isMuted = !this.state.isMuted
+            this.state.shouldResumeCanvas = false
             this.setState(this.state)
           }}
           style={{
@@ -228,7 +234,7 @@ class Canvas extends Component {
             color: 'white',
             top: '5rem',
             left: '1rem',
-            transform: 'scale(2)'
+            transform: 'scale(1.5)'
           }}>
             {this.state.isMuted ? <VolumeOffIcon/> : <VolumeUpIcon/>}
         </IconButton>
