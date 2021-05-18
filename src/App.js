@@ -6,13 +6,14 @@ import { CssBaseline } from '@material-ui/core'
 import NavBar from './react-components/NavBar'
 import TitleBar from './react-components/TitleBar'
 import CanvasSwitcher from './react-components/CanvasSwitcher'
+import EntryPage from './react-components/EntryPage'
 
 import About from './react-components/pages/About'
 import Projects from './react-components/pages/Projects'
 import Contact from './react-components/pages/Contact'
 
 const BASE_ROUTE = '/portfolio'
-const VERSION = '0.7.9'
+const VERSION = '0.8.0'
 
 console.log('VER: ', VERSION)
 
@@ -38,7 +39,7 @@ const App = () => {
         component: Contact
       }
     ],
-    shouldEntryPage: true
+    entryPageDismissed: false
   })
 
   const completeStage = route => {
@@ -65,6 +66,10 @@ const App = () => {
     })
   }
 
+  const dismissEntryPage = () => {
+    setState({entryPageDismissed: true, pages: state.pages})
+  }
+
   return (
     <BrowserRouter
       basename={BASE_ROUTE}>
@@ -77,14 +82,20 @@ const App = () => {
         buttons={state.pages}
         baseRoute={BASE_ROUTE}
       />
-      {/* <EntryPage isActive={true}/> */}
-      <CanvasSwitcher
-        pages={state.pages}
-        completeStageCallback={completeStage}
-        replayStageCallback={replayStage}
-        baseRoute={BASE_ROUTE}
-        isiOS={isiOS()}
-      />
+      {
+        !state.entryPageDismissed ? (
+          <EntryPage
+            dismissEntryPage={dismissEntryPage}/>
+        ) : (
+          <CanvasSwitcher
+            pages={state.pages}
+            completeStageCallback={completeStage}
+            replayStageCallback={replayStage}
+            baseRoute={BASE_ROUTE}
+            isiOS={isiOS()}
+          />
+        )
+      }
       <div
         id={'ver'}
         style={{

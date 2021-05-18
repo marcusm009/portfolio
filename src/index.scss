@@ -218,34 +218,37 @@ button, a {
 #entry-page {
   position: fixed;
   display: flex;
+  flex-direction: column;
+  // justify-content: space-evenly;
   top: $navBarSize;
   left: 0;
   right: 0;
   bottom: 0;
   background-color: $darkGray;
   color: $white;
-  padding: 1rem;
-  align-items: center;
+  // margin: auto;
+  // padding: 1rem;
+  // align-items: stretch;
   text-align: center;
   z-index: 999;
 
-  h1 {
-    display: none;
+  div {
+    flex-grow: 1;
+  }
 
-    &.fade, &.active {
-      display: block;
-      transition: opacity .3s linear;
-      -moz-transition: opacity .3s linear;
-      -webkit-transition: opacity .3s linear;
+  h3 {
+    border-right: .15em solid red;
+    animation: blink-caret .75s step-end infinite;
+
+    &.no-cursor {
+      animation: none;
+      border-right: transparent;
     }
-  
-    &.fade {
-      opacity: 0;
-    }
-  
-    &.active {
-      opacity: 1;
-    }
+  }
+
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: red; }
   }
 }
 
@@ -289,20 +292,6 @@ button, a {
   }
 }
 
-// .page {
-//   background-color: rgba(255, 255, 255, 1);
-//   padding-top: 3rem;
-//   padding-left: calc(min(10rem, 10vw));
-//   padding-right: calc(min(10rem, 10vw));
-//   padding-bottom: 7rem;
-//   font-size: $fontSizeSmall;
-//   font-weight: 300;
-//   line-height: $fontSizeSmall * 2;
-//   text-rendering: optimizeLegibility;
-//   -webkit-font-smoothing: antialiased;
-//   z-index: 2
-// }
-
 .fade-in-section {
   opacity: 0;
   transform: translateY(20vh);
@@ -344,9 +333,3 @@ button, a {
   background-color: red;
   display: none;
 }
-
-// .timeline {
-//   background-color: $veryLightGray;
-//   border: 2px solid $darkGray;
-// }
-
