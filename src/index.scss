@@ -219,26 +219,28 @@ button, a {
   position: fixed;
   display: flex;
   flex-direction: column;
-  // justify-content: space-evenly;
+  justify-content: space-evenly;
   top: $navBarSize;
   left: 0;
   right: 0;
   bottom: 0;
   background-color: $darkGray;
   color: $white;
-  // margin: auto;
-  // padding: 1rem;
-  // align-items: stretch;
+  margin: auto;
+  padding-top: 20rem;
+  padding-bottom: 20rem;
+  align-items: center;
   text-align: center;
   z-index: 999;
 
-  div {
-    flex-grow: 1;
-  }
+  // div {
+  //   flex-grow: 1;
+  // }
 
-  h3 {
+  h5 {
     border-right: .15em solid red;
     animation: blink-caret .75s step-end infinite;
+    flex-grow: 1;
 
     &.no-cursor {
       animation: none;

@@ -5,7 +5,7 @@ import { useLocation, useHistory } from 'react-router'
 
 const messages = [
   'Welcome to my interactive portfolio website inspired by Bloxorz.',
-  'Beat the level to unlock the page... or click the auto-solve button',
+  'Beat the level to unlock the page... or click the auto-solve button.',
   'Tap or click to get started!'
 ]
 
@@ -40,6 +40,22 @@ const EntryPage = ({ dismissEntryPage }) => {
   
   return (
       <>
+      <Button
+          variant='contained'
+          onClick={() => {
+            dismissEntryPage()
+          }}
+          style={{
+            display: 'block',
+            backgroundColor: 'rgba(0,0,0,0)',
+            position: 'absolute',
+            top: '4rem',
+            bottom: '0',
+            width: '100%',
+            textAlign: 'center',
+            zIndex: '1000'
+          }}>
+      </Button>
       <div
         id='entry-page'
         onclick={() => {dismissEntryPage()}}>
@@ -48,7 +64,7 @@ const EntryPage = ({ dismissEntryPage }) => {
         <div>
           <Typography
             className={(msg.length === messages[idx].length) ? 'no-cursor' : ''}
-            variant='h3'
+            variant='h5'
             style={{
               position: 'relative'
             }}
@@ -58,21 +74,6 @@ const EntryPage = ({ dismissEntryPage }) => {
           </Typography>
         </div>
       ))}
-          <Button
-          variant='contained'
-          onClick={() => {
-            dismissEntryPage()
-          }}
-          style={{
-            display: 'block',
-            backgroundColor: 'rgba(0,0,0,0)',
-            position: 'relative',
-            width: '100%',
-            height: '100%',
-            textAlign: 'center',
-            zIndex: '4'
-          }}>
-        </Button>
       </div>
       </>
   )
