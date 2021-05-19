@@ -6,14 +6,14 @@ import { CssBaseline } from '@material-ui/core'
 import NavBar from './react-components/NavBar'
 import TitleBar from './react-components/TitleBar'
 import CanvasSwitcher from './react-components/CanvasSwitcher'
-import EntryPage from './react-components/EntryPage'
 
+import Welcome from './react-components/pages/Welcome'
 import About from './react-components/pages/About'
 import Projects from './react-components/pages/Projects'
 import Contact from './react-components/pages/Contact'
 
 const BASE_ROUTE = '/portfolio'
-const VERSION = '0.8.1'
+const VERSION = '0.8.3'
 
 console.log('VER: ', VERSION)
 
@@ -39,7 +39,7 @@ const App = () => {
         component: Contact
       }
     ],
-    entryPageDismissed: false
+    welcomePageDismissed: false
   })
 
   const completeStage = route => {
@@ -66,8 +66,8 @@ const App = () => {
     })
   }
 
-  const dismissEntryPage = () => {
-    setState({entryPageDismissed: true, pages: state.pages})
+  const dismissWelcomePage = () => {
+    setState({welcomePageDismissed: true, pages: state.pages})
   }
 
   return (
@@ -83,9 +83,9 @@ const App = () => {
         baseRoute={BASE_ROUTE}
       />
       {
-        !state.entryPageDismissed ? (
-          <EntryPage
-            dismissEntryPage={dismissEntryPage}/>
+        !state.welcomePageDismissed ? (
+          <Welcome
+            dismissWelcomePage={dismissWelcomePage}/>
         ) : (
           <CanvasSwitcher
             pages={state.pages}

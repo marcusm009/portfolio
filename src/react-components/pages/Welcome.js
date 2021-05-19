@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Paper, Box, Typography } from '@material-ui/core'
-import { Button, IconButton } from '@material-ui/core'
-import { useLocation, useHistory } from 'react-router'
+import { useLocation } from 'react-router'
+import { Typography, Button } from '@material-ui/core'
 
 const messages = [
   'Welcome to my interactive portfolio website inspired by Bloxorz.',
@@ -9,7 +8,7 @@ const messages = [
   'Tap or click to get started!'
 ]
 
-const EntryPage = ({ dismissEntryPage }) => {
+const Welcome = ({ dismissWelcomePage }) => {
   const location = useLocation().pathname
   const [curMessages, setMessages] = useState(Array(messages.length).fill(''))
 
@@ -34,7 +33,7 @@ const EntryPage = ({ dismissEntryPage }) => {
 
   useEffect(() => {
     if(location !== '/')
-      dismissEntryPage()
+      dismissWelcomePage()
     updateText()
   })
   
@@ -43,7 +42,7 @@ const EntryPage = ({ dismissEntryPage }) => {
       <Button
           variant='contained'
           onClick={() => {
-            dismissEntryPage()
+            dismissWelcomePage()
           }}
           style={{
             display: 'block',
@@ -57,14 +56,14 @@ const EntryPage = ({ dismissEntryPage }) => {
           }}>
       </Button>
       <div
-        id='entry-page'
-        onclick={() => {dismissEntryPage()}}>
+        id='welcome-page'
+        onclick={() => {dismissWelcomePage()}}>
       {
       curMessages.map((msg, idx) => (
         <div>
           <Typography
             className={(msg.length === messages[idx].length) ? 'no-cursor' : ''}
-            variant='h5'
+            variant='h3'
             style={{
               position: 'relative'
             }}
@@ -79,4 +78,4 @@ const EntryPage = ({ dismissEntryPage }) => {
   )
 }
 
-export default EntryPage
+export default Welcome

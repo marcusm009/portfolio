@@ -215,11 +215,11 @@ button, a {
   z-index: 4;
 }
 
-#entry-page {
+#welcome-page {
   position: fixed;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   top: $navBarSize;
   left: 0;
   right: 0;
@@ -227,17 +227,11 @@ button, a {
   background-color: $darkGray;
   color: $white;
   margin: auto;
-  padding-top: 20rem;
-  padding-bottom: 20rem;
   align-items: center;
   text-align: center;
   z-index: 999;
 
-  // div {
-  //   flex-grow: 1;
-  // }
-
-  h5 {
+  h3 {
     border-right: .15em solid red;
     animation: blink-caret .75s step-end infinite;
     flex-grow: 1;
@@ -245,6 +239,10 @@ button, a {
     &.no-cursor {
       animation: none;
       border-right: transparent;
+    }
+
+    @media screen and (max-width: 600px) {
+      font-size: .5rem;
     }
   }
 
