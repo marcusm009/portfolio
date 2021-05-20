@@ -24,6 +24,7 @@ class Controller {
         }
 
         this.lastMoveWasManual = false
+        this.hasMoved = false
         this.isEnabled = isEnabled
     }
 
@@ -70,16 +71,12 @@ class Controller {
             this.moveCallback('l')
         } else if (keyCode === 68 || keyCode === 39) {
             this.moveCallback('r')
-        } else if (keyCode === 13) {
-            this.autoSolve(.25)
         } else {
             console.log('Key pressed: ' + keyCode);
         }
         
-        if (keyCode !== 13) {
-          clearTimeout(this.autoSolveTimer)  
-          this.lastMoveWasManual = true
-        }
+        this.hasMoved = true
+        this.lastMoveWasManual = true
     }
 
     getTouches(event) {
@@ -121,6 +118,7 @@ class Controller {
         this.yDown = null
 
         clearTimeout(this.autoSolveTimer)
+        this.hasMoved = true
         this.lastMoveWasManual = true
     }
 
@@ -134,6 +132,7 @@ class Controller {
                 this.autoSolve(stepTimeInSeconds)
             }, stepTimeInSeconds * 1000)
         }
+        this.hasMoved = true
     }
 
     reset() {

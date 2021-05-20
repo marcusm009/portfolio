@@ -68,7 +68,7 @@ const Page = ({ Component, isActive, replayStageCallback, nextLevel, baseRoute }
                 console.log(nextLevel)
                 history.push(nextLevel.route)}}
               style={{
-                display: (nextLevel !== undefined) ? 'block' : 'none',
+                display: (nextLevel !== undefined) ? 'inline-flex' : 'none',
                 right: 0
               }}>
                 Next Level

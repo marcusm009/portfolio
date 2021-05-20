@@ -4,7 +4,7 @@ import { Typography, Button } from '@material-ui/core'
 
 const messages = [
   'Welcome to my interactive portfolio website inspired by Bloxorz.',
-  'Beat the level to unlock the page... or click the auto-solve button.',
+  'Beat the level to unlock the page or click the auto-solve button.',
   'Tap or click to get started!'
 ]
 
@@ -27,7 +27,7 @@ const Welcome = ({ dismissWelcomePage }) => {
     if(didUpdate) {
       setTimeout(() => {
         setMessages(newMessages)
-      }, 75)
+      }, 50)
     }
   }
 

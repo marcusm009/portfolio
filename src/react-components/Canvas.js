@@ -32,7 +32,8 @@ class Canvas extends Component {
         'source': null
       },
       'isMuted': this.props.isiOS,
-      'shouldResumeCanvas': true
+      'shouldResumeCanvas': true,
+      'hasMoved': false
     }
   }
 
@@ -150,6 +151,14 @@ class Canvas extends Component {
             shouldRender = false
           }
 
+          // The controller says it has moved, but it has not been reflected in the state yet
+          // Used to remove text and icons explaining what to do
+          if(this.state.controller.hasMoved && !this.state.hasMoved) {
+            this.state.hasMoved = true
+            this.state.shouldResumeCanvas = false
+            this.setState(this.state)
+          }
+
           if(this.state.player.playSound && !this.state.isMuted) {
             this.state.audioManager.playSound('block-move')
           }
@@ -247,13 +256,7 @@ class Canvas extends Component {
           display: (this.props.isActive) ? 'block' : 'none'
         }}
       >
-        <h1
-          id='directions-text'
-          style={{
-            display: (this.props.isActive && !this.props.isComplete) ? 'block' : 'none',
-          }}>
-          Beat the level to unlock the page!
-        </h1>
+        {!this.state.hasMoved && <Hints/>}
         <Button
           variant='contained'
           onClick={() => {
@@ -281,6 +284,25 @@ function updateCanvasCSS(mount) {
   let canvas = mount.firstElementChild
   canvas.style.width = mount.offsetWidth
   canvas.style.height = mount.offsetHeight
+}
+
+function Hints() {
+  return (
+    isTouchDevice() ? (
+      <>
+      <h1 id='directions-text'>Swipe to move!</h1>
+      <div id='touch-icon'></div>
+      </>
+    ) : (
+      <>
+      <h1 id='directions-text'>Use WASD or arrow keys to move!</h1>
+      </>
+    )
+  )
+}
+
+function isTouchDevice() {
+  return window.matchMedia('(any-hover: none)').matches
 }
 
 export default Canvas

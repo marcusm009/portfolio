@@ -13,7 +13,7 @@ import Projects from './react-components/pages/Projects'
 import Contact from './react-components/pages/Contact'
 
 const BASE_ROUTE = '/portfolio'
-const VERSION = '0.8.3'
+const VERSION = '0.8.4'
 
 console.log('VER: ', VERSION)
 
@@ -39,7 +39,8 @@ const App = () => {
         component: Contact
       }
     ],
-    welcomePageDismissed: false
+    welcomePageDismissed: false,
+    touchEnabled: false
   })
 
   const completeStage = route => {
@@ -85,7 +86,8 @@ const App = () => {
       {
         !state.welcomePageDismissed ? (
           <Welcome
-            dismissWelcomePage={dismissWelcomePage}/>
+            dismissWelcomePage={dismissWelcomePage}
+            />
         ) : (
           <CanvasSwitcher
             pages={state.pages}
