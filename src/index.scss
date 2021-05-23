@@ -250,9 +250,9 @@ button, a {
       border-right: transparent;
     }
 
-    // @media screen and (max-width: 600px) {
-    //   font-size: .75rem;
-    // }
+    @media screen and (max-width: 600px) {
+      font-size: 1.5rem;
+    }
   }
 
   @keyframes blink-caret {

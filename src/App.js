@@ -13,7 +13,7 @@ import Projects from './react-components/pages/Projects'
 import Contact from './react-components/pages/Contact'
 
 const BASE_ROUTE = '/portfolio'
-const VERSION = '0.8.5'
+const VERSION = '0.8.6'
 
 console.log('VER: ', VERSION)
 
@@ -71,6 +71,10 @@ const App = () => {
     setState({welcomePageDismissed: true, pages: state.pages})
   }
 
+  const showWelcomePage = () => {
+    setState({welcomePageDismissed: false, pages: state.pages})
+  }
+
   return (
     <BrowserRouter
       basename={BASE_ROUTE}>
@@ -78,6 +82,7 @@ const App = () => {
       <CssBaseline />
       <TitleBar
         baseRoute={BASE_ROUTE}
+        showWelcomePage={showWelcomePage}
       />
       <NavBar
         buttons={state.pages}

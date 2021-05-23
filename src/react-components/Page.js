@@ -65,7 +65,6 @@ const Page = ({ Component, isActive, replayStageCallback, nextLevel, baseRoute }
               variant='contained'
               endIcon={<NavigateNextIcon/>}
               onClick={() => {
-                console.log(nextLevel)
                 history.push(nextLevel.route)}}
               style={{
                 display: (nextLevel !== undefined) ? 'inline-flex' : 'none',

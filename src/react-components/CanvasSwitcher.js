@@ -1,5 +1,5 @@
 import { useLocation, useHistory } from 'react-router'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 import Canvas from './Canvas'
 import Page from './Page'

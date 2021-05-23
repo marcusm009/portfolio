@@ -1,25 +1,46 @@
-const TitleBar = ({ baseRoute }) => {
+import { IconButton } from '@material-ui/core'
+import Icon from '@material-ui/core/Icon'
+import { useHistory } from 'react-router'
+
+const TitleBar = ({ baseRoute, showWelcomePage }) => {
+  const history = useHistory()
+  
   const refresh = () => {
     window.location.reload()
   }
+
+  const logoClicked = () => {
+    showWelcomePage()
+    history.push('/')
+  }
+
+  const Logo = () => (
+    <Icon>
+      <img
+        alt='Logo'
+        src={baseRoute + '/images/favicon/favicon-64x64.png'}
+        style={{
+          width: '48px',
+          maxWidth: '100%',
+          height: 'auto'
+        }}/>
+    </Icon>
+  )
 
   return (
     <div
       id={'title-bar'}
       className={'top-bar'}>
-      <img src={baseRoute + '/images/favicon/favicon-64x64.png'}
-          style={{
-            width: '48px',
-            maxWidth: '100%',
-            height: 'auto'}}
-          alt="Logo"
-          title="Logo" />
+      <IconButton
+        onClick={() => logoClicked()}>
+        <Logo />
+      </IconButton>
       <button
         type='button'
         className={'title'}
         onClick={refresh}
       >
-      {'Marcus_Mills'}
+      {'Marcus Mills'}
       </button>
     </div>
 

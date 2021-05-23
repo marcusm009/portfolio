@@ -257,23 +257,35 @@ class Canvas extends Component {
         }}
       >
         {!this.state.hasMoved && <Hints/>}
-        <Button
-          variant='contained'
-          onClick={() => {
-            this.state.controller.autoSolve(.25)
-          }}
-          style={{
-            display: (this.props.isActive && !this.props.isComplete) ? 'block' : 'none',
-            position: 'fixed',
-            margin: 'auto',
-            bottom: '2rem',
-            left: 0,
-            right: 0,
-            textAlign: 'center',
-            zIndex: '4'
-          }}>
-          Auto-solve
-        </Button>
+        <div style={{
+          display: (this.props.isActive && !this.props.isComplete) ? 'block' : 'none',
+          position: 'fixed',
+          margin: 'auto',
+          bottom: '2rem',
+          left: 0,
+          right: 0,
+          textAlign: 'center',
+          zIndex: '4'
+        }}>
+          <Button
+            variant='contained'
+            onClick={() => {
+              this.state.controller.autoSolve(.25)
+            }}
+            // style={{
+            //   display: (this.props.isActive && !this.props.isComplete) ? 'block' : 'none',
+            //   position: 'fixed',
+            //   margin: 'auto',
+            //   bottom: '2rem',
+            //   left: 0,
+            //   right: 0,
+            //   textAlign: 'center',
+            //   zIndex: '4'
+            // }}
+            >
+            Auto-solve
+          </Button>
+        </div>
       </div>
       </>
     )

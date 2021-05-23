@@ -3,7 +3,7 @@ import MenuButton from './MenuButton'
 import NavButton from './NavButton'
 
 const calcOrientation = (width, height) => {
-  return (width/height >= 1) ? 'landscape' : 'portrait'
+  return (width/height >= 1 && width > 600) ? 'landscape' : 'portrait'
 }
 
 const NavBar = ({ buttons }) => {
