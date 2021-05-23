@@ -26,10 +26,7 @@ const Overview = () => {
               maxWidth: '100%'
             }}
             alt="Me!" />
-      <CardContent style={{
-        flexGrow: 1,
-        padding: '2rem'
-      }}>
+      <CardContent style={{ flexGrow: 1 }}>
         <Typography variant='h4' gutterBottom>Overview</Typography>
         <Typography variant='h6'>Occupation: Software Engineer</Typography>
         <Typography variant='h6'>Company: Motorola Solutions</Typography>

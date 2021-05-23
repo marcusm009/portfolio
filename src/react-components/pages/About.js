@@ -12,7 +12,7 @@ import Overview from '../Overview'
 
 const useStyles = makeStyles(() => ({
   paper: {
-    padding: '.5rem'
+    padding: '1rem'
   }
 }))
 
@@ -46,11 +46,11 @@ const About = () => {
       icon: <CodeIcon/>,
       interests: [
         'Python - Proficient',
-        'Javascript - Experienced',
-        'HTML / CSS - Experienced',
-        'React.JS - Experienced',
+        'JavaScript - Experienced',
         'Git - Experienced',
-        'SQL - Experienced',
+        'HTML / CSS - Experienced',
+        'React.JS - Acquiring knowledge',
+        'SQL - Some knowledge',
         'Node.js - Some knowledge'
       ]
     }
@@ -64,7 +64,7 @@ const About = () => {
       <FadeInSection>  
         <Typography variant='h4' gutterBottom>Objective</Typography>
         <Typography>
-          To make society more productive through the use of software solutions
+          To become a master at my craft, write clean and reusable code, and make informed design decisions
         </Typography>
       </FadeInSection>
       <br/>

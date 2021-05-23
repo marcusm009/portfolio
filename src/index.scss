@@ -250,8 +250,14 @@ button, a {
       border-right: transparent;
     }
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 760px) {
       font-size: 1.5rem;
+    }
+  }
+
+  h4 {
+    @media screen and (max-width: 760px) {
+      font-size: 1.25rem;
     }
   }
 
@@ -341,4 +347,19 @@ button, a {
   z-index: 1000;
   background-color: red;
   display: none;
+}
+
+.fade, .active {
+  display: block;
+  transition: opacity .3s linear;
+  -moz-transition: opacity .3s linear;
+  -webkit-transition: opacity .3s linear;
+}
+
+.fade {
+  opacity: 0;
+}
+
+.active {
+  opacity: 1;
 }

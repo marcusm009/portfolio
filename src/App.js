@@ -13,7 +13,7 @@ import Projects from './react-components/pages/Projects'
 import Contact from './react-components/pages/Contact'
 
 const BASE_ROUTE = '/portfolio'
-const VERSION = '0.8.6'
+const VERSION = '0.9.1'
 
 console.log('VER: ', VERSION)
 
@@ -91,6 +91,7 @@ const App = () => {
       {
         !state.welcomePageDismissed ? (
           <Welcome
+            baseRoute={BASE_ROUTE}
             dismissWelcomePage={dismissWelcomePage}
             />
         ) : (
@@ -103,7 +104,7 @@ const App = () => {
           />
         )
       }
-      <div
+      {/* <div
         id={'ver'}
         style={{
           color: 'white',
@@ -113,7 +114,7 @@ const App = () => {
           zIndex: '999'
         }}
         >
-        Ver: {VERSION}</div>
+        Ver: {VERSION}</div> */}
     </BrowserRouter>
   )
 }

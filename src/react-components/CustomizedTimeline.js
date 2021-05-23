@@ -33,7 +33,8 @@ const CustomizedTimeline = () => {
       },
       title: 'B.S. in Computer Science',
       subtitle: 'University of Florida',
-      content: 'Began pursing a BS in CS at the University of Florida'
+      content: ["In 2016, I began pursuing a bachelor's degree in computer science at the University of Florida. I graduated in 2020 with my bachelor's, as well as a minor in Statistics."],
+      skills: ['Programming Fundamentals', 'Data Structures & Algorithms', 'Software Engineering', 'Operating Systems']
     },
     {
       year: '2018-2020',
@@ -44,10 +45,11 @@ const CustomizedTimeline = () => {
       },
       title: 'Undergraduate Research Assistant',
       subtitle: 'Florida Institute of Cybersecurity',
-      content: 'Became a machine learning research assistant at FICS under Vincent Bindschadler'
+      content: ['In 2018, I became a research assistant for Dr. Vincent Bindschadler. We discovered new methods to extract meta-data from black box machine learning models.'],
+      skills: ['Python', 'Machine Learning', 'Membership Inference']
     },
     {
-      year: '2020-',
+      year: '2020-Pres.',
       icon: (<LaptopMacIcon />),
       image: {
         title: 'Motorola',
@@ -55,10 +57,12 @@ const CustomizedTimeline = () => {
       },
       title: 'Jr. Software Engineer',
       subtitle: 'Motorola Solutions',
-      content: 'Became a full time software engineer at Motorola Solutions'
+      content: ['After interning at Motorola Solutions in 2019, I joined the Software Engineer in Test (SET) team as a full time engineer shortly after graduating.',
+                'I spearheaded multiple initiatives such as creating a Linux version of our tool used to flash radios, developing a system to automatically detect new failures when firmware was checked in, designing an interactive web page used to view information about our automated test system, and much more!'],
+      skills: ['Python', 'Test Driven Development', 'Web Development', 'SQL', 'Git', 'Jira', 'C#']
     },
     {
-      year: '2021-',
+      year: '2021-Pres.',
       icon: (<LaptopMacIcon />),
       image: {
         title: 'OMSCS',
@@ -66,13 +70,8 @@ const CustomizedTimeline = () => {
       },
       title: 'M.S. in Computer Science',
       subtitle: 'Georgia Institute of Technology',
-      content: 'Currently pursuring a masters of science in computer science at Georgia Tech'
-    },
-    {
-      year: '????',
-      icon: (<LaptopMacIcon />),
-      title: 'Future',
-      content: 'Who knows what it will hold...'
+      content: ["I will begin pursuing my master's degree online in Fall of 2021 at Georgia Tech. My specialization will be in Computing Systems"],
+      skills: ['TBD']
     },
     
   ]
@@ -83,7 +82,8 @@ const CustomizedTimeline = () => {
       {content.map((info, idx) => (
         <TimelineItem key={idx}>
           <TimelineOppositeContent style={{
-            flexGrow: shouldAlternate ? 1 : 0
+            flexGrow: shouldAlternate ? 1 : 0,
+            padding: '.25rem'
           }}>
             {info.year ? 
               (<Typography color='textSecondary'>{info.year}</Typography>) : 
@@ -113,10 +113,16 @@ const CustomizedTimeline = () => {
                   {info.title}
                 </Typography>
                 <Typography gutterBottom variant='h6' style={{fontStyle:'italic'}}>
-                  {info.subtitle}
-                </Typography>
-                <Typography variant='body2' color='textSecondary' component='p'>
-                  {info.content}
+                    {info.subtitle}
+                  </Typography>
+                {info.content.map((c) => {
+                  return (
+                    <Typography gutterBottom variant='body2' color='textSecondary' component='p'>
+                      {c}
+                    </Typography>)
+                })}
+                <Typography variant='body2' color='textPrimary' component='p' style={{fontWeight: 'bold'}}>
+                  Skills: {info.skills.map((skill, idx) => skill + ((idx === info.skills.length - 1) ? '' : ', '))}
                 </Typography>
               </CardContent>
             </Card>

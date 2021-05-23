@@ -12,6 +12,7 @@ const TitleBar = ({ baseRoute, showWelcomePage }) => {
   const logoClicked = () => {
     showWelcomePage()
     history.push('/')
+    window.location.reload()
   }
 
   const Logo = () => (

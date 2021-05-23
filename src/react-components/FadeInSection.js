@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 const FadeInSection = (props) => {
   const [isVisible, setVisible] = useState(true)
