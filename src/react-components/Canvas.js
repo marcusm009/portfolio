@@ -218,7 +218,7 @@ class Canvas extends Component {
           controls>
           <source
             ref={ref => (this.state.audioiOS.source = ref)}
-            src='http://mmills.io/portfolio/sounds/block-move-ios/0.wav'
+            src='http://mmills.io/portfolio/sounds/silence.wav'
             type='audio/mpeg'></source>
             Your browser does not support the audio tag.
         </audio>
@@ -291,7 +291,7 @@ function Hints() {
     isTouchDevice() ? (
       <>
       <h1 id='directions-text'>Swipe to move!</h1>
-      <div id='touch-icon'></div>
+      {/* <div id='touch-icon'></div> */}
       </>
     ) : (
       <>

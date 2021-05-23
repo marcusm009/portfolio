@@ -3,10 +3,37 @@ import { useLocation } from 'react-router'
 import { Typography, Button } from '@material-ui/core'
 
 const messages = [
-  'Welcome to my interactive portfolio website inspired by Bloxorz.',
-  'Beat the level to unlock the page or click the auto-solve button.',
+  'Welcome to my interactive portfolio',
+  'website inspired by Bloxorz.',
+  '<br>',
+  '<br>',
+  '<br>',
+  'Beat the level to unlock the page',
+  'or click the auto-solve button.',
+  '<br>',
+  '<br>',
+  '<br>',
   'Tap or click to get started!'
 ]
+
+const Message = ({ msg, idx }) => {
+  return (
+    msg === '<br>' ? <br/>
+    : (
+      <div>
+        <Typography
+          className={(msg.length === messages[idx].length) ? 'no-cursor' : ''}
+          variant='h3'
+          style={{
+            position: 'relative'
+          }}
+          gutterBottom
+          >
+          {msg}
+        </Typography>
+      </div>
+    ))
+}
 
 const Welcome = ({ dismissWelcomePage }) => {
   const location = useLocation().pathname
@@ -17,6 +44,13 @@ const Welcome = ({ dismissWelcomePage }) => {
     let newMessages = [...curMessages]
 
     for(let i = 0; i < messages.length; i++) {
+      if(messages[i] === '<br>') {
+        if(curMessages[i] === '<br>')
+          continue
+        newMessages[i] = messages[i]
+        didUpdate = true
+        break
+      }
       if(curMessages[i].length < messages[i].length) {
         newMessages[i] = messages[i].substring(0, curMessages[i].length + 1)
         didUpdate = true
@@ -58,21 +92,7 @@ const Welcome = ({ dismissWelcomePage }) => {
       <div
         id='welcome-page'
         onclick={() => {dismissWelcomePage()}}>
-      {
-      curMessages.map((msg, idx) => (
-        <div>
-          <Typography
-            className={(msg.length === messages[idx].length) ? 'no-cursor' : ''}
-            variant='h3'
-            style={{
-              position: 'relative'
-            }}
-            gutterBottom
-            >
-            {msg}
-          </Typography>
-        </div>
-      ))}
+        {curMessages.map((msg, idx) => <Message msg={msg} idx={idx}/>)}
       </div>
       </>
   )
