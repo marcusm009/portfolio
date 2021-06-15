@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { useLocation } from 'react-router'
 import { Typography, Button } from '@material-ui/core'
 
+import Instructions from '../Instructions'
+
 const messages = [
   'Welcome to my interactive portfolio',
   'website inspired by Bloxorz!',
@@ -11,9 +13,7 @@ const Welcome = ({ dismissWelcomePage, baseRoute }) => {
   const location = useLocation().pathname
   const [curMessages, setMessages] = useState(Array(messages.length).fill(''))
   
-  const [directionsVis, setDirectionsVis] = useState(false)
-  const [imgVis, setImgVis] = useState(false)
-  const [tapClickVis, setTapClickVis] = useState(false)
+  const [showInstructions, setShowInstructions] = useState(false)
 
   const updateText = () => {
     let didUpdate = false
@@ -38,21 +38,8 @@ const Welcome = ({ dismissWelcomePage, baseRoute }) => {
       setTimeout(() => {
         setMessages(newMessages)
       }, 50)
-    }
-    else if(!directionsVis) {
-      setTimeout(() => {
-        setDirectionsVis(true)
-      }, 500)
-    }
-    else if(!imgVis) {
-      setTimeout(() => {
-        setImgVis(true)
-      }, 500)
-    }
-    else if(!tapClickVis) {
-      setTimeout(() => {
-        setTapClickVis(true)
-      }, 500)
+    } else {
+      // setShowInstructions(true)
     }
   }
 
@@ -66,6 +53,7 @@ const Welcome = ({ dismissWelcomePage, baseRoute }) => {
       <>
       <Button
           variant='contained'
+          disabled={showInstructions ? false : true}
           onClick={() => {
             dismissWelcomePage()
           }}
@@ -84,41 +72,64 @@ const Welcome = ({ dismissWelcomePage, baseRoute }) => {
         id='welcome-page'
         onclick={() => {dismissWelcomePage()}}
       >
-        <div className='welcome-element'>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column'
+        }}>
           {curMessages.map((msg, idx) => <Message msg={msg} idx={idx}/>)}
         </div>
-        {/* <br/>
-        <br/> */}
-        <div
-          className='welcome-element'
-          style={{padding: '2rem'}}>
-          <Typography
-            className={directionsVis ? 'active' : 'fade'}
-            variant='h4'>
-            Beat the level to unlock the page or click the auto-solve button
-          </Typography>
-        </div>
-        {/* <br/> */}
-        <img
-        alt='Logo'
-        className={imgVis ? 'active' : 'fade'}
-        src={baseRoute + '/images/welcome/how-to-play.png'}
-        style={{
-          width: '800px',
-          maxWidth: '80%',
-          height: 'auto'
-        }}/>
-
-        {/* <br/>
-        <br/> */}
-        <div style={{padding: '2rem'}}>
-          <Typography
-            className={tapClickVis ? 'active' : 'fade'}
-            variant='h4'>
-            Tap or click to get started!
-          </Typography>
-        </div>
-        
+        {
+        showInstructions ? (
+          <Instructions baseRoute={baseRoute}/>
+        ) : (
+          //<></>
+          <>
+            <MainIcon />
+            <div style={{
+              display: 'block',
+            }}>
+              <Typography
+                className='no-cursor'
+                variant='h4'
+                style={{
+                  position: 'relative'
+                }}
+                >
+                Please choose a mode:
+              </Typography>
+              <br/>
+              <Button
+              variant='contained'
+              onClick={() => {
+                setShowInstructions(true)
+              }}>
+                Interactive Game
+              </Button>
+              <Typography
+                className='no-cursor'
+                style={{
+                  position: 'relative'
+                }}
+                >
+                Complete a puzzle before unlocking each page
+              </Typography>
+              <br/>
+              <Button
+              variant='contained'>
+                Classic
+              </Button>
+              <Typography
+                className='no-cursor'
+                style={{
+                  position: 'relative'
+                }}
+                >
+                View the portfolio without having to complete puzzles
+              </Typography>
+            </div>
+          </>
+        )
+        }
       </div>
       </>
   )
@@ -128,9 +139,12 @@ const Message = ({ msg, idx }) => {
   return (
     msg === '<br>' ? <br/>
     : (
-      <>
+      <div style={{
+          width: 'fit-content',
+          margin: '0 auto'
+        }}>
         <Typography
-          className={(msg.length === messages[idx].length) ? 'no-cursor' : ''}
+          className={(msg.length === messages[idx].length || msg.length == 0) ? 'no-cursor' : ''}
           variant='h3'
           style={{
             position: 'relative'
@@ -138,8 +152,31 @@ const Message = ({ msg, idx }) => {
           >
           {msg}
         </Typography>
-      </>
+      </div>
   ))
+}
+
+const MainIcon = () => {
+  return (
+    <svg height='200' width='200'>
+      <line x1='100' y1='50' x2='50' y2='100' style={{
+        stroke:'rgb(255,0,0)',
+        strokeWidth:'2'
+      }}/>
+      <line x1='50' y1='100' x2='100' y2='150' style={{
+        stroke:'rgb(255,0,0)',
+        strokeWidth:'2'
+      }}/>
+      <line x1='100' y1='150' x2='150' y2='100' style={{
+        stroke:'rgb(255,0,0)',
+        strokeWidth:'2'
+      }}/>
+      <line x1='150' y1='100' x2='100' y2='50' style={{
+        stroke:'rgb(255,0,0)',
+        strokeWidth:'2'
+      }}/>
+    </svg>
+  )
 }
 
 export default Welcome

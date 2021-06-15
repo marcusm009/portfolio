@@ -244,6 +244,7 @@ button, a {
   h3 {
     border-right: .15em solid red;
     animation: blink-caret .75s step-end infinite;
+    display: inline;
     // flex-grow: 1;
 
     &.no-cursor {
