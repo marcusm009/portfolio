@@ -225,14 +225,15 @@ button, a {
 }
 
 #welcome-page {
-  position: fixed;
+  position: absolute;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   top: $navBarSize;
   left: 0;
   right: 0;
   bottom: 0;
+  background-color: red;
   background-color: $darkGray;
   color: $white;
   margin: auto;
@@ -243,7 +244,7 @@ button, a {
   h3 {
     border-right: .15em solid red;
     animation: blink-caret .75s step-end infinite;
-    flex-grow: 1;
+    // flex-grow: 1;
 
     &.no-cursor {
       animation: none;

@@ -84,17 +84,21 @@ const Welcome = ({ dismissWelcomePage, baseRoute }) => {
         id='welcome-page'
         onclick={() => {dismissWelcomePage()}}
       >
-        {curMessages.map((msg, idx) => <Message msg={msg} idx={idx}/>)}
-        <br/>
-        <br/>
-        <div style={{padding: '2rem'}}>
+        <div className='welcome-element'>
+          {curMessages.map((msg, idx) => <Message msg={msg} idx={idx}/>)}
+        </div>
+        {/* <br/>
+        <br/> */}
+        <div
+          className='welcome-element'
+          style={{padding: '2rem'}}>
           <Typography
             className={directionsVis ? 'active' : 'fade'}
             variant='h4'>
             Beat the level to unlock the page or click the auto-solve button
           </Typography>
         </div>
-        <br/>
+        {/* <br/> */}
         <img
         alt='Logo'
         className={imgVis ? 'active' : 'fade'}
@@ -105,8 +109,8 @@ const Welcome = ({ dismissWelcomePage, baseRoute }) => {
           height: 'auto'
         }}/>
 
-        <br/>
-        <br/>
+        {/* <br/>
+        <br/> */}
         <div style={{padding: '2rem'}}>
           <Typography
             className={tapClickVis ? 'active' : 'fade'}
@@ -124,7 +128,7 @@ const Message = ({ msg, idx }) => {
   return (
     msg === '<br>' ? <br/>
     : (
-      <div>
+      <>
         <Typography
           className={(msg.length === messages[idx].length) ? 'no-cursor' : ''}
           variant='h3'
@@ -134,7 +138,7 @@ const Message = ({ msg, idx }) => {
           >
           {msg}
         </Typography>
-      </div>
+      </>
   ))
 }
 
