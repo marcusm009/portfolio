@@ -6,11 +6,11 @@ import { useWindowDimensions } from '../hooks.js'
 import Instructions from '../Instructions'
 
 const messages = [
-  'Welcome to my interactive portfolio',
+  'Welcome to my portfolio',
   'website inspired by Bloxorz!',
 ]
 
-const Welcome = ({ dismissWelcomePage, baseRoute }) => {
+const Welcome = ({ startGame, startClassic, baseRoute }) => {
   const location = useLocation().pathname
   const { windowHeight, windowWidth } = useWindowDimensions()
   const [curMessages, setMessages] = useState(Array(messages.length).fill(''))
@@ -47,7 +47,7 @@ const Welcome = ({ dismissWelcomePage, baseRoute }) => {
 
   useEffect(() => {
     if(location !== '/')
-      dismissWelcomePage()
+      startClassic()
     updateText()
     console.log(windowHeight)
   })
@@ -58,7 +58,7 @@ const Welcome = ({ dismissWelcomePage, baseRoute }) => {
           variant='contained'
           disabled={showInstructions ? false : true}
           onClick={() => {
-            dismissWelcomePage()
+            startGame()
           }}
           style={{
             display: 'block',
@@ -73,7 +73,7 @@ const Welcome = ({ dismissWelcomePage, baseRoute }) => {
       </Button>
       <div
         id='welcome-page'
-        onclick={() => {dismissWelcomePage()}}
+        onclick={() => {startGame()}}
       >
         <div style={{
           display: 'flex',
@@ -118,7 +118,11 @@ const Welcome = ({ dismissWelcomePage, baseRoute }) => {
               </Typography>
               <br/>
               <Button
-              variant='contained'>
+              variant='contained'
+              onClick={() => {
+                startClassic()
+              }}
+              >
                 Classic
               </Button>
               <Typography

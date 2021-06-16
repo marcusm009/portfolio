@@ -13,7 +13,7 @@ import Projects from './react-components/pages/Projects'
 import Contact from './react-components/pages/Contact'
 
 const BASE_ROUTE = '/portfolio'
-const VERSION = '0.9.4'
+const VERSION = '0.9.5'
 
 console.log('VER: ', VERSION)
 
@@ -23,19 +23,19 @@ const App = () => {
       {
         text: 'About',
         route: '/about',
-        completed: false,
+        completed: true,
         component: About
       },
       {
         text: 'Projects',
         route: '/projects',
-        completed: false,
+        completed: true,
         component: Projects
       },
       {
         text: 'Contact',
         route: '/contact',
-        completed: false,
+        completed: true,
         component: Contact
       }
     ],
@@ -67,7 +67,15 @@ const App = () => {
     })
   }
 
-  const dismissWelcomePage = () => {
+  const startGame = () => {
+    let newPages = state.pages
+    for (let page of newPages) {
+      page.completed = false
+    }
+    setState({welcomePageDismissed: true, pages: newPages})
+  }
+  
+  const startClassic = () => {
     setState({welcomePageDismissed: true, pages: state.pages})
   }
 
@@ -92,7 +100,8 @@ const App = () => {
         !state.welcomePageDismissed ? (
           <Welcome
             baseRoute={BASE_ROUTE}
-            dismissWelcomePage={dismissWelcomePage}
+            startGame={startGame}
+            startClassic={startClassic}
             />
         ) : (
           <CanvasSwitcher
