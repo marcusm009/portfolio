@@ -46,7 +46,8 @@ class Canvas extends Component {
   async componentDidUpdate() {
     console.log('Canvas updated')
     if(this.state.isInitialized) {
-      if(this.state.shouldResumeCanvas)
+      // TODO: Figure out why the props.isComplete check causes win animation to be slow
+      if(this.state.shouldResumeCanvas && !this.props.isComplete)
         this.resumeThreeCanvas()
       else
         this.state.shouldResumeCanvas = true
@@ -256,7 +257,7 @@ class Canvas extends Component {
           display: (this.props.isActive) ? 'block' : 'none'
         }}
       >
-        {!this.state.hasMoved && <Hints/>}
+        {!this.state.hasMoved && !this.props.isComplete && <Hints/>}
         <div style={{
           display: (this.props.isActive && !this.props.isComplete) ? 'block' : 'none',
           position: 'fixed',
