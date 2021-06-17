@@ -102,7 +102,7 @@ button, a {
   left: 0;
   right: 0;
   overflow: hidden;
-  z-index: 2;
+  z-index: 6;
 }
 
 #title-bar {
@@ -239,7 +239,7 @@ button, a {
   margin: auto;
   align-items: center;
   text-align: center;
-  z-index: 999;
+  z-index: 5;
 
   h3 {
     border-right: .15em solid red;

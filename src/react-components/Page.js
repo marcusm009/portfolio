@@ -5,12 +5,13 @@ import { Container, Button, Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
 import ReplayIcon from '@material-ui/icons/Replay'
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
 import Footer from './Footer'
 
-const Page = ({ Component, isActive, replayStageCallback, nextLevel, baseRoute }) => {
-  const [isFadingIn, setFadingIn] = useState(true)
+const Page = ({ Component, isActive, replayStageCallback, prevLevel, nextLevel, baseRoute, shouldFadeIn }) => {
+  const [isFadingIn, setFadingIn] = useState(shouldFadeIn)
   const history = useHistory()
 
   const useStyles = makeStyles(() => ({
@@ -60,17 +61,22 @@ const Page = ({ Component, isActive, replayStageCallback, nextLevel, baseRoute }
             </Button>
           <br/><br/>
           <Component baseRoute={baseRoute}/>
-          <Grid container justify='flex-end'>
+          <Grid container justify='space-between'>
+            <Button
+                variant='contained'
+                disabled={!prevLevel}
+                startIcon={<NavigateBeforeIcon/>}
+                onClick={() => {
+                  history.push(prevLevel.route)}}>
+                {prevLevel && !prevLevel.completed ? 'Prev Level' : 'Prev Page'}
+              </Button>
             <Button
               variant='contained'
+              disabled={!nextLevel}
               endIcon={<NavigateNextIcon/>}
               onClick={() => {
-                history.push(nextLevel.route)}}
-              style={{
-                display: (nextLevel !== undefined) ? 'inline-flex' : 'none',
-                right: 0
-              }}>
-                Next Level
+                history.push(nextLevel.route)}}>
+                {nextLevel && !nextLevel.completed ? 'Next Level' : 'Next Page'}
             </Button>
           </Grid>
           <Footer />

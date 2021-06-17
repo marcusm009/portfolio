@@ -39,7 +39,7 @@ const TitleBar = ({ baseRoute, showWelcomePage }) => {
       <button
         type='button'
         className={'title'}
-        onClick={refresh}
+        onClick={() => logoClicked()}
       >
       {'Marcus Mills'}
       </button>

@@ -13,7 +13,7 @@ import Projects from './react-components/pages/Projects'
 import Contact from './react-components/pages/Contact'
 
 const BASE_ROUTE = '/portfolio'
-const VERSION = '0.9.6'
+const VERSION = '0.9.7'
 
 console.log('VER: ', VERSION)
 
@@ -40,6 +40,7 @@ const App = () => {
       }
     ],
     welcomePageDismissed: false,
+    gameModeEnabled: false,
     touchEnabled: false
   })
 
@@ -62,6 +63,7 @@ const App = () => {
         let newState = {}
         Object.assign(newState, state)
         newState.pages[idx].completed = false
+        newState.gameModeEnabled = true
         setState(newState)
       }
     })
@@ -72,11 +74,11 @@ const App = () => {
     for (let page of newPages) {
       page.completed = false
     }
-    setState({welcomePageDismissed: true, pages: newPages})
+    setState({welcomePageDismissed: true, pages: newPages, gameModeEnabled: true})
   }
   
   const startClassic = () => {
-    setState({welcomePageDismissed: true, pages: state.pages})
+    setState({welcomePageDismissed: true, pages: state.pages, gameModeEnabled: false})
   }
 
   const showWelcomePage = () => {
@@ -110,6 +112,7 @@ const App = () => {
             replayStageCallback={replayStage}
             baseRoute={BASE_ROUTE}
             isiOS={isiOS()}
+            gameModeEnabled={state.gameModeEnabled}
           />
         )
       }

@@ -13,7 +13,7 @@ const messages = [
 const Welcome = ({ startGame, startClassic, baseRoute }) => {
   const location = useLocation().pathname
   const { windowHeight, windowWidth } = useWindowDimensions()
-  const [curMessages, setMessages] = useState(Array(messages.length).fill(''))
+  const [curMessages, setMessages] = useState(Array(messages.length).fill('*'))
   
   const [showInstructions, setShowInstructions] = useState(false)
 
@@ -73,7 +73,7 @@ const Welcome = ({ startGame, startClassic, baseRoute }) => {
       </Button>
       <div
         id='welcome-page'
-        onclick={() => {startGame()}}
+        // onClick={() => {startGame()}}
       >
         <div style={{
           display: 'flex',
@@ -151,10 +151,11 @@ const Message = ({ msg, idx }) => {
           margin: '0 auto'
         }}>
         <Typography
-          className={(msg.length === messages[idx].length || msg.length == 0) ? 'no-cursor' : ''}
+          className={(msg.length === messages[idx].length || msg.length == 1) ? 'no-cursor' : ''}
           variant='h3'
           style={{
-            position: 'relative'
+            position: 'relative',
+            opacity: msg === '*' ? '0%' : '100%'
           }}
           >
           {msg}

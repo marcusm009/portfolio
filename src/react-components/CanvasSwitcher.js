@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import Canvas from './Canvas'
 import Page from './Page'
 
-const CanvasSwitcher = ({ pages, completeStageCallback, replayStageCallback, baseRoute, isiOS }) => {
+const CanvasSwitcher = ({ pages, completeStageCallback, replayStageCallback, baseRoute, isiOS, gameModeEnabled }) => {
   const location = useLocation().pathname
   const history = useHistory()
 
@@ -37,8 +37,10 @@ const CanvasSwitcher = ({ pages, completeStageCallback, replayStageCallback, bas
               Component={page.component}
               isActive={location === page.route}
               replayStageCallback={() => replayStageCallback(page.route)}
-              nextLevel={pages[idx+1]}
+              prevLevel={idx > 0 ? pages[idx-1] : null}
+              nextLevel={idx < pages.length - 1 ? pages[idx+1] : null}
               baseRoute={baseRoute}
+              shouldFadeIn={gameModeEnabled}
             />}
           <Canvas
             level={page.route.replace('/','')}

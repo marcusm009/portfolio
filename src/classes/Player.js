@@ -158,7 +158,7 @@ class Player extends THREE.Mesh {
     }
     // complete level
     else if (floor.hasGoalInLocation(pos)) {
-      this.fall(0.005, 100)
+      this.fall(0.02)
       this.beginCompletion()
       floor.completeLevel()
     }
