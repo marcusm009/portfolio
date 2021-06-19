@@ -196,32 +196,3 @@ const IconSegment = ({ size, offsetX, offsetY, isTop }) => {
 }
 
 export default Welcome
-
-// const MainIcon = ( {size} ) => {
-//   return (
-//     <svg height={size*1.25} width={size}>
-//       <IconSegment size={size} offsetX={0} offsetY={0} isTop/>
-//       <IconSegment size={size} offsetX={0} offsetY={size/2}/>
-//       <line className='main-icon' x1={size*1/4} y1={size*3/8} x2={size*1/4} y2={size*7/8}/>
-//       <line className='main-icon' x1={size*3/4} y1={size*3/8} x2={size*3/4} y2={size*7/8}/>
-//       <line className='main-icon' x1={size*1/2} y1={size*1/2} x2={size*1/2} y2={size}/>
-
-//     </svg>
-//   )
-// }
-
-// const IconSegment = ({ size, offsetX, offsetY, isTop }) => {
-//   return (
-//     <>
-//       <line className='main-icon' x1={size*1/2+offsetX} y1={size*1/2+offsetY} x2={size*3/4+offsetX} y2={size*3/8+offsetY}/>
-//       <line className='main-icon' x1={size*1/4+offsetX} y1={size*3/8+offsetY} x2={size*1/2+offsetX} y2={size*1/2+offsetY}/>
-//       {isTop && (
-//         <>
-//           <line className='main-icon' x1={size*1/2+offsetX} y1={size*1/4+offsetY} x2={size*1/4+offsetX} y2={size*3/8+offsetY}/>
-//           <line className='main-icon' x1={size*3/4+offsetX} y1={size*3/8+offsetY} x2={size*1/2+offsetX} y2={size*1/4+offsetY}/>
-//         </>
-//       )}
-
-//     </>
-//   )
-// }

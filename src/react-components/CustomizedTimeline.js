@@ -5,28 +5,16 @@ import { Timeline, TimelineItem, TimelineSeparator, TimelineConnector, TimelineC
 import { Card, CardContent, CardMedia, Typography, useMediaQuery} from '@material-ui/core'
 
 import LaptopMacIcon from '@material-ui/icons/LaptopMac'
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: 0
-    // flexGrow: 0
-  },
-  card: {
-    // maxWidth: 345,
-  },
-  media: {
-    height: 140,
-  }
-}))
+import SchoolIcon from '@material-ui/icons/School'
+import MenuBookIcon from '@material-ui/icons/MenuBook'
 
 const CustomizedTimeline = () => {
-  const classes = useStyles()
   const shouldAlternate = useMediaQuery('(min-width:600px)')
 
   const content = [
     {
       year: '2016-2020',
-      icon: (<LaptopMacIcon />),
+      icon: (<SchoolIcon />),
       image: {
         title: 'UF',
         link: 'about/uf.png'
@@ -38,7 +26,7 @@ const CustomizedTimeline = () => {
     },
     {
       year: '2018-2020',
-      icon: (<LaptopMacIcon />),
+      icon: (<MenuBookIcon />),
       image: {
         title: 'Research',
         link: 'about/fics.png'
@@ -63,7 +51,7 @@ const CustomizedTimeline = () => {
     },
     {
       year: '2021-Pres.',
-      icon: (<LaptopMacIcon />),
+      icon: (<SchoolIcon />),
       image: {
         title: 'OMSCS',
         link: 'about/omscs.png'
@@ -77,13 +65,19 @@ const CustomizedTimeline = () => {
   ]
 
   return (
-    <Timeline style={{flexGrow: 0}} className={classes.root}
-      align={shouldAlternate ? 'alternate' : 'left'}>
+    <Timeline
+    style={{
+      flexGrow: 0,
+      padding: 0
+    }}
+    align={shouldAlternate ? 'alternate' : 'left'
+    }>
       {content.map((info, idx) => (
         <TimelineItem key={idx}>
           <TimelineOppositeContent style={{
             flexGrow: shouldAlternate ? 1 : 0,
-            padding: '.25rem'
+            padding: 0,
+            margin: '.25rem'
           }}>
             {info.year ? 
               (<Typography color='textSecondary'>{info.year}</Typography>) : 
@@ -91,20 +85,22 @@ const CustomizedTimeline = () => {
           </TimelineOppositeContent>
           <TimelineSeparator>
             <TimelineDot color='primary' variant='outlined'>
-              <LaptopMacIcon />
+              {info.icon}
             </TimelineDot>
             <TimelineConnector />
           </TimelineSeparator>
-          <TimelineContent>
-            <Card className={classes.card}>
+          <TimelineContent style={{
+            padding: 0,
+            margin: '.25rem'
+          }}>
+            <Card>
               {info.image && (
                 <CardMedia
-                className={classes.media}
                 image={'/portfolio/images/' + info.image.link}
                 title={info.image.title}
                 style={{
                   backgroundSize: 'contain',
-                  margin: '.5rem'
+                  height: 140
                 }}
                 />
               )}

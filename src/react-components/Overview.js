@@ -1,14 +1,15 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 
-import { Avatar, ButtonGroup, Button, IconButton, Typography, Card, CardContent, useMediaQuery } from '@material-ui/core'
+import { Avatar, ButtonGroup, Button, Typography, Card, CardContent, useMediaQuery } from '@material-ui/core'
 
 import GitHubIcon from '@material-ui/icons/GitHub'
 import LinkedInIcon from '@material-ui/icons/LinkedIn'
 import DescriptionIcon from '@material-ui/icons/Description'
 
 const Overview = () => {
-  const shouldWrap = useMediaQuery('(min-width:900px)')
+  const summaryOnSide = useMediaQuery('(min-width:900px)')
+  const largerText    = useMediaQuery('(min-width:500px)')
 
   return (
     <Card
@@ -16,7 +17,7 @@ const Overview = () => {
         display: 'flex',
         justifyContent: 'space-evenly',
         padding: '.5rem',
-        flexDirection: shouldWrap ? 'row' : 'column'
+        flexDirection: summaryOnSide ? 'row' : 'column'
       }}>
       <div style={{display: 'flex', flexDirection: 'column'}}>
         <Avatar src={'/portfolio/images/headshot.jpg'}
@@ -71,16 +72,27 @@ const Overview = () => {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-evenly',
-        padding: '2rem'
+        padding: '1rem'
         }}>
-        <Typography variant='h4' gutterBottom>Overview</Typography>
-        <Typography variant='h5'>Occupation: Software Engineer</Typography>
-        <Typography variant='h5'>Company: Motorola Solutions</Typography>
-        <Typography variant='h5'>Location: Denver, CO</Typography>
-        <Typography variant='h5'>Total Experience: 5+ years</Typography>
-        <Typography variant='h5'>Industry Experience: 1+ year</Typography>
+        <Typography
+          variant='h4'
+          gutterBottom
+          style={{fontWeight: 'bold'}}>
+            Overview
+        </Typography>
+        <OverviewItem label='Occupation' value='Software Engineer' largerText={largerText}/>
+        <OverviewItem label='Company' value='Motorola Solutions' largerText={largerText}/>
+        <OverviewItem label='Location' value='Denver, CO' largerText={largerText}/>
+        <OverviewItem label='Total Experience' value='5+ years' largerText={largerText}/>
+        <OverviewItem label='Industry Experience' value='1+ year' largerText={largerText}/>
       </CardContent>
     </Card>
+  )
+}
+
+const OverviewItem = ({ label, value, largerText }) => {
+  return (
+    <Typography variant={largerText ? 'h5' : 'h6'}><span style={{fontWeight: 'bold'}}>{label}:</span> {value}</Typography>
   )
 }
 
