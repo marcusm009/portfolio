@@ -105,7 +105,8 @@ const Welcome = ({ startGame, startClassic, baseRoute }) => {
               variant='contained'
               onClick={() => {
                 setShowInstructions(true)
-              }}>
+              }}
+              id='start-interactive-game-button'>
                 Interactive Game
               </Button>
               <Typography
@@ -122,6 +123,7 @@ const Welcome = ({ startGame, startClassic, baseRoute }) => {
               onClick={() => {
                 startClassic()
               }}
+              id='start-classic-button'
               >
                 Classic
               </Button>

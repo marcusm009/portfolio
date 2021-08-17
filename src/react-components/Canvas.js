@@ -273,6 +273,7 @@ class Canvas extends Component {
             onClick={() => {
               this.state.controller.autoSolve(.25)
             }}
+            className='autosolve-button'
             // style={{
             //   display: (this.props.isActive && !this.props.isComplete) ? 'block' : 'none',
             //   position: 'fixed',

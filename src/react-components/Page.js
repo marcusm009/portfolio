@@ -52,6 +52,7 @@ const Page = ({ Component, isActive, replayStageCallback, prevLevel, nextLevel, 
           style={{
             minHeight: '96vh'
           }}
+          id='page'
           >
           <Button
             variant='contained'
