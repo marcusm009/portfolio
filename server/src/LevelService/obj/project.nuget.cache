@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "mWGl92wVh6vYVzsjQ1/kAwUiyiyySNYmcNGl2fXUAd1UYDSlGrGDJ8SRpIu7E9NrHshzhFFpWHIxZaj0JxCRrw==",
+  "success": true,
+  "projectFilePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\marcus\\code\\portfolio\\server\\src\\LevelService\\LevelService.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Marcus\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.17.2\\microsoft.visualstudio.azure.containers.tools.targets.1.17.2.nupkg.sha512"
+  ],
+  "logs": []
+}
