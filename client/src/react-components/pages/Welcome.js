@@ -3,7 +3,7 @@ import { useLocation } from 'react-router'
 import { Typography, Button } from '@material-ui/core'
 import { useWindowDimensions } from '../hooks.js'
 
-import Instructions from '../Instructions'
+import Instructions from '../Instructions.js'
 
 const messages = [
   'Welcome to my portfolio',
