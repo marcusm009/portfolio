@@ -37,7 +37,7 @@ const CustomizedTimeline = () => {
       skills: ['Python', 'Machine Learning', 'Membership Inference']
     },
     {
-      year: '2020-Pres.',
+      year: '2020-2021',
       icon: (<LaptopMacIcon />),
       image: {
         title: 'Motorola',
@@ -47,19 +47,31 @@ const CustomizedTimeline = () => {
       subtitle: 'Motorola Solutions',
       content: ['After interning at Motorola Solutions in 2019, I joined the Software Engineer in Test (SET) team as a full time engineer shortly after graduating.',
                 'I spearheaded multiple initiatives such as creating a Linux version of our tool used to flash radios, developing a system to automatically detect new failures when firmware was checked in, designing an interactive web page used to view information about our automated test system, and much more!'],
-      skills: ['Python', 'Test Driven Development', 'Web Development', 'SQL', 'Git', 'Jira', 'C#']
+      skills: ['Python', 'Web Development', 'SQL', 'Git', 'Jira', 'C#']
     },
     {
-      year: '2021-Pres.',
-      icon: (<SchoolIcon />),
+      year: '2021-2023',
+      icon: (<LaptopMacIcon />),
       image: {
-        title: 'OMSCS',
-        link: 'about/omscs.png'
+        title: 'Charles Schwab',
+        link: 'about/schwab.png' 
       },
-      title: 'M.S. in Computer Science',
-      subtitle: 'Georgia Institute of Technology',
-      content: ["I will begin pursuing my master's degree online in Fall of 2021 at Georgia Tech. My specialization will be in Computing Systems"],
-      skills: ['TBD']
+      title: 'Software Engineer in Test',
+      subtitle: 'Charles Schwab',
+      content: ["I worked primarily as a software development engineer in test (SDET), while also working on development stories on an as-needed basis."],
+      skills: ['C#', 'ASP.NET Core', 'Test Driven Development', 'xUnit']
+    },
+    {
+      year: '2023-Pres.',
+      icon: (<LaptopMacIcon />),
+      image: {
+        title: 'Charles Schwab',
+        link: 'about/schwab.png'
+      },
+      title: 'Sr. Software Engineer',
+      subtitle: 'Charles Schwab',
+      content: ["After being promoted to a full time senior developer, I worked with my team to migrate the organization's first application to the public cloud (AWS)."],
+      skills: ['C#', 'AWS', 'Docker', '.NET Core']
     },
     
   ]

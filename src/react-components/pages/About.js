@@ -26,7 +26,7 @@ const About = () => {
       interests: [
         'Backend development',
         'Frontend development',
-        'Machine learning'
+        'Machine learning / AI'
       ]
     },
     {
@@ -42,16 +42,14 @@ const About = () => {
       ]
     },
     {
-      title: 'Languages / Frameworks',
+      title: 'Languages',
       icon: <CodeIcon/>,
       interests: [
         'Python - Proficient',
+        'C# - Proficient',
         'JavaScript - Experienced',
-        'Git - Experienced',
         'HTML / CSS - Experienced',
-        'React.JS - Acquiring knowledge',
-        'SQL - Some knowledge',
-        'Node.js - Some knowledge'
+        'SQL - Experienced'
       ]
     }
   ]
