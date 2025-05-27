@@ -57,7 +57,7 @@ const Overview = () => {
           <Button
           variant='contained'
           startIcon={<DescriptionIcon/>}
-          href='https://drive.google.com/file/d/1D42JrNZSsBVvPeno8waztfLepSoqsC1Z/view?usp=sharing'
+          href={RESOURCES_BASE_URL + '/marcus_mills_resume.pdf'}
           style={{
             backgroundColor: 'red',
             color: 'white',

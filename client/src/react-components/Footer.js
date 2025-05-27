@@ -2,7 +2,7 @@ const Footer = () => {
   return (
     <div
       id='footer'>
-        Copyright 2021
+        Copyright {new Date().getFullYear()} - All rights reserved.
     </div>
   )
 }
