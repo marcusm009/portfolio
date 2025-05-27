@@ -82,8 +82,7 @@ const Overview = () => {
         <OverviewItem label='Occupation' value='Software Engineer' largerText={largerText}/>
         <OverviewItem label='Company' value='Charles Schwab' largerText={largerText}/>
         <OverviewItem label='Location' value='Denver, CO' largerText={largerText}/>
-        <OverviewItem label='Total Experience' value='5+ years' largerText={largerText}/>
-        <OverviewItem label='Industry Experience' value='3+ years' largerText={largerText}/>
+        <OverviewItem label='Industry Experience' value='5+ years' largerText={largerText}/>
       </CardContent>
     </Card>
   )
