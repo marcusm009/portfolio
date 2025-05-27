@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  client:
+    build: ./client
+    ports:
+      - '32778:3000'
+    networks:
+      - portfolio
+  level-service:
+    build: ./server/src/LevelService
+    ports:
+      - '32779:443'
+      - '32780:80'
+    networks:
+      - portfolio
+
+networks:
+  portfolio:
