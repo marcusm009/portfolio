@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - feature/containerize_and_add_server  # Set this to your default branch
+      - main
 
 jobs:
   deploy:
