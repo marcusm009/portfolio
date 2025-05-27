@@ -1,10 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "mWGl92wVh6vYVzsjQ1/kAwUiyiyySNYmcNGl2fXUAd1UYDSlGrGDJ8SRpIu7E9NrHshzhFFpWHIxZaj0JxCRrw==",
+  "dgSpecHash": "2mRUIS8j4Ms=",
   "success": true,
-  "projectFilePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\marcus\\code\\portfolio\\server\\src\\LevelService\\LevelService.csproj",
+  "projectFilePath": "/Users/marcus/code/projects/portfolio/server/src/LevelService/LevelService.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Marcus\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.17.2\\microsoft.visualstudio.azure.containers.tools.targets.1.17.2.nupkg.sha512"
+    "/Users/marcus/.nuget/packages/microsoft.visualstudio.azure.containers.tools.targets/1.17.2/microsoft.visualstudio.azure.containers.tools.targets.1.17.2.nupkg.sha512",
+    "/Users/marcus/.nuget/packages/microsoft.netcore.app.ref/7.0.20/microsoft.netcore.app.ref.7.0.20.nupkg.sha512",
+    "/Users/marcus/.nuget/packages/microsoft.aspnetcore.app.ref/7.0.20/microsoft.aspnetcore.app.ref.7.0.20.nupkg.sha512",
+    "/Users/marcus/.nuget/packages/microsoft.netcore.app.host.osx-arm64/7.0.20/microsoft.netcore.app.host.osx-arm64.7.0.20.nupkg.sha512"
   ],
   "logs": []
 }

@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
-import { Typography, Button } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
+
+import { RESOURCES_BASE_URL } from '../constants'
 
 const Instructions = ({ baseRoute }) => {
   const [directionsVis, setDirectionsVis] = useState(false)
@@ -38,7 +40,7 @@ const Instructions = ({ baseRoute }) => {
       <img
       alt='Logo'
       className={imgVis ? 'active' : 'fade'}
-      src={baseRoute + '/images/welcome/how-to-play.png'}
+      src={RESOURCES_BASE_URL + '/images/welcome/how-to-play.png'}
       style={{
         width: '800px',
         maxWidth: '80%',

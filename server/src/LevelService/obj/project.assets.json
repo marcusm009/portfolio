@@ -100,32 +100,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Marcus\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "/Users/marcus/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\marcus\\code\\portfolio\\server\\src\\LevelService\\LevelService.csproj",
+      "projectUniqueName": "/Users/marcus/code/projects/portfolio/server/src/LevelService/LevelService.csproj",
       "projectName": "LevelService",
-      "projectPath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\marcus\\code\\portfolio\\server\\src\\LevelService\\LevelService.csproj",
-      "packagesPath": "C:\\Users\\Marcus\\.nuget\\packages\\",
-      "outputPath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\marcus\\code\\portfolio\\server\\src\\LevelService\\obj\\",
+      "projectPath": "/Users/marcus/code/projects/portfolio/server/src/LevelService/LevelService.csproj",
+      "packagesPath": "/Users/marcus/.nuget/packages/",
+      "outputPath": "/Users/marcus/code/projects/portfolio/server/src/LevelService/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Marcus\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/marcus/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -138,7 +130,13 @@
         "warnAsError": [
           "NU1605"
         ]
-      }
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net7.0": {
@@ -160,6 +158,20 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[7.0.20, 7.0.20]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.osx-arm64",
+            "version": "[7.0.20, 7.0.20]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[7.0.20, 7.0.20]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -168,7 +180,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/Users/marcus/.dotnet/sdk/9.0.200/RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -1,11 +1,10 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-
 import { Avatar, ButtonGroup, Button, Typography, Card, CardContent, useMediaQuery } from '@material-ui/core'
 
 import GitHubIcon from '@material-ui/icons/GitHub'
 import LinkedInIcon from '@material-ui/icons/LinkedIn'
 import DescriptionIcon from '@material-ui/icons/Description'
+
+import { RESOURCES_BASE_URL } from '../constants'
 
 const Overview = () => {
   const summaryOnSide = useMediaQuery('(min-width:900px)')
@@ -20,7 +19,7 @@ const Overview = () => {
         flexDirection: summaryOnSide ? 'row' : 'column'
       }}>
       <div style={{display: 'flex', flexDirection: 'column'}}>
-        <Avatar src={'/portfolio/images/headshot.jpg'}
+        <Avatar src={`${RESOURCES_BASE_URL}/images/headshot.jpg`}
               style={{
                 objectFit: 'cover',
                 height: 'auto',

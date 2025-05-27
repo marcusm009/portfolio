@@ -1,4 +1,4 @@
-import { BrowserRouter, Redirect } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import { useState } from 'react'
 
 import { CssBaseline } from '@material-ui/core'
@@ -12,10 +12,9 @@ import About from './react-components/pages/About'
 import Projects from './react-components/pages/Projects'
 import Contact from './react-components/pages/Contact'
 
-const BASE_ROUTE = '/portfolio'
-const VERSION = '1.0'
+import * as constants from './constants'
 
-console.log('VER: ', VERSION)
+console.log('VER: ', constants.VERSION)
 
 const App = () => {  
   const [state, setState] = useState({
@@ -87,21 +86,21 @@ const App = () => {
 
   return (
     <BrowserRouter
-      basename={BASE_ROUTE}>
+      basename={constants.BASE_ROUTE}>
       
       <CssBaseline />
       <TitleBar
-        baseRoute={BASE_ROUTE}
+        baseRoute={constants.BASE_ROUTE}
         showWelcomePage={showWelcomePage}
       />
       <NavBar
         buttons={state.pages}
-        baseRoute={BASE_ROUTE}
+        baseRoute={constants.BASE_ROUTE}
       />
       {
         !state.welcomePageDismissed ? (
           <Welcome
-            baseRoute={BASE_ROUTE}
+            baseRoute={constants.BASE_ROUTE}
             startGame={startGame}
             startClassic={startClassic}
             />
@@ -110,7 +109,7 @@ const App = () => {
             pages={state.pages}
             completeStageCallback={completeStage}
             replayStageCallback={replayStage}
-            baseRoute={BASE_ROUTE}
+            baseRoute={constants.BASE_ROUTE}
             isiOS={isiOS()}
             gameModeEnabled={state.gameModeEnabled}
           />

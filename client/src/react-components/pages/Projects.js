@@ -3,6 +3,8 @@ import { Typography, Card, CardContent, CardMedia, CardActions, IconButton, Tool
 import LinkIcon from '@material-ui/icons/Link'
 import CodeIcon from '@material-ui/icons/Code'
 
+import { RESOURCES_BASE_URL } from '../../constants'
+
 const Projects = () => {
   return (
     <>
@@ -25,7 +27,7 @@ const Projects = () => {
           within a few seconds.
         </>)
       ]}
-      imgSrc='/portfolio/images/projects/poli-bias.jpg'
+      imgSrc={RESOURCES_BASE_URL + '/images/projects/poli-bias.jpg'}
       codeSrc='https://github.com/marcusm009/political-bias-detector'
       link='https://chrome.google.com/webstore/detail/bias-detector/aifdepmjdlepmpcgdkmbnhjfdmpjboma'
       />
@@ -51,7 +53,7 @@ const Projects = () => {
           levels.
         </>)
       ]}
-      imgSrc='/portfolio/images/projects/react-website.png'
+      imgSrc={RESOURCES_BASE_URL + '/images/projects/react-website.png'}
       imgBg='#202020'
       codeSrc='https://github.com/marcusm009/portfolio'
       isItalic

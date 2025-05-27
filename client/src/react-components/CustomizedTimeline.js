@@ -1,8 +1,8 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 import { Timeline, TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent,
          TimelineOppositeContent, TimelineDot } from '@material-ui/lab'
 import { Card, CardContent, CardMedia, Typography, useMediaQuery} from '@material-ui/core'
+
+import { RESOURCES_BASE_URL } from '../constants'
 
 import LaptopMacIcon from '@material-ui/icons/LaptopMac'
 import SchoolIcon from '@material-ui/icons/School'
@@ -96,7 +96,7 @@ const CustomizedTimeline = () => {
             <Card>
               {info.image && (
                 <CardMedia
-                image={'/portfolio/images/' + info.image.link}
+                image={RESOURCES_BASE_URL + '/images/' + info.image.link}
                 title={info.image.title}
                 style={{
                   backgroundSize: 'contain',
