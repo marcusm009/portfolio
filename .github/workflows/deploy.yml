@@ -29,6 +29,7 @@ jobs:
         run: npm run build
         env:
           CI: false  # This prevents treating warnings as errors
+          NODE_OPTIONS: '--openssl-legacy-provider'  # Allow legacy OpenSSL providers
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
