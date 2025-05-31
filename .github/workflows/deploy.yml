@@ -24,6 +24,12 @@ jobs:
         working-directory: ./client
         run: npm ci
 
+      - name: Run Tests
+        working-directory: ./client
+        run: npm test -- --watchAll=false
+        env:
+          CI: true  # Run in CI mode for tests
+
       - name: Build
         working-directory: ./client
         run: npm run build
